@@ -1,0 +1,26 @@
+﻿"use client";
+
+import { useState } from "react";
+import { site } from "@/content/site";
+
+const links = [
+  { label: "Architecture", href: "#architecture" },
+  { label: "Vision", href: "#vision" },
+  { label: "Experience", href: "#experience" },
+];
+
+export function Navigation() {
+  const [open, setOpen] = useState(false);
+  return <header className="site-header">
+    <a className="wordmark" href="#top" aria-label={`${site.name}, back to top`}><span>EC</span><span className="wordmark-name">EASTERN<br />CHAMBER</span></a>
+    <nav className={open ? "nav-links open" : "nav-links"} aria-label="Main navigation" id="main-navigation">
+      {links.map(({ label, href }) => <a key={href} href={href} onClick={() => setOpen(false)}>{label}</a>)}
+      <a className="mobile-enquire" href="#enquire" onClick={() => setOpen(false)}>Enquire</a>
+    </nav>
+    <a className="header-enquire" href="#enquire">Enquire <span aria-hidden="true">?</span></a>
+    <button className="menu-toggle" type="button" aria-label={open ? "Close menu" : "Open menu"} aria-controls="main-navigation" aria-expanded={open} onClick={() => setOpen(!open)}>
+      <span /> <span />
+    </button>
+  </header>;
+}
+
