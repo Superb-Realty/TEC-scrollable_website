@@ -49,6 +49,8 @@ export function SequenceStory() {
     const cache = new Map<number, HTMLImageElement>();
     const layer = document.createElement("canvas");
     const layerCtx = layer.getContext("2d")!;
+    const backdrop = document.createElement("canvas");
+    const backdropCtx = backdrop.getContext("2d")!;
     const loading = new Set<number>();
     let raf = 0;
     let lastDrawn = -1;
@@ -88,13 +90,17 @@ export function SequenceStory() {
       const sw = image.naturalWidth - edge * 2;
       const sh = image.naturalHeight;
       if (width < 700) {
-        const backgroundScale = Math.max(width / sw, height / sh) * 1.12;
-        const backgroundWidth = sw * backgroundScale;
-        const backgroundHeight = sh * backgroundScale;
-        ctx.save();
-        ctx.filter = "blur(30px) brightness(.55)";
-        ctx.drawImage(image, edge, 0, sw, sh, (width - backgroundWidth) / 2, (height - backgroundHeight) / 2, backgroundWidth, backgroundHeight);
-        ctx.restore();
+        backdrop.width = 32;
+        backdrop.height = 21;
+        backdropCtx.drawImage(image, edge, 0, sw, sh, 0, 0, backdrop.width, backdrop.height);
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = "high";
+        ctx.drawImage(backdrop, 0, 0, backdrop.width, backdrop.height, 0, 0, width, height);
+        const shade = ctx.createLinearGradient(0, 0, 0, height);
+        shade.addColorStop(0, "rgba(17, 31, 24, .18)");
+        shade.addColorStop(1, "rgba(17, 31, 24, .56)");
+        ctx.fillStyle = shade;
+        ctx.fillRect(0, 0, width, height);
         const cropWidth = Math.min(900, sw);
         const cropX = (image.naturalWidth - cropWidth) / 2;
         const bandHeight = width * sh / cropWidth;
