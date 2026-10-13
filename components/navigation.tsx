@@ -1,9 +1,12 @@
 ﻿"use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { site } from "@/content/site";
+import chamberLogo from "@/assets/the_eastern_chambers_logo/the_eastern_chambers_logo.png";
 
 const links = [
+  { label: "Benchmarks", href: "#benchmarks" },
   { label: "Architecture", href: "#architecture" },
   { label: "Vision", href: "#vision" },
   { label: "Experience", href: "#experience" },
@@ -12,7 +15,7 @@ const links = [
 export function Navigation() {
   const [open, setOpen] = useState(false);
   return <header className="site-header">
-    <a className="wordmark" href="#top" aria-label={`${site.name}, back to top`}><span>EC</span><span className="wordmark-name">EASTERN<br />CHAMBER</span></a>
+    <a className="wordmark" href="#top" aria-label={`${site.name}, back to top`}><Image src={chamberLogo} alt="" priority /></a>
     <nav className={open ? "nav-links open" : "nav-links"} aria-label="Main navigation" id="main-navigation">
       {links.map(({ label, href }) => <a key={href} href={href} onClick={() => setOpen(false)}>{label}</a>)}
       <a className="mobile-enquire" href="#enquire" onClick={() => setOpen(false)}>Enquire</a>

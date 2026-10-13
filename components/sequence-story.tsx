@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useMotionValueEvent, useScroll, useTransform } from "motion/react";
+import { motion, useMotionValue, useMotionValueEvent, useTransform } from "motion/react";
 
 const LAST = 239;
 const src = (index: number) => `/sequence/ezgif-frame-${String(index + 1).padStart(3, "0")}.jpg`;
@@ -12,12 +12,36 @@ export function SequenceStory() {
   const desired = useRef(0);
   const drawRequested = useRef<(() => void) | null>(null);
   const loadAround = useRef<((index: number) => void) | null>(null);
-  const [reduced, setReduced] = useState(false);
+  const [prefersReduced, setPrefersReduced] = useState(false);
+  const [motionOverride, setMotionOverride] = useState(false);
+  const reduced = prefersReduced && !motionOverride;
   const [activeCopy, setActiveCopy] = useState("intro");
-  const { scrollYProgress } = useScroll({ target: storyRef, offset: ["start start", "end end"] });
-  const frame = useTransform(scrollYProgress, [0, 0.86], [0, LAST], { clamp: true });
+  const scrollYProgress = useMotionValue(0);
   const introOpacity = useTransform(scrollYProgress, [0, 0.09], [1, 0]);
   const revealOpacity = useTransform(scrollYProgress, [0.85, 0.93], [0, 1]);
+
+  useEffect(() => {
+    const update = () => {
+      const story = storyRef.current;
+      if (!story) return;
+      const travel = story.offsetHeight - window.innerHeight;
+      const progress = travel > 0 ? Math.max(0, Math.min(1, -story.getBoundingClientRect().top / travel)) : 0;
+      scrollYProgress.set(progress);
+      const next = Math.round(Math.min(progress / 0.86, 1) * LAST);
+      if (next !== desired.current) {
+        desired.current = next;
+        loadAround.current?.(next);
+        drawRequested.current?.();
+      }
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [scrollYProgress, reduced]);
 
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
     setActiveCopy(progress < 0.12 ? "intro" : progress >= 0.85 ? "reveal" : "none");
@@ -27,15 +51,9 @@ export function SequenceStory() {
     const progress = scrollYProgress.get();
     setActiveCopy(progress < 0.12 ? "intro" : progress >= 0.85 ? "reveal" : "none");
   }, [scrollYProgress]);
-  useMotionValueEvent(frame, "change", (value) => {
-    desired.current = Math.max(0, Math.min(LAST, Math.round(value)));
-    loadAround.current?.(desired.current);
-    drawRequested.current?.();
-  });
-
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setReduced(media.matches);
+    const update = () => setPrefersReduced(media.matches);
     update();
     media.addEventListener("change", update);
     return () => media.removeEventListener("change", update);
@@ -119,7 +137,6 @@ export function SequenceStory() {
     };
     drawRequested.current = requestDraw;
     loadAround.current = around;
-    desired.current = Math.round(frame.get());
     around(desired.current);
     const resize = new ResizeObserver(() => { lastDrawn = -1; requestDraw(); });
     resize.observe(canvas);
@@ -143,7 +160,7 @@ export function SequenceStory() {
       loadAround.current = null;
       cache.clear();
     };
-  }, [frame, reduced]);
+  }, [reduced]);
 
   return <section className={reduced ? "story reduced" : "story"} ref={storyRef} id="top" aria-label="Eastern Chamber architectural reveal">
     <div className="story-sticky">
@@ -158,6 +175,7 @@ export function SequenceStory() {
           <p className="opening-description">An architectural expression of ambition, elegance, and timeless design.</p>
         </motion.div>}
         {!reduced && activeCopy === "reveal" && <motion.div className="reveal-copy" style={{ opacity: revealOpacity }}><p className="eyebrow light">THE REVEAL</p><h2>An address<br /><em>beyond the ordinary.</em></h2></motion.div>}
+        {reduced && <button className="enable-animation" type="button" onClick={() => setMotionOverride(true)}>Enable scroll animation <span aria-hidden="true">↗</span></button>}
       </div>
     </div>
   </section>;

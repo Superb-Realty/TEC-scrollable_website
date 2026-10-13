@@ -1,22 +1,53 @@
 ﻿import { Navigation } from "@/components/navigation";
 import { SequenceStory } from "@/components/sequence-story";
+import { BenchmarksScene } from "@/components/benchmarks-scene";
 import { site } from "@/content/site";
+import Image from "next/image";
+import benchmarksImage from "@/assets/three_global_benchmarks/3_global_benchmarks.png";
+import leedLogo from "@/assets/three_global_benchmarks/Leed.png";
+import wiredScoreLogo from "@/assets/three_global_benchmarks/Wired Score Certified.webp";
+import smartScoreLogo from "@/assets/three_global_benchmarks/smart-score.webp";
+
+const benchmarks = [
+  { name: "LEED*", logo: leedLogo, description: "A benchmark for environmental performance across energy efficiency, water conservation, indoor environmental quality, materials and site considerations." },
+  { name: "WIREDSCORE*", logo: wiredScoreLogo, description: "A benchmark for digital connectivity, resilience and technology infrastructure helping buildings stay connected as business requirements evolve." },
+  { name: "SMARTSCORE*", logo: smartScoreLogo, description: "A benchmark for smart building technology, automation, IoT integration and data-enabled operations." },
+];
 
 export default function Home() {
   return <main>
     <link rel="preload" as="image" href="/sequence/ezgif-frame-001.jpg" />
     <Navigation />
     <SequenceStory />
+    <BenchmarksScene>
+      <div className="benchmarks-content">
+        <h2 id="benchmarks-title">Three global benchmarks.<br />One future-ready workspace.</h2>
+        <p className="benchmarks-intro">From sustainable infrastructure and resilient connectivity to intelligent building performance, The Eastern Chambers brings together three global benchmarks to create a workplace equipped for how businesses will work tomorrow.</p>
+        <div className="benchmarks-grid">
+          {benchmarks.map(({ name, logo, description }) => <article className="benchmark-card" key={name}>
+            <Image src={logo} alt="" />
+            <h3>{name}</h3>
+            <p>{description}</p>
+          </article>)}
+        </div>
+      </div>
+      <div className="benchmarks-visual">
+        <Image src={benchmarksImage} alt="Artistic impression of The Eastern Chambers beside an elevated transit line" fill sizes="100vw" quality={82} />
+        <span>Artistic impression</span>
+      </div>
+    </BenchmarksScene>
     <section className="architecture" id="architecture" aria-labelledby="architecture-title">
-      <div className="architecture-image" role="img" aria-label="Eastern Chamber building above a green landscape" />
-      <div className="architecture-intro"><p className="eyebrow">01 / ARCHITECTURE</p><h2 id="architecture-title">Designed to leave<br /><em>an impression.</em></h2><p>A thoughtful convergence of contemporary architecture, refined spaces, and a setting that celebrates the extraordinary.</p></div>
+      <div className="architecture-heading"><p className="eyebrow light">02 / ARCHITECTURE</p><h2 id="architecture-title">A presence with<br /><em>purpose.</em></h2><p>Defined by a clear architectural silhouette and framed by its landscape, Eastern Chamber is conceived as an address with a lasting identity.</p></div>
+      <div className="architecture-image" role="img" aria-label="Eastern Chamber rising above a green landscape"><span>Artist&apos;s impression</span></div>
+      <p className="architecture-caption">An architecture that makes its mark with clarity, proportion and restraint.</p>
     </section>
     <section className="vision" id="vision" aria-labelledby="vision-title">
-      <div className="section-heading"><p className="eyebrow">02 / OUR VISION</p><h2 id="vision-title">A dialogue between<br /><em>form and nature.</em></h2></div>
-      <div className="vision-content"><p>Rooted in nature. Defined by vision.</p><p>Eastern Chamber is an invitation to experience architecture with a different perspective. A composed meeting of light, landscape, and structure.</p><a className="text-link" href="#experience">Explore the experience <span aria-hidden="true">?</span></a></div>
+      <div className="vision-top"><p className="eyebrow">03 / THE VISION</p><p>Eastern Chamber<br />A commercial address</p></div>
+      <h2 id="vision-title">Designed to matter<br /><em>well beyond today.</em></h2>
+      <div className="vision-bottom"><p className="vision-lead">A distinctive building is only the beginning.</p><div><p>The ambition is to bring architectural character and considered performance into the same conversation—creating a workplace proposition with relevance for the years ahead.</p><a className="text-link" href="#experience">Explore the experience <span aria-hidden="true">↗</span></a></div></div>
     </section>
-    <section className="experience" id="experience" aria-labelledby="experience-title"><div className="experience-image" role="img" aria-label="Architectural facade framed by mangrove trees" /><div className="experience-copy"><p className="eyebrow light">03 / THE EXPERIENCE</p><h2 id="experience-title">The moment<br /><em>everything opens.</em></h2><p>From a quiet glimpse through the mangroves to a full architectural presence, the journey is part of the experience.</p></div></section>
-    <footer className="closing" id="enquire"><div className="closing-top"><p className="eyebrow">EASTERN CHAMBER</p><p>{site.location}</p></div><h2>Discover a<br /><em>different perspective.</em></h2><a className="closing-cta" href={`mailto:${site.email}?subject=Eastern%20Chamber%20enquiry`}>Enquire now <span aria-hidden="true">?</span></a><div className="closing-bottom"><span>{site.contactNote}</span><a href="#top">Back to top ?</a><span>© {new Date().getFullYear()} {site.name}</span></div></footer>
+    <section className="experience" id="experience" aria-labelledby="experience-title"><div className="experience-image" role="img" aria-label="Eastern Chamber glimpsed through the surrounding greenery" /><div className="experience-copy"><p className="eyebrow light">04 / THE EXPERIENCE</p><h2 id="experience-title">An arrival<br /><em>worth remembering.</em></h2><p>The journey through the landscape reveals the architecture gradually. It is an introduction shaped by contrast: the softness of nature and the precision of the built form.</p></div></section>
+    <footer className="closing" id="enquire"><div className="closing-top"><p className="eyebrow light">EASTERN CHAMBER</p><p>{site.location}</p></div><div className="closing-main"><p className="eyebrow light">THE NEXT CONVERSATION</p><h2>See the vision<br /><em>in full.</em></h2><p>For project information and investment enquiries, start a conversation with the Eastern Chamber team.</p><a className="closing-cta" href={`mailto:${site.email}?subject=Eastern%20Chamber%20enquiry`}>Request project information <span aria-hidden="true">↗</span></a></div><div className="closing-bottom"><span>{site.contactNote}</span><a href="#top">Back to top ↑</a><span>© {new Date().getFullYear()} {site.name}</span></div></footer>
   </main>;
 }
 
