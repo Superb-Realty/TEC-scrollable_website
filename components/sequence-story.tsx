@@ -47,8 +47,6 @@ export function SequenceStory() {
     const ctx = canvas?.getContext("2d", { alpha: false });
     if (!canvas || !ctx) return;
     const cache = new Map<number, HTMLImageElement>();
-    const layer = document.createElement("canvas");
-    const layerCtx = layer.getContext("2d")!;
     const loading = new Set<number>();
     let raf = 0;
     let lastDrawn = -1;
@@ -87,37 +85,10 @@ export function SequenceStory() {
       const edge = selected < 175 ? 100 : Math.max(0, 100 * (1 - (selected - 175) / 15));
       const sw = image.naturalWidth - edge * 2;
       const sh = image.naturalHeight;
-      if (width < 700) {
-        const backgroundScale = Math.max(width / sw, height / sh) * 1.12;
-        const backgroundWidth = sw * backgroundScale;
-        const backgroundHeight = sh * backgroundScale;
-        ctx.save();
-        ctx.filter = "blur(30px) brightness(.55)";
-        ctx.drawImage(image, edge, 0, sw, sh, (width - backgroundWidth) / 2, (height - backgroundHeight) / 2, backgroundWidth, backgroundHeight);
-        ctx.restore();
-        const cropWidth = Math.min(900, sw);
-        const cropX = (image.naturalWidth - cropWidth) / 2;
-        const bandHeight = width * sh / cropWidth;
-        layer.width = pixelWidth;
-        layer.height = Math.round(bandHeight * dpr);
-        layerCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        layerCtx.drawImage(image, cropX, 0, cropWidth, sh, 0, 0, width, bandHeight);
-        layerCtx.globalCompositeOperation = "destination-in";
-        const fade = layerCtx.createLinearGradient(0, 0, 0, bandHeight);
-        fade.addColorStop(0, "transparent");
-        fade.addColorStop(.16, "black");
-        fade.addColorStop(.84, "black");
-        fade.addColorStop(1, "transparent");
-        layerCtx.fillStyle = fade;
-        layerCtx.fillRect(0, 0, width, bandHeight);
-        layerCtx.globalCompositeOperation = "source-over";
-        ctx.drawImage(layer, 0, (height - bandHeight) * .42, width, bandHeight);
-      } else {
-        const scale = Math.max(width / sw, height / sh);
-        const dw = sw * scale;
-        const dh = sh * scale;
-        ctx.drawImage(image, edge, 0, sw, sh, (width - dw) / 2, (height - dh) / 2, dw, dh);
-      }
+      const scale = Math.max(width / sw, height / sh);
+      const dw = sw * scale;
+      const dh = sh * scale;
+      ctx.drawImage(image, edge, 0, sw, sh, (width - dw) / 2, (height - dh) / 2, dw, dh);
       lastDrawn = selected;
     };
     const requestDraw = () => { if (!raf) raf = requestAnimationFrame(paint); };
