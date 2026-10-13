@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValueEvent, useScroll, useTransform } from "motion/react";
 
-const LAST = 231;
+const LAST = 239;
 const src = (index: number) => `/sequence/ezgif-frame-${String(index + 1).padStart(3, "0")}.jpg`;
 
 export function SequenceStory() {
@@ -13,11 +13,20 @@ export function SequenceStory() {
   const drawRequested = useRef<(() => void) | null>(null);
   const loadAround = useRef<((index: number) => void) | null>(null);
   const [reduced, setReduced] = useState(false);
+  const [activeCopy, setActiveCopy] = useState("intro");
   const { scrollYProgress } = useScroll({ target: storyRef, offset: ["start start", "end end"] });
   const frame = useTransform(scrollYProgress, [0, 0.86], [0, LAST], { clamp: true });
   const introOpacity = useTransform(scrollYProgress, [0, 0.09], [1, 0]);
   const revealOpacity = useTransform(scrollYProgress, [0.85, 0.93], [0, 1]);
 
+  useMotionValueEvent(scrollYProgress, "change", (progress) => {
+    setActiveCopy(progress < 0.12 ? "intro" : progress >= 0.85 ? "reveal" : "none");
+  });
+
+  useEffect(() => {
+    const progress = scrollYProgress.get();
+    setActiveCopy(progress < 0.12 ? "intro" : progress >= 0.85 ? "reveal" : "none");
+  }, [scrollYProgress]);
   useMotionValueEvent(frame, "change", (value) => {
     desired.current = Math.max(0, Math.min(LAST, Math.round(value)));
     loadAround.current?.(desired.current);
@@ -74,8 +83,8 @@ export function SequenceStory() {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.fillStyle = "#17211c";
       ctx.fillRect(0, 0, width, height);
-      // The supplied first frames have black side bars that recede by frame 40.
-      const edge = selected < 20 ? 100 : Math.max(0, 100 * (1 - (selected - 20) / 20));
+      // The supplied sequence has side-fill bands until the full-width reveal.
+      const edge = selected < 175 ? 100 : Math.max(0, 100 * (1 - (selected - 175) / 15));
       const sw = image.naturalWidth - edge * 2;
       const sh = image.naturalHeight;
       if (width < 700) {
@@ -169,17 +178,18 @@ export function SequenceStory() {
     <div className="story-sticky">
       {reduced ? <picture className="still-frame"><img src={src(0)} alt="Eastern Chamber glimpsed through a mangrove forest" /></picture> : <canvas ref={canvasRef} aria-label="Scroll controlled sequence revealing Eastern Chamber through a mangrove forest" role="img" />}
       <div className="story-vignette" aria-hidden="true" />
-      <motion.div className="opening-copy" style={reduced ? undefined : { opacity: introOpacity }}>
+      {(reduced || activeCopy === "intro") && <motion.div className="opening-copy" style={reduced ? undefined : { opacity: introOpacity }}>
         <p className="eyebrow light">AN ARCHITECTURAL JOURNEY <span>—</span> EASTERN CHAMBER</p>
         <h1>Where nature<br /><em>meets distinction.</em></h1>
         <p className="opening-description">An architectural expression of ambition, elegance, and timeless design.</p>
-      </motion.div>
-      {!reduced && <motion.div className="reveal-copy" style={{ opacity: revealOpacity }}><p className="eyebrow light">THE REVEAL</p><h2>An address<br /><em>beyond the ordinary.</em></h2></motion.div>}
-      <div className="scroll-cue"><span>SCROLL TO EXPLORE</span><i /></div>
-      <div className="frame-counter" aria-hidden="true">01 <span>/</span> 232</div>
+      </motion.div>}
+      {!reduced && activeCopy === "reveal" && <motion.div className="reveal-copy" style={{ opacity: revealOpacity }}><p className="eyebrow light">THE REVEAL</p><h2>An address<br /><em>beyond the ordinary.</em></h2></motion.div>}
     </div>
   </section>;
 }
+
+
+
 
 
 
