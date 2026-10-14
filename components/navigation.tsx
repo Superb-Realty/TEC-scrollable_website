@@ -7,9 +7,9 @@ import chamberLogo from "@/assets/the_eastern_chambers_logo/the_eastern_chambers
 
 const links = [
   { label: "Benchmarks", href: "#benchmarks" },
+  { label: "The building", href: "#breakdown" },
   { label: "Architecture", href: "#architecture" },
   { label: "Vision", href: "#vision" },
-  { label: "Experience", href: "#experience" },
 ];
 
 export function Navigation() {

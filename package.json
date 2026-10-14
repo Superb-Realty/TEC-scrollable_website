@@ -2,6 +2,19 @@
   "name": "eastern-chamber-experience",
   "version": "1.0.0",
   "private": true,
+  "description": "",
+  "homepage": "https://github.com/Superb-Realty/TEC-scrollable_website#readme",
+  "bugs": {
+    "url": "https://github.com/Superb-Realty/TEC-scrollable_website/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Superb-Realty/TEC-scrollable_website.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
   "scripts": {
     "dev": "next dev --hostname 127.0.0.1",
     "build": "next build",
