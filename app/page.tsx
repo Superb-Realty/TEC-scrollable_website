@@ -17,7 +17,7 @@ const benchmarks = [
 
 export default function Home() {
   return <main>
-    <link rel="preload" as="image" href="/sequence/ezgif-frame-001.jpg" />
+    <link rel="preload" as="image" href="/sequence/frame-001.webp" />
     <Navigation />
     <SequenceStory />
     <BenchmarksScene>

@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useMotionValueEvent, useTransform } from "motion/react";
 
-const LAST = 239;
-const src = (index: number) => `/sequence/ezgif-frame-${String(index + 1).padStart(3, "0")}.jpg`;
+const LAST = 191;
+const src = (index: number) => `/sequence/frame-${String(index + 1).padStart(3, "0")}.webp`;
 
 export function SequenceStory() {
   const storyRef = useRef<HTMLElement>(null);
@@ -99,14 +99,12 @@ export function SequenceStory() {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.fillStyle = "#17211c";
       ctx.fillRect(0, 0, width, height);
-      // The supplied sequence has side-fill bands until the full-width reveal.
-      const edge = selected < 175 ? 150 : Math.max(0, 150 * (1 - (selected - 175) / 15));
-      const sw = image.naturalWidth - edge * 2;
+      const sw = image.naturalWidth;
       const sh = image.naturalHeight;
       const scale = Math.max(width / sw, height / sh);
       const dw = sw * scale;
       const dh = sh * scale;
-      ctx.drawImage(image, edge, 0, sw, sh, (width - dw) / 2, (height - dh) / 2, dw, dh);
+      ctx.drawImage(image, 0, 0, sw, sh, (width - dw) / 2, (height - dh) / 2, dw, dh);
       lastDrawn = selected;
     };
     const requestDraw = () => { if (!raf) raf = requestAnimationFrame(paint); };
