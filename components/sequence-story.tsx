@@ -103,7 +103,7 @@ export function SequenceStory() {
       const edge = selected < 175 ? 100 : Math.max(0, 100 * (1 - (selected - 175) / 15));
       const sw = image.naturalWidth - edge * 2;
       const sh = image.naturalHeight;
-      const scale = width <= 700 ? Math.min(width / sw, height / sh) : Math.max(width / sw, height / sh);
+      const scale = Math.max(width / sw, height / sh);
       const dw = sw * scale;
       const dh = sh * scale;
       ctx.drawImage(image, edge, 0, sw, sh, (width - dw) / 2, (height - dh) / 2, dw, dh);
@@ -175,6 +175,7 @@ export function SequenceStory() {
           <p className="opening-description">An architectural expression of ambition, elegance, and timeless design.</p>
         </motion.div>}
         {!reduced && activeCopy === "reveal" && <motion.div className="reveal-copy" style={{ opacity: revealOpacity }}><p className="eyebrow light">THE REVEAL</p><h2>An address<br /><em>beyond the ordinary.</em></h2></motion.div>}
+        <a className="story-scroll" href="#benchmarks">Scroll to explore <span aria-hidden="true">↓</span></a>
         {reduced && <button className="enable-animation" type="button" onClick={() => setMotionOverride(true)}>Enable scroll animation <span aria-hidden="true">↗</span></button>}
       </div>
     </div>

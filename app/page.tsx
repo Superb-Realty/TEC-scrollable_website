@@ -33,7 +33,7 @@ export default function Home() {
         </div>
       </div>
       <div className="benchmarks-visual">
-        <Image src={benchmarksImage} alt="Artistic impression of The Eastern Chambers beside an elevated transit line" fill sizes="100vw" quality={82} />
+        <Image src={benchmarksImage} alt="Artistic impression of The Eastern Chambers beside an elevated transit line" fill sizes="(max-width: 900px) 100vw, 42vw" />
         <span>Artistic impression</span>
       </div>
     </BenchmarksScene>
@@ -46,9 +46,9 @@ export default function Home() {
     <section className="vision" id="vision" aria-labelledby="vision-title">
       <div className="vision-top"><p className="eyebrow">04 / THE VISION</p><p>Eastern Chamber<br />A commercial address</p></div>
       <h2 id="vision-title">Designed to matter<br /><em>well beyond today.</em></h2>
-      <div className="vision-bottom"><p className="vision-lead">A distinctive building is only the beginning.</p><div><p>The ambition is to bring architectural character and considered performance into the same conversation—creating a workplace proposition with relevance for the years ahead.</p><a className="text-link" href="#enquire">Request project information <span aria-hidden="true">↗</span></a></div></div>
+      <div className="vision-bottom"><p className="vision-lead">A distinctive building is only the beginning.</p><div><p>The ambition is to bring architectural character and considered performance into the same conversation—creating a workplace proposition with relevance for the years ahead.</p></div></div>
     </section>
-    <footer className="closing" id="enquire"><div className="closing-top"><p className="eyebrow light">EASTERN CHAMBER</p><p>{site.location}</p></div><div className="closing-main"><p className="eyebrow light">THE NEXT CONVERSATION</p><h2>See the vision<br /><em>in full.</em></h2><p>For project information and investment enquiries, start a conversation with the Eastern Chamber team.</p><a className="closing-cta" href={`mailto:${site.email}?subject=Eastern%20Chamber%20enquiry`}>Request project information <span aria-hidden="true">↗</span></a></div><div className="closing-bottom"><span>{site.contactNote}</span><a href="#top">Back to top ↑</a><span>© {new Date().getFullYear()} {site.name}</span></div></footer>
+    <footer className="closing" id="enquire"><div className="closing-top"><p className="eyebrow light">EASTERN CHAMBER</p></div><div className="closing-main"><p className="eyebrow light">THE EASTERN CHAMBER</p><h2>A vision made<br /><em>to endure.</em></h2><p>Architecture, workplace performance and nature in one distinctive commercial address.</p></div><div className="closing-bottom"><span>Eastern Chamber</span><a href="#top">Back to top ↑</a><span>© {new Date().getFullYear()} {site.name}</span></div></footer>
   </main>;
 }
 
