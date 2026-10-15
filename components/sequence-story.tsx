@@ -100,7 +100,7 @@ export function SequenceStory() {
       ctx.fillStyle = "#17211c";
       ctx.fillRect(0, 0, width, height);
       // The supplied sequence has side-fill bands until the full-width reveal.
-      const edge = selected < 175 ? 100 : Math.max(0, 100 * (1 - (selected - 175) / 15));
+      const edge = selected < 175 ? 150 : Math.max(0, 150 * (1 - (selected - 175) / 15));
       const sw = image.naturalWidth - edge * 2;
       const sh = image.naturalHeight;
       const scale = Math.max(width / sw, height / sh);
