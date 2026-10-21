@@ -1,9 +1,10 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { site } from "@/content/site";
 import chamberLogo from "@/assets/the_eastern_chambers_logo/the_eastern_chambers_logo.png";
+import { openEnquiryModal } from "@/components/enquiry-modal";
 
 const links = [
   { label: "Benchmarks", href: "#benchmarks" },
@@ -33,6 +34,7 @@ export function Navigation() {
       window.removeEventListener("resize", update);
     };
   }, []);
+
   useEffect(() => {
     if (!open) return;
     const previousOverflow = document.body.style.overflow;
@@ -47,14 +49,42 @@ export function Navigation() {
     };
   }, [open]);
 
-  return <header className={onLight && !open ? "site-header on-light" : "site-header"}>
-    <a className="wordmark" href="#top" aria-label={`${site.name}, back to top`}><Image src={chamberLogo} alt="" priority /></a>
-    <nav className={open ? "nav-links open" : "nav-links"} aria-label="Main navigation" id="main-navigation">
-      {links.map(({ label, href }) => <a key={href} href={href} onClick={() => setOpen(false)}>{label}</a>)}
-    </nav>
-    <button className="menu-toggle" type="button" aria-label={open ? "Close menu" : "Open menu"} aria-controls="main-navigation" aria-expanded={open} onClick={() => setOpen(!open)}>
-      <span /> <span />
-    </button>
-  </header>;
+  return (
+    <header className={onLight && !open ? "site-header on-light" : "site-header"}>
+      <a className="wordmark" href="#top" aria-label={`${site.name}, back to top`}>
+        <Image src={chamberLogo} alt="" priority />
+      </a>
+      <nav className={open ? "nav-links open" : "nav-links"} aria-label="Main navigation" id="main-navigation">
+        {links.map(({ label, href }) => (
+          <a
+            key={href}
+            href={href}
+            onClick={() => setOpen(false)}
+          >
+            {label}
+          </a>
+        ))}
+        <button
+          type="button"
+          className="nav-cta-btn"
+          onClick={() => {
+            setOpen(false);
+            openEnquiryModal();
+          }}
+        >
+          Enquire Now
+        </button>
+      </nav>
+      <button
+        className="menu-toggle"
+        type="button"
+        aria-label={open ? "Close menu" : "Open menu"}
+        aria-controls="main-navigation"
+        aria-expanded={open}
+        onClick={() => setOpen(!open)}
+      >
+        <span /> <span />
+      </button>
+    </header>
+  );
 }
-
