@@ -3,6 +3,7 @@ import { SequenceStory } from "@/components/sequence-story";
 import { BenchmarksScene } from "@/components/benchmarks-scene";
 import { BuildingBreakdown } from "@/components/building-breakdown";
 import { EnquiryModal } from "@/components/enquiry-modal";
+import { ProjectPillars } from "@/components/project-pillars";
 import { site } from "@/content/site";
 import Image from "next/image";
 import benchmarksImage from "@/assets/three_global_benchmarks/3_global_benchmarks.png";
@@ -45,14 +46,18 @@ export default function Home() {
       <section className="architecture" id="architecture" aria-labelledby="architecture-title">
         <div className="architecture-heading">
           <p className="eyebrow light">03 / ARCHITECTURE</p>
-          <h2 id="architecture-title">A presence with<br /><em>purpose.</em></h2>
-          <p>Defined by a clear architectural silhouette and framed by its landscape, Eastern Chamber is conceived as an address with a lasting identity.</p>
+          <h2 id="architecture-title">INNOVATION SHAPING<br className="architecture-title-break" /> THE FUTURE OF BUSINESS.</h2>
+          <div className="architecture-copy">
+            <p>The Eastern Chambers reimagines the modern workplace for businesses that expect their address to work as hard as they do.</p>
+            <p>A Grade A+ workplace should do more than accommodate business. It should enable what comes next, driven by Technology, Design, Sustainability and Wellness.</p>
+          </div>
         </div>
         <div className="architecture-image" role="img" aria-label="Eastern Chamber rising above a green landscape">
           <span>Artist&apos;s impression</span>
         </div>
         <p className="architecture-caption">An architecture that makes its mark with clarity, proportion and restraint.</p>
       </section>
+      <ProjectPillars />
       <section className="vision" id="vision" aria-labelledby="vision-title">
         <div className="vision-top">
           <p className="eyebrow">04 / THE VISION</p>

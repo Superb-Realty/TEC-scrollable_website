@@ -18,7 +18,7 @@ export function Navigation() {
   const [onLight, setOnLight] = useState(false);
 
   useEffect(() => {
-    const sections = document.querySelectorAll(".benchmarks, .vision");
+    const sections = document.querySelectorAll(".benchmarks, .vision, .pillars-experience");
     const update = () => {
       const y = window.innerWidth <= 900 ? 36 : 43;
       setOnLight(Array.from(sections).some((section) => {

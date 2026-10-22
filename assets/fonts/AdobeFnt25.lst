@@ -1,0 +1,176 @@
+%!Adobe-FontList 1.25
+%Locale:0x409
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Invalid
+OutlineFileName:/Users/sharanyaajmani/Desktop/Rev 07_T3XSuperb Realty_Opp Doc Folder/Document fonts/AdobeFnt25.lst
+FileLength:3665
+FileModTime:813325139
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:MinionPro-Regular
+FamilyName:Minion Pro
+StyleName:Regular
+MenuName:Minion Pro
+StyleBits:0
+WeightClass:400
+WidthClass:5
+AngleClass:0
+FullName:Minion Pro
+WritingScript:Roman
+OutlineFileName:/Users/sharanyaajmani/Desktop/Rev 07_T3XSuperb Realty_Opp Doc Folder/Document fonts/MinionPro-Regular.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+hasSBIX:no
+hasCOLR:no
+VariableFontType:NonVariableFont
+FileLength:218640
+FileModTime:747219151
+DesignSize:110
+NameArray:0,Mac,4,Minion Pro
+NameArray:0,Win,1,Minion Pro
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:NexaBold
+FamilyName:Nexa Bold
+StyleName:Regular
+MenuName:Nexa Bold
+StyleBits:2
+WeightClass:700
+WidthClass:5
+AngleClass:0
+FullName:Nexa Bold
+WritingScript:Roman
+OutlineFileName:/Users/sharanyaajmani/Desktop/Rev 07_T3XSuperb Realty_Opp Doc Folder/Document fonts/Nexa Bold.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+hasSBIX:no
+hasCOLR:no
+VariableFontType:NonVariableFont
+FileLength:30388
+FileModTime:364492218
+NameArray:0,Mac,4,Nexa Bold
+NameArray:0,Win,1,Nexa Bold
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:NexaLight
+FamilyName:Nexa Light
+StyleName:Regular
+MenuName:Nexa Light
+StyleBits:0
+WeightClass:400
+WidthClass:5
+AngleClass:0
+FullName:Nexa Light
+WritingScript:Roman
+OutlineFileName:/Users/sharanyaajmani/Desktop/Rev 07_T3XSuperb Realty_Opp Doc Folder/Document fonts/Nexa Light.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+hasSBIX:no
+hasCOLR:no
+VariableFontType:NonVariableFont
+FileLength:30004
+FileModTime:364572044
+NameArray:0,Mac,4,Nexa Light
+NameArray:0,Win,1,Nexa Light
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:ProximaNova-Bold
+FamilyName:Proxima Nova
+StyleName:Bold
+MenuName:Proxima Nova Rg
+StyleBits:2
+WeightClass:700
+WidthClass:5
+AngleClass:0
+FullName:Proxima Nova Bold
+WritingScript:Roman
+OutlineFileName:/Users/sharanyaajmani/Desktop/Rev 07_T3XSuperb Realty_Opp Doc Folder/Document fonts/Proxima Nova Bold.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+hasSBIX:no
+hasCOLR:no
+VariableFontType:NonVariableFont
+FileLength:96640
+NameArray:0,Mac,4,Proxima Nova Bold
+NameArray:0,Win,1,Proxima Nova Rg
+NameArray:0,Win,16,Proxima Nova
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:ProximaNova-Light
+FamilyName:Proxima Nova
+StyleName:Light
+MenuName:Proxima Nova Lt
+StyleBits:0
+WeightClass:300
+WidthClass:5
+AngleClass:0
+FullName:Proxima Nova Light
+WritingScript:Roman
+OutlineFileName:/Users/sharanyaajmani/Desktop/Rev 07_T3XSuperb Realty_Opp Doc Folder/Document fonts/ProximaNova-Light.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+hasSBIX:no
+hasCOLR:no
+VariableFontType:NonVariableFont
+FileLength:62968
+FileModTime:424090678
+NameArray:0,Mac,4,Proxima Nova Light
+NameArray:0,Win,1,Proxima Nova Lt
+NameArray:0,Win,16,Proxima Nova
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Type1
+FontName:ProximaNova-Semibold
+FamilyName:Proxima Nova
+StyleName:Semibold
+MenuName:Proxima Nova Lt
+StyleBits:2
+WeightClass:600
+WidthClass:5
+AngleClass:0
+FullName:Proxima Nova Semibold
+WritingScript:Roman
+OutlineFileName:/Users/sharanyaajmani/Desktop/Rev 07_T3XSuperb Realty_Opp Doc Folder/Document fonts/ProximaNova-Semibold.otf
+DataFormat:sfntData
+UsesStandardEncoding:yes
+isCFF:yes
+hasSVG:no
+hasSBIX:no
+hasCOLR:no
+VariableFontType:NonVariableFont
+FileLength:63116
+FileModTime:424090680
+NameArray:0,Mac,4,Proxima Nova Semibold
+NameArray:0,Win,1,Proxima Nova Lt
+NameArray:0,Win,16,Proxima Nova
+%EndFont
+
