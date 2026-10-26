@@ -15,12 +15,11 @@ export function WormViewStory() {
   const loadAround = useRef<((index: number) => void) | null>(null);
 
   const [prefersReduced, setPrefersReduced] = useState(false);
-  const [activeChapter, setActiveChapter] = useState<"arrival" | "ascent" | "summit" | "none">("arrival");
+  const [activeChapter, setActiveChapter] = useState<"arrival" | "summit" | "none">("arrival");
 
   const scrollYProgress = useMotionValue(0);
-  const arrivalOpacity = useTransform(scrollYProgress, [0, 0.22, 0.28], [1, 1, 0]);
-  const ascentOpacity = useTransform(scrollYProgress, [0.32, 0.40, 0.60, 0.68], [0, 1, 1, 0]);
-  const summitOpacity = useTransform(scrollYProgress, [0.72, 0.80, 0.98], [0, 1, 1]);
+  const arrivalOpacity = useTransform(scrollYProgress, [0, 0.08], [1, 0]);
+  const summitOpacity = useTransform(scrollYProgress, [0.86, 0.94], [0, 1]);
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -70,11 +69,9 @@ export function WormViewStory() {
   }, [scrollYProgress, prefersReduced]);
 
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
-    if (progress < 0.28) {
+    if (progress < 0.10) {
       setActiveChapter("arrival");
-    } else if (progress >= 0.32 && progress < 0.68) {
-      setActiveChapter("ascent");
-    } else if (progress >= 0.72) {
+    } else if (progress >= 0.86) {
       setActiveChapter("summit");
     } else {
       setActiveChapter("none");
@@ -226,14 +223,6 @@ export function WormViewStory() {
               <p className="eyebrow light">THE ARRIVAL <span>/</span> PLAZA & SCALE</p>
               <h2>From the ground up,<br /><em>built to inspire.</em></h2>
               <p className="worm-copy-desc">A grand arrival plaza welcomes ambitious enterprises to a workplace of uncommon presence.</p>
-            </motion.div>
-          )}
-
-          {activeChapter === "ascent" && (
-            <motion.div className="worm-copy" style={{ opacity: ascentOpacity }}>
-              <p className="eyebrow light">ARCHITECTURAL ASCENT</p>
-              <h2>Stone, metal<br /><em>and light in motion.</em></h2>
-              <p className="worm-copy-desc">Clean geometric lines and expansive double-glazed curtain walls rise into the skyline.</p>
             </motion.div>
           )}
 
