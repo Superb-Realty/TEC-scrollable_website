@@ -156,7 +156,7 @@ export function BuildingBreakdown() {
     <div className="breakdown-intro">
       <div className="breakdown-heading"><p className="eyebrow light">02 / THE BUILDING</p><h2 id="breakdown-title">Inside the<br /><em>architecture.</em></h2></div>
       <p>Explore the layers of The Eastern Chamber, from its rooftop amenities and commercial workspaces to the podium below.</p>
-      <span className="breakdown-scroll-note">Scroll to explore <span aria-hidden="true">↓</span></span>
+      <span className="breakdown-scroll-note">Scroll to experience<span aria-hidden="true">↓</span></span>
     </div>
     <div className={reducedMotion ? "breakdown-sequence is-still" : "breakdown-sequence"} ref={sequenceRef}>
       <div className="breakdown-sticky">

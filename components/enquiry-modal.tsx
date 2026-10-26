@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useId, useCallback } from "react";
+import { useState, useEffect, useId, useCallback, useRef } from "react";
 
 interface FormState {
   name: string;
@@ -33,6 +33,7 @@ export function openEnquiryModal() {
 
 export function EnquiryModal() {
   const formId = useId();
+  const dialogRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState<FormState>({
     name: "",
@@ -91,11 +92,21 @@ export function EnquiryModal() {
     if (!isOpen) return;
 
     const originalOverflow = document.body.style.overflow;
+    const previousFocus = document.activeElement as HTMLElement | null;
     document.body.style.overflow = "hidden";
+    dialogRef.current?.querySelector<HTMLElement>("input, button")?.focus();
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         handleClose();
+      }
+      if (e.key === "Tab") {
+        const controls = dialogRef.current?.querySelectorAll<HTMLElement>("button:not(:disabled), input, textarea");
+        if (!controls?.length) return;
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
       }
     };
 
@@ -103,8 +114,9 @@ export function EnquiryModal() {
     return () => {
       document.body.style.overflow = originalOverflow;
       window.removeEventListener("keydown", onKeyDown);
+      previousFocus?.focus({ preventScroll: true });
     };
-  }, [isOpen, handleClose]);
+  }, [isOpen, handleClose, submitSuccess]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -185,7 +197,7 @@ export function EnquiryModal() {
       aria-modal="true"
       aria-labelledby="enquiry-modal-title"
     >
-      <div className="modal-dialog">
+      <div className="modal-dialog" ref={dialogRef}>
         <div className="modal-accent-bar" aria-hidden="true" />
         <button
           type="button"
@@ -215,7 +227,7 @@ export function EnquiryModal() {
             </div>
             <h3 id="enquiry-modal-title">Enquiry Received</h3>
             <p className="success-lead">
-              Thank you, <strong>{submittedData.name}</strong>. Your requirement has been registered and synced with our Google Sheet &amp; leasing desk.
+              Thank you, <strong>{submittedData.name}</strong>. Your requirement has been received by our leasing team. We look forward to discussing your next workspace.
             </p>
 
             <div className="submitted-summary">
@@ -326,6 +338,7 @@ export function EnquiryModal() {
                       type="button"
                       key={preset}
                       className={`preset-chip ${formData.areaRequired === preset ? "active" : ""}`}
+                      aria-pressed={formData.areaRequired === preset}
                       onClick={() => setFormData({ ...formData, areaRequired: preset })}
                     >
                       {preset}
@@ -355,6 +368,7 @@ export function EnquiryModal() {
                       type="button"
                       key={preset}
                       className={`preset-chip ${formData.budget === preset ? "active" : ""}`}
+                      aria-pressed={formData.budget === preset}
                       onClick={() => setFormData({ ...formData, budget: preset })}
                     >
                       {preset}
@@ -400,14 +414,14 @@ export function EnquiryModal() {
                   {isSubmitting ? (
                     <span className="submitting-state">
                       <span className="spinner" aria-hidden="true" />
-                      Syncing with leasing desk...
+                      Sending your enquiry...
                     </span>
                   ) : (
                     <span>Submit Enquiry &amp; Request Deck →</span>
                   )}
                 </button>
                 <p className="form-disclaimer">
-                  🔒 Connected to Google Sheet &amp; leasing CRM. Your data is handled strictly confidentially.
+                  Your details will be used to respond to your leasing enquiry.
                 </p>
               </div>
             </form>

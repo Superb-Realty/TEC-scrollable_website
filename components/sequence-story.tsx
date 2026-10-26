@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useMotionValueEvent, useTransform } from "motion/react";
@@ -168,12 +168,13 @@ export function SequenceStory() {
       </div>
       <div className="story-caption">
         {(reduced || activeCopy === "intro") && <motion.div className="opening-copy" style={reduced ? undefined : { opacity: introOpacity }}>
-          <p className="eyebrow light">AN ARCHITECTURAL JOURNEY <span>—</span> EASTERN CHAMBER</p>
-          <h1>Where nature<br /><em>meets distinction.</em></h1>
+          <p className="eyebrow light">The Eastern Chambers <span>/</span> A different outlook</p>
+          <h1>A WORLD-CLASS<br /><em>EPICENTRE UNFOLDS</em></h1>
           <p className="opening-description">An architectural expression of ambition, elegance, and timeless design.</p>
         </motion.div>}
         {!reduced && activeCopy === "reveal" && <motion.div className="reveal-copy" style={{ opacity: revealOpacity }}><p className="eyebrow light">THE REVEAL</p><h2>An address<br /><em>beyond the ordinary.</em></h2></motion.div>}
-        <a className="story-scroll" href="#benchmarks">Scroll to explore <span aria-hidden="true">↓</span></a>
+        <a className="story-scroll" href="#benchmarks">Scroll to experience <span aria-hidden="true">↓</span></a>
+        <span className="story-edition" aria-hidden="true">Nature. Architecture. Ambition.</span>
         {reduced && <button className="enable-animation" type="button" onClick={() => setMotionOverride(true)}>Enable scroll animation <span aria-hidden="true">↗</span></button>}
       </div>
     </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { site } from "@/content/site";
 import chamberLogo from "@/assets/the_eastern_chambers_logo/the_eastern_chambers_logo.png";
@@ -10,48 +10,46 @@ const links = [
   { label: "Benchmarks", href: "#benchmarks" },
   { label: "The building", href: "#breakdown" },
   { label: "Architecture", href: "#architecture" },
+  { label: "The pillars", href: "#pillars" },
   { label: "Vision", href: "#vision" },
 ];
 
 export function Navigation() {
   const [open, setOpen] = useState(false);
-  const [onLight, setOnLight] = useState(false);
-
-  useEffect(() => {
-    const sections = document.querySelectorAll(".benchmarks, .vision, .pillars-experience");
-    const update = () => {
-      const y = window.innerWidth <= 900 ? 36 : 43;
-      setOnLight(Array.from(sections).some((section) => {
-        const bounds = section.getBoundingClientRect();
-        return bounds.top <= y && bounds.bottom > y;
-      }));
-    };
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    return () => {
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-    };
-  }, []);
+  const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (!open) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    headerRef.current?.querySelector<HTMLAnchorElement>("nav a")?.focus();
     const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape") {
+        setOpen(false);
+        headerRef.current?.querySelector<HTMLButtonElement>(".menu-toggle")?.focus();
+      }
+      if (event.key === "Tab") {
+        const controls = headerRef.current?.querySelectorAll<HTMLElement>("a, button");
+        if (!controls?.length) return;
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+      }
     };
+    const closeOnDesktop = () => { if (window.innerWidth > 900) setOpen(false); };
     window.addEventListener("keydown", closeOnEscape);
+    window.addEventListener("resize", closeOnDesktop);
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", closeOnEscape);
+      window.removeEventListener("resize", closeOnDesktop);
     };
   }, [open]);
 
   return (
-    <header className={onLight && !open ? "site-header on-light" : "site-header"}>
-      <a className="wordmark" href="#top" aria-label={`${site.name}, back to top`}>
+    <header className="site-header" ref={headerRef}>
+      <a className="wordmark" href="#top" onClick={() => setOpen(false)} aria-label={`${site.name}, back to top`}>
         <Image src={chamberLogo} alt="" priority />
       </a>
       <nav className={open ? "nav-links open" : "nav-links"} aria-label="Main navigation" id="main-navigation">
@@ -72,7 +70,7 @@ export function Navigation() {
             openEnquiryModal();
           }}
         >
-          Enquire Now
+          Leasing enquiries <span aria-hidden="true">↗</span>
         </button>
       </nav>
       <button

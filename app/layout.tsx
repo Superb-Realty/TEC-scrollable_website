@@ -19,11 +19,11 @@ const minion = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Eastern Chamber — Where Nature Meets Distinction",
+  title: "Eastern Chamber",
   description: "A cinematic introduction to Eastern Chamber, where nature reveals architecture.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" className={`${proxima.variable} ${minion.variable}`}><body suppressHydrationWarning>{children}</body></html>;
+  return <html lang="en" className={`${proxima.variable} ${minion.variable}`}><body suppressHydrationWarning><a className="skip-link" href="#main-content">Skip to content</a>{children}</body></html>;
 }
 

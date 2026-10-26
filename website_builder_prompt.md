@@ -216,7 +216,8 @@ Suggested copy:
 
 EASTERN CHAMBER
 
-"Where Nature Meets Distinction."
+"A WORLD-CLASS
+EPICENTRE UNFOLDS"
 
 Supporting text:
 
