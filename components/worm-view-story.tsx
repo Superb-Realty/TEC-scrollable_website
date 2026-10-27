@@ -216,7 +216,7 @@ export function WormViewStory() {
   }, [prefersReduced]);
 
   return (
-    <section className="worm-story blend-in" ref={storyRef} id="elevation" aria-label="Architectural elevation scroll experience">
+    <section className="worm-story blend-in blend-sm" ref={storyRef} id="elevation" aria-label="Architectural elevation scroll experience">
       <div className="worm-sticky">
         <div className="worm-stage">
           <canvas ref={canvasRef} className="worm-canvas" />

@@ -16,7 +16,7 @@ export default function Home() {
     <main id="main-content">
       <link rel="preload" as="image" href="/sequence/frame-001.webp" />
       <SequenceStory />
-      <section className="address-note blend-in blend-out" aria-label="The Eastern Chambers at a glance">
+      <section className="address-note blend-in blend-sm blend-out blend-out-sm" aria-label="The Eastern Chambers at a glance">
         <p className="eyebrow">A considered address.<br />An uncommon perspective.</p>
         <p>A new perspective<br />on the <em>working day.</em></p>
         <div><span>Grade A+</span><span>Commercial workspace</span></div>
