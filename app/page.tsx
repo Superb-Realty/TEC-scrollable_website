@@ -7,16 +7,6 @@ import { EnquiryModal } from "@/components/enquiry-modal";
 import { ProjectPillars } from "@/components/project-pillars";
 import { site } from "@/content/site";
 import Image from "next/image";
-import benchmarksImage from "@/assets/three_global_benchmarks/3_global_benchmarks.png";
-import leedLogo from "@/assets/three_global_benchmarks/Leed.png";
-import wiredScoreLogo from "@/assets/three_global_benchmarks/Wired Score Certified.webp";
-import smartScoreLogo from "@/assets/three_global_benchmarks/smart-score.webp";
-
-const benchmarks = [
-  { name: "LEED*", logo: leedLogo, description: "A benchmark for environmental performance across energy efficiency, water conservation, indoor environmental quality, materials and site considerations." },
-  { name: "WIREDSCORE*", logo: wiredScoreLogo, description: "A benchmark for digital connectivity, resilience and technology infrastructure helping buildings stay connected as business requirements evolve." },
-  { name: "SMARTSCORE*", logo: smartScoreLogo, description: "A benchmark for smart building technology, automation, IoT integration and data-enabled operations." },
-];
 
 export default function Home() {
   return (
@@ -31,27 +21,7 @@ export default function Home() {
         <div><span>Grade A+</span><span>Commercial workspace</span></div>
       </section>
       <WormViewStory />
-      <BenchmarksScene>
-        <div className="benchmarks-content">
-          <p className="eyebrow">01 / A higher standard</p>
-          <h2 id="benchmarks-title">Global standards.<br /><em>Considered together.</em></h2>
-          <p className="benchmarks-intro">From sustainable infrastructure and resilient connectivity to intelligent building performance, The Eastern Chambers brings together three global benchmarks to create a workplace equipped for how businesses will work tomorrow.</p>
-          <div className="benchmarks-grid">
-            {benchmarks.map(({ name, logo, description }) => (
-              <article className="benchmark-card" key={name}>
-                <Image src={logo} alt="" />
-                <h3>{name}</h3>
-                <p>{description}</p>
-              </article>
-            ))}
-          </div>
-          <p className="certification-note">*Pre-certification aligned.</p>
-        </div>
-        <div className="benchmarks-visual">
-          <Image src={benchmarksImage} alt="Artistic impression of The Eastern Chambers beside an elevated transit line" fill sizes="(max-width: 600px) 170vw, 110vw" />
-          <span>Artistic impression</span>
-        </div>
-      </BenchmarksScene>
+      <BenchmarksScene />
       <BuildingBreakdown />
       <section className="architecture" id="architecture" aria-labelledby="architecture-title">
         <div className="architecture-heading">
