@@ -47,7 +47,7 @@ export function SectionReveal() {
         entry.target.classList.add("is-in");
         observer.unobserve(entry.target);
       }
-    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
+    }, { rootMargin: "0px 0px -4% 0px", threshold: 0.05 });
 
     for (const element of elements) {
       const siblings = element.parentElement ? Array.from(element.parentElement.children) : [];

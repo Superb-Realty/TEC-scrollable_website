@@ -92,8 +92,10 @@ export function BenchmarksScene() {
                 <div className="benchmark-badge">
                   <Image src={logo} alt={alt} width={64} height={64} />
                 </div>
-                <h3>{name}</h3>
-                <p>{description}</p>
+                <div className="benchmark-card-body">
+                  <h3>{name}</h3>
+                  <p>{description}</p>
+                </div>
               </article>
             ))}
           </div>

@@ -71,9 +71,18 @@ export function EnquiryModal() {
       }
     };
 
+    const onGlobalClick = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement)?.closest<HTMLElement>('a[href="#enquire"], .btn-closing-enquire');
+      if (target) {
+        e.preventDefault();
+        handleOpen();
+      }
+    };
+
     window.addEventListener("open-enquiry-modal", onOpenEvent);
     window.addEventListener("close-enquiry-modal", onCloseEvent);
     window.addEventListener("hashchange", onHashChange);
+    document.addEventListener("click", onGlobalClick);
 
     // Initial check if opened with #enquire
     if (window.location.hash === "#enquire") {
@@ -84,6 +93,7 @@ export function EnquiryModal() {
       window.removeEventListener("open-enquiry-modal", onOpenEvent);
       window.removeEventListener("close-enquiry-modal", onCloseEvent);
       window.removeEventListener("hashchange", onHashChange);
+      document.removeEventListener("click", onGlobalClick);
     };
   }, [handleOpen, handleClose]);
 
