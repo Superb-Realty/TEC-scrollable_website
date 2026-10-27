@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useMotionValueEvent, useTransform } from "motion/react";
+import { measureSeams, pinnedProgress } from "@/components/pinned-progress";
 
 const LAST = 191;
 const src = (index: number) => `/sequence/frame-${String(index + 1).padStart(3, "0")}.webp`;
@@ -21,11 +22,11 @@ export function SequenceStory() {
   const revealOpacity = useTransform(scrollYProgress, [0.85, 0.93], [0, 1]);
 
   useEffect(() => {
+    const story = storyRef.current;
+    if (!story) return;
+    let seams = measureSeams(story);
     const update = () => {
-      const story = storyRef.current;
-      if (!story) return;
-      const travel = story.offsetHeight - window.innerHeight;
-      const progress = travel > 0 ? Math.max(0, Math.min(1, -story.getBoundingClientRect().top / travel)) : 0;
+      const progress = pinnedProgress(story, seams);
       scrollYProgress.set(progress);
       const next = Math.round(Math.min(progress / 0.86, 1) * LAST);
       if (next !== desired.current) {
@@ -34,12 +35,13 @@ export function SequenceStory() {
         drawRequested.current?.();
       }
     };
+    const onResize = () => { seams = measureSeams(story); update(); };
     update();
     window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
+    window.addEventListener("resize", onResize);
     return () => {
       window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
+      window.removeEventListener("resize", onResize);
     };
   }, [scrollYProgress, reduced]);
 

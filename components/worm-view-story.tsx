@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useMotionValueEvent, useTransform } from "motion/react";
+import { measureSeams, pinnedProgress } from "@/components/pinned-progress";
 
 const TOTAL_FRAMES = 181;
 const frameSrc = (index: number) => `/section-2/frame-${String(index + 1).padStart(3, "0")}.webp`;
@@ -36,10 +37,10 @@ export function WormViewStory() {
     if (!story) return;
 
     let raf = 0;
+    let seams = measureSeams(story);
     const update = () => {
       raf = 0;
-      const travel = story.offsetHeight - window.innerHeight;
-      const progress = travel > 0 ? Math.max(0, Math.min(1, -story.getBoundingClientRect().top / travel)) : 0;
+      const progress = pinnedProgress(story, seams);
       scrollYProgress.set(progress);
 
       if (progressRef.current) {
@@ -58,12 +59,17 @@ export function WormViewStory() {
       if (!raf) raf = requestAnimationFrame(update);
     };
 
+    const onResize = () => {
+      seams = measureSeams(story);
+      onScroll();
+    };
+
     update();
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    window.addEventListener("resize", onResize);
     return () => {
       window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("resize", onResize);
       cancelAnimationFrame(raf);
     };
   }, [scrollYProgress, prefersReduced]);
@@ -210,7 +216,7 @@ export function WormViewStory() {
   }, [prefersReduced]);
 
   return (
-    <section className="worm-story" ref={storyRef} id="elevation" aria-label="Architectural elevation scroll experience">
+    <section className="worm-story blend-in" ref={storyRef} id="elevation" aria-label="Architectural elevation scroll experience">
       <div className="worm-sticky">
         <div className="worm-stage">
           <canvas ref={canvasRef} className="worm-canvas" />

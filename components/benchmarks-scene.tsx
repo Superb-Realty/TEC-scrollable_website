@@ -63,7 +63,7 @@ export function BenchmarksScene() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="benchmarks" id="benchmarks" aria-labelledby="benchmarks-title">
+    <section ref={sectionRef} className="benchmarks blend-in blend-out" id="benchmarks" aria-labelledby="benchmarks-title">
       <div className="benchmarks-bg-wrap" aria-hidden="true">
         <Image
           src={urbanEleganceImg}

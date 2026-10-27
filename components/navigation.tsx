@@ -7,82 +7,157 @@ import chamberLogo from "@/assets/the_eastern_chambers_logo/the_eastern_chambers
 import { openEnquiryModal } from "@/components/enquiry-modal";
 
 const links = [
-  { label: "Benchmarks", href: "#benchmarks" },
-  { label: "The building", href: "#breakdown" },
-  { label: "Architecture", href: "#architecture" },
-  { label: "The pillars", href: "#pillars" },
-  { label: "Vision", href: "#vision" },
+  { num: "01", label: "Benchmarks", href: "#benchmarks" },
+  { num: "02", label: "The building", href: "#breakdown" },
+  { num: "03", label: "Architecture", href: "#architecture" },
+  { num: "04", label: "The pillars", href: "#pillars" },
+  { num: "05", label: "Vision", href: "#vision" },
 ];
 
 export function Navigation() {
   const [open, setOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
+  const drawerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!open) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    headerRef.current?.querySelector<HTMLAnchorElement>("nav a")?.focus();
+
+    // Focus first link in drawer
+    drawerRef.current?.querySelector<HTMLAnchorElement>("a")?.focus();
+
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setOpen(false);
         headerRef.current?.querySelector<HTMLButtonElement>(".menu-toggle")?.focus();
       }
-      if (event.key === "Tab") {
-        const controls = headerRef.current?.querySelectorAll<HTMLElement>("a, button");
-        if (!controls?.length) return;
+      if (event.key === "Tab" && drawerRef.current) {
+        const controls = drawerRef.current.querySelectorAll<HTMLElement>("a, button");
+        if (!controls.length) return;
         const first = controls[0];
         const last = controls[controls.length - 1];
-        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
-        if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
       }
     };
-    const closeOnDesktop = () => { if (window.innerWidth > 900) setOpen(false); };
+
     window.addEventListener("keydown", closeOnEscape);
-    window.addEventListener("resize", closeOnDesktop);
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", closeOnEscape);
-      window.removeEventListener("resize", closeOnDesktop);
     };
   }, [open]);
 
   return (
-    <header className="site-header" ref={headerRef}>
-      <a className="wordmark" href="#top" onClick={() => setOpen(false)} aria-label={`${site.name}, back to top`}>
-        <Image src={chamberLogo} alt="" priority />
-      </a>
-      <nav className={open ? "nav-links open" : "nav-links"} aria-label="Main navigation" id="main-navigation">
-        {links.map(({ label, href }) => (
-          <a
-            key={href}
-            href={href}
-            onClick={() => setOpen(false)}
+    <>
+      <header className="site-header" ref={headerRef}>
+        <div className="site-header-left">
+          <button
+            className={`menu-toggle ${open ? "is-active" : ""}`}
+            type="button"
+            aria-label={open ? "Close navigation menu" : "Open navigation menu"}
+            aria-controls="main-navigation"
+            aria-expanded={open}
+            onClick={() => setOpen(!open)}
           >
-            {label}
+            <span className="menu-burger" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+            </span>
+          </button>
+        </div>
+
+        <div className="site-header-center">
+          <a
+            className="wordmark"
+            href="#top"
+            onClick={() => setOpen(false)}
+            aria-label={`${site.name}, back to top`}
+          >
+            <Image src={chamberLogo} alt={site.name} priority />
           </a>
-        ))}
-        <button
-          type="button"
-          className="nav-cta-btn"
-          onClick={() => {
-            setOpen(false);
-            openEnquiryModal();
-          }}
-        >
-          Leasing enquiries <span aria-hidden="true">↗</span>
-        </button>
-      </nav>
-      <button
-        className="menu-toggle"
-        type="button"
-        aria-label={open ? "Close menu" : "Open menu"}
-        aria-controls="main-navigation"
-        aria-expanded={open}
-        onClick={() => setOpen(!open)}
+        </div>
+
+        <div className="site-header-right">
+          <button
+            type="button"
+            className="nav-enquire-btn"
+            onClick={() => {
+              setOpen(false);
+              openEnquiryModal();
+            }}
+          >
+            Enquire
+          </button>
+        </div>
+      </header>
+
+      {/* Dimmed backdrop */}
+      <div
+        className={`nav-backdrop ${open ? "is-open" : ""}`}
+        onClick={() => setOpen(false)}
+        aria-hidden="true"
+      />
+
+      {/* Slide-out Navigation Drawer */}
+      <aside
+        ref={drawerRef}
+        className={`nav-drawer ${open ? "is-open" : ""}`}
+        id="main-navigation"
+        aria-label="Main navigation menu"
+        aria-hidden={!open}
       >
-        <span /> <span />
-      </button>
-    </header>
+        <div className="nav-drawer-header">
+          <p className="eyebrow">00 / NAVIGATION</p>
+          <button
+            type="button"
+            className="nav-drawer-close"
+            onClick={() => setOpen(false)}
+            aria-label="Close menu"
+          >
+            <span aria-hidden="true">✕</span> Close
+          </button>
+        </div>
+
+        <nav className="nav-drawer-links" aria-label="Section links">
+          {links.map(({ num, label, href }) => (
+            <a
+              key={href}
+              href={href}
+              className="nav-drawer-item"
+              onClick={() => setOpen(false)}
+            >
+              <span className="nav-drawer-num">{num}</span>
+              <span className="nav-drawer-label">{label}</span>
+              <span className="nav-drawer-arrow" aria-hidden="true">→</span>
+            </a>
+          ))}
+        </nav>
+
+        <div className="nav-drawer-footer">
+          <button
+            type="button"
+            className="nav-drawer-enquire-btn"
+            onClick={() => {
+              setOpen(false);
+              openEnquiryModal();
+            }}
+          >
+            Enquire <span aria-hidden="true">↗</span>
+          </button>
+          <div className="nav-drawer-meta">
+            <span className="nav-drawer-brand">The Eastern Chambers</span>
+            <span className="nav-drawer-sub">Grade A+ Commercial Workspace</span>
+          </div>
+        </div>
+      </aside>
+    </>
   );
 }

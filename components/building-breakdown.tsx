@@ -152,7 +152,7 @@ export function BuildingBreakdown() {
     };
   }, [reducedMotion]);
 
-  return <section className="breakdown" id="breakdown" aria-labelledby="breakdown-title">
+  return <section className="breakdown blend-in blend-out" id="breakdown" aria-labelledby="breakdown-title">
     <div className="breakdown-intro">
       <div className="breakdown-heading"><p className="eyebrow light">02 / THE BUILDING</p><h2 id="breakdown-title">Inside the<br /><em>architecture.</em></h2></div>
       <p>Explore the layers of The Eastern Chamber, from its rooftop amenities and commercial workspaces to the podium below.</p>

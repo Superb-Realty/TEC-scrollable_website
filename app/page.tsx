@@ -5,6 +5,7 @@ import { BenchmarksScene } from "@/components/benchmarks-scene";
 import { BuildingBreakdown } from "@/components/building-breakdown";
 import { EnquiryModal } from "@/components/enquiry-modal";
 import { ProjectPillars } from "@/components/project-pillars";
+import { SectionReveal } from "@/components/section-reveal";
 import { site } from "@/content/site";
 import Image from "next/image";
 
@@ -15,7 +16,7 @@ export default function Home() {
     <main id="main-content">
       <link rel="preload" as="image" href="/sequence/frame-001.webp" />
       <SequenceStory />
-      <section className="address-note" aria-label="The Eastern Chambers at a glance">
+      <section className="address-note blend-in blend-out" aria-label="The Eastern Chambers at a glance">
         <p className="eyebrow">A considered address.<br />An uncommon perspective.</p>
         <p>A new perspective<br />on the <em>working day.</em></p>
         <div><span>Grade A+</span><span>Commercial workspace</span></div>
@@ -23,7 +24,7 @@ export default function Home() {
       <WormViewStory />
       <BenchmarksScene />
       <BuildingBreakdown />
-      <section className="architecture" id="architecture" aria-labelledby="architecture-title">
+      <section className="architecture blend-in blend-out blend-out-sm" id="architecture" aria-labelledby="architecture-title">
         <div className="architecture-heading">
           <p className="eyebrow light">03 / ARCHITECTURE</p>
           <h2 id="architecture-title">A clear expression<br />of <em>what comes next.</em></h2>
@@ -38,7 +39,7 @@ export default function Home() {
         <p className="architecture-caption">An architecture that makes its mark with clarity, proportion and restraint.</p>
       </section>
       <ProjectPillars />
-      <section className="vision" id="vision" aria-labelledby="vision-title">
+      <section className="vision blend-in blend-sm blend-out" id="vision" aria-labelledby="vision-title">
         <div className="vision-top">
           <p className="eyebrow">04 / THE VISION</p>
           <p>Eastern Chamber<br />A commercial address</p>
@@ -52,7 +53,7 @@ export default function Home() {
         </div>
       </section>
     </main>
-      <footer className="closing" id="enquire">
+      <footer className="closing blend-in" id="enquire">
         <div className="closing-top">
           <p className="eyebrow light">05 / Your next chapter</p>
           <span className="eyebrow light">The Eastern Chambers</span>
@@ -77,6 +78,7 @@ export default function Home() {
         </div>
       </footer>
       <EnquiryModal />
+      <SectionReveal />
     </>
   );
 }

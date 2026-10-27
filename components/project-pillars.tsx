@@ -243,11 +243,13 @@ export function ProjectPillars() {
   }, []);
 
   return (
-    <section className="pillars-experience" ref={sectionRef} id="pillars" aria-labelledby="pillars-title">
+    <section className="pillars-experience blend-in blend-sm blend-out blend-out-sm" ref={sectionRef} id="pillars" aria-labelledby="pillars-title">
       <div className="pillars-heading">
         <p className="eyebrow">03.1 / THE FOUR PILLARS</p>
-        <h2 id="pillars-title">Every detail.<br /><em>A greater purpose.</em></h2>
-        <p className="pillars-intro">Four connected ideas. One considered workplace. Discover the thinking that gives The Eastern Chambers its character.</p>
+        <h2 id="pillars-title">INNOVATION SHAPING<br /><em>THE FUTURE OF BUSINESS</em></h2>
+        <p className="pillars-intro">
+          The Eastern Chambers reimagines the modern workplace for businesses that expect their address to work as hard as they do. A Grade A+ workplace should do more than accommodate business. It should enable what comes next, driven by <strong className="pillars-highlight">Technology, Design, Sustainability and Wellness</strong>.
+        </p>
         <nav className="pillar-index" aria-label="Explore the four pillars">{PILLARS.map((pillar, idx) => <a href={`#${pillar.id}`} key={pillar.id}><span>0{idx + 1}</span>{pillar.tabLabel}<span aria-hidden="true">↗</span></a>)}</nav>
       </div>
       <div className="pillars-chapters">
