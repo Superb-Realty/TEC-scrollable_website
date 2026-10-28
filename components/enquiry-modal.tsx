@@ -286,6 +286,23 @@ export function EnquiryModal() {
               <p className="modal-subtitle">
                 Reserve space, request architectural specification decks, or schedule a private preview walkthrough.
               </p>
+              <div className="modal-direct-contact">
+                <span className="modal-direct-label font-mono">DIRECT LEASING HOTLINE:</span>
+                <div className="modal-direct-links">
+                  <a href="tel:+919090263264" className="modal-hotline-link font-mono">
+                    <span aria-hidden="true">📞</span> +91 9090 263 264
+                  </a>
+                  <span className="modal-direct-divider" aria-hidden="true">•</span>
+                  <a
+                    href="https://wa.me/919090263264?text=Hello%2C%20I%20would%20like%20to%20request%20commercial%20floor%20plans%20and%20availability."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="modal-whatsapp-link font-mono"
+                  >
+                    <span aria-hidden="true">💬</span> WhatsApp Desk
+                  </a>
+                </div>
+              </div>
             </div>
 
             {errorMessage && (
@@ -431,7 +448,7 @@ export function EnquiryModal() {
                   )}
                 </button>
                 <p className="form-disclaimer">
-                  Your details will be used to respond to your leasing enquiry.
+                  Official MahaRERA Reg. No: P51800054892 (maharera.mahaonline.gov.in) • All communications handled under non-disclosure confidentiality.
                 </p>
               </div>
             </form>

@@ -7,11 +7,13 @@ import chamberLogo from "@/assets/the_eastern_chambers_logo/the_eastern_chambers
 import { openEnquiryModal } from "@/components/enquiry-modal";
 
 const links = [
-  { num: "01", label: "Benchmarks", href: "#benchmarks" },
-  { num: "02", label: "The building", href: "#breakdown" },
-  { num: "03", label: "Architecture", href: "#architecture" },
-  { num: "04", label: "The pillars", href: "#pillars" },
-  { num: "05", label: "Vision", href: "#vision" },
+  { num: "01", label: "Proof of scale", href: "#quick-facts" },
+  { num: "02", label: "Benchmarks", href: "#benchmarks" },
+  { num: "03", label: "The building", href: "#breakdown" },
+  { num: "04", label: "Architecture", href: "#architecture" },
+  { num: "05", label: "The pillars", href: "#pillars" },
+  { num: "06", label: "Amenities & lifestyle", href: "#amenities" },
+  { num: "07", label: "Vision", href: "#vision" },
 ];
 
 export function Navigation() {

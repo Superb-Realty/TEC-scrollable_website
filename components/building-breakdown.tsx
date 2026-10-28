@@ -169,9 +169,9 @@ export function BuildingBreakdown() {
     <div className="breakdown-details" aria-label="Building features">
       <p className="eyebrow light">THE BUILDING / AT A GLANCE</p>
       <div className="breakdown-detail-grid">
-        <article><span>01 / ABOVE</span><h3>Rooftop amenities</h3><p>Rooftop space sits above a contemporary facade of stone, metal and glass.</p></article>
-        <article><span>02 / WITHIN</span><h3>Flexible workspaces</h3><p>Commercial floors 1–17, boutique offices from 400 sq. ft. and 12,500 sq. ft. full floors.</p></article>
-        <article><span>03 / BELOW</span><h3>Podium &amp; arrival</h3><p>Podium amenities, a hospitality lobby, high-street retail and parking provision.</p></article>
+        <article><span className="font-mono">01 / ABOVE</span><h3>Rooftop amenities</h3><p>Rooftop space sits above a contemporary facade of stone, metal and glass.</p></article>
+        <article><span className="font-mono">02 / WITHIN</span><h3>Flexible workspaces</h3><p>Commercial floors <strong className="font-mono">1–17</strong>, boutique offices from <strong className="font-mono">400 SQ. FT.</strong> and <strong className="font-mono">12,500 SQ. FT.</strong> full floors.</p></article>
+        <article><span className="font-mono">03 / BELOW</span><h3>Podium &amp; arrival</h3><p>Podium amenities, an <strong className="font-mono">8.5M</strong> hospitality lobby, high-street retail and <strong className="font-mono">8</strong> levels of parking.</p></article>
       </div>
     </div>
   </section>;

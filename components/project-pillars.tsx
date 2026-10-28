@@ -198,7 +198,7 @@ function PillarFeature({
     <article className="pillar-feature" id={pillar.id}>
       <div className={`pf-panel ${panelClass}`} aria-hidden="true" />
       <div className="pf-head">
-        <p className="pf-eyebrow"><span>{label}</span><span className="pf-eyebrow-num">{num}</span><span className="pf-eyebrow-rule" /></p>
+        <p className="pf-eyebrow"><span>{label}</span><span className="pf-eyebrow-num font-mono">{num}</span><span className="pf-eyebrow-rule" /></p>
         <h3 className="pf-title"><strong>{pillar.leadWord}</strong> {pillar.titleRest}</h3>
         <p className="pf-desc">{pillar.description}</p>
       </div>
@@ -243,14 +243,14 @@ export function ProjectPillars() {
   }, []);
 
   return (
-    <section className="pillars-experience blend-in blend-sm blend-out blend-out-sm" ref={sectionRef} id="pillars" aria-labelledby="pillars-title">
+    <section className="pillars-experience" ref={sectionRef} id="pillars" aria-labelledby="pillars-title">
       <div className="pillars-heading">
         <p className="eyebrow">03.1 / THE FOUR PILLARS</p>
         <h2 id="pillars-title">INNOVATION SHAPING<br /><em>THE FUTURE OF BUSINESS</em></h2>
         <p className="pillars-intro">
           The Eastern Chambers reimagines the modern workplace for businesses that expect their address to work as hard as they do. A Grade A+ workplace should do more than accommodate business. It should enable what comes next, driven by <strong className="pillars-highlight">Technology, Design, Sustainability and Wellness</strong>.
         </p>
-        <nav className="pillar-index" aria-label="Explore the four pillars">{PILLARS.map((pillar, idx) => <a href={`#${pillar.id}`} key={pillar.id}><span>0{idx + 1}</span>{pillar.tabLabel}<span aria-hidden="true">↗</span></a>)}</nav>
+        <nav className="pillar-index" aria-label="Explore the four pillars">{PILLARS.map((pillar, idx) => <a href={`#${pillar.id}`} key={pillar.id}><span className="font-mono">0{idx + 1}</span>{pillar.tabLabel}<span aria-hidden="true">↗</span></a>)}</nav>
       </div>
       <div className="pillars-chapters">
         {PILLARS.map((pillar, idx) => {
@@ -267,7 +267,7 @@ export function ProjectPillars() {
             <article className="pillar-editorial-slide" key={pillar.id} id={pillar.id}>
             <div className="slide-content">
               <div className="slide-eyebrow-line">
-                <span className="slide-num">0{idx + 1} / 04</span>
+                <span className="slide-num font-mono">0{idx + 1} / 04</span>
                 <span>{pillar.tabLabel}</span>
               </div>
               <h3 className="slide-title">{pillar.leadWord} {pillar.titleRest}</h3>

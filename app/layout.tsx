@@ -1,5 +1,6 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
 const proxima = localFont({
@@ -18,12 +19,26 @@ const minion = localFont({
   display: "swap",
 });
 
+const ibmMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-mono",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "Eastern Chamber",
-  description: "A cinematic introduction to Eastern Chamber, where nature reveals architecture.",
+  title: "The Eastern Chambers | Grade A+ Commercial Landmark",
+  description: "A cinematic introduction to The Eastern Chambers, where nature reveals future-ready commercial architecture.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" className={`${proxima.variable} ${minion.variable}`}><body suppressHydrationWarning><a className="skip-link" href="#main-content">Skip to content</a>{children}</body></html>;
+  return (
+    <html lang="en" className={`${proxima.variable} ${minion.variable} ${ibmMono.variable}`}>
+      <body suppressHydrationWarning>
+        <a className="skip-link" href="#main-content">Skip to content</a>
+        {children}
+      </body>
+    </html>
+  );
 }
 
