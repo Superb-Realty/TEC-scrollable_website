@@ -3,6 +3,7 @@ import { SequenceStory } from "@/components/sequence-story";
 import { WormViewStory } from "@/components/worm-view-story";
 import { BenchmarksScene } from "@/components/benchmarks-scene";
 import { BuildingBreakdown } from "@/components/building-breakdown";
+import { LocalityMapSection } from "@/components/locality-map-section";
 import { ProjectPillars } from "@/components/project-pillars";
 import { AmenityMarquee } from "@/components/amenity-marquee";
 import { EnquiryModal } from "@/components/enquiry-modal";
@@ -21,20 +22,8 @@ export default function Home() {
         <BenchmarksScene />
         <BuildingBreakdown />
 
-        <section className="architecture blend-in" id="architecture" aria-labelledby="architecture-title">
-          <div className="architecture-heading">
-            <p className="eyebrow light">INNOVATION SHAPING THE FUTURE OF BUSINESS</p>
-            <h2 id="architecture-title">INNOVATION SHAPING<br />THE <em>FUTURE OF BUSINESS.</em></h2>
-            <div className="architecture-copy">
-              <p>The Eastern Chambers reimagines the modern workplace for businesses that expect their address to work as hard as they do.</p>
-              <p>A Grade A+ workplace should do more than accommodate business. It should enable what comes next, driven by Technology, Design, Sustainability and Wellness.</p>
-            </div>
-          </div>
-          <div className="architecture-image" role="img" aria-label="Representative Image">
-            <span>Representative Image</span>
-          </div>
-          <p className="architecture-caption">Representative Image</p>
-        </section>
+        {/* 3. Strategic Locality & Multimodal Connectivity Map */}
+        <LocalityMapSection />
 
         {/* 4. Project Pillars */}
         <ProjectPillars />

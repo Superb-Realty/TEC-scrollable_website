@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useMotionValueEvent, useTransform } from "motion/react";
 import { measureSeams, pinnedProgress } from "@/components/pinned-progress";
 
-const TOTAL_FRAMES = 302;
-const frameSrc = (index: number) => `/section-2/frame-${String(index + 1).padStart(3, "0")}.webp?v=5acc0008`;
+const TOTAL_FRAMES = 235;
+const frameSrc = (index: number) => `/section-2/frame-${String(index + 1).padStart(3, "0")}.webp?v=b202db4b`;
 
 export function WormViewStory() {
   const storyRef = useRef<HTMLElement>(null);
@@ -150,7 +150,9 @@ export function WormViewStory() {
       if (canvasRatio > imgRatio) {
         drawWidth = width;
         drawHeight = width / imgRatio;
-        offsetY = (height - drawHeight) / 2;
+        // Follow the camera upward: show the entrance first, then the roofline.
+        const framingProgress = Math.max(0, Math.min(1, (selected / (TOTAL_FRAMES - 1) - 0.1) / 0.4));
+        offsetY = -(drawHeight - height) * (1 - framingProgress);
       } else {
         drawHeight = height;
         drawWidth = height * imgRatio;
@@ -246,20 +248,19 @@ export function WormViewStory() {
         </div>
 
         <div className="worm-captions" aria-live="polite">
-          {activeChapter === "arrival" && (
-            <motion.div className="worm-copy" style={{ opacity: arrivalOpacity }}>
-              <h2>THE CHAMBERS OF<br /><em>CORPORATE POWER.</em></h2>
-            </motion.div>
-          )}
-
           {activeChapter === "summit" && (
-            <motion.div className="worm-copy" style={{ opacity: summitOpacity }}>
-              <p className="eyebrow light">1ST - 17TH FLOOR</p>
-              <h2>Contemporary Façade<br /><em>Stone, Metal &amp; Glass</em></h2>
-              <p className="worm-copy-desc">Commercial workspaces with 13,500 Sq.Ft. column-free full floors, boutique offices starting at 391 Sq.Ft., 11’4” floor-to-floor height and rooftop amenities.</p>
+            <motion.div className="worm-brand-copy" style={{ opacity: summitOpacity }}>
+              <h2><span>THE</span><span>EASTERN</span><span>CHAMBERS</span></h2>
             </motion.div>
           )}
         </div>
+
+        {activeChapter === "summit" && (
+          <motion.div className="worm-summit-tagline" style={{ opacity: summitOpacity }}>
+            <p>THE CHAMBERS OF<br /><em>CORPORATE POWER.</em></p>
+            <span>Grade A+ Commercial Workspaces</span>
+          </motion.div>
+        )}
       </div>
     </section>
   );

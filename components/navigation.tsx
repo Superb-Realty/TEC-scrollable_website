@@ -5,6 +5,7 @@ import Image from "next/image";
 import { site } from "@/content/site";
 import chamberLogo from "@/assets/the_eastern_chambers_logo/the_eastern_chambers_logo.png";
 import { openEnquiryModal } from "@/components/enquiry-modal";
+import { measureSeams, pinnedProgress } from "@/components/pinned-progress";
 
 const links = [
   { num: "01", label: "Three Global Benchmarks", href: "#benchmarks" },
@@ -16,8 +17,37 @@ const links = [
 
 export function Navigation() {
   const [open, setOpen] = useState(false);
+  const [visible, setVisible] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const drawerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const story = document.getElementById("elevation");
+    if (!story) return;
+
+    let raf = 0;
+    let seams = measureSeams(story);
+    const update = () => {
+      raf = 0;
+      setVisible(pinnedProgress(story, seams) >= 1);
+    };
+    const scheduleUpdate = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    const onResize = () => {
+      seams = measureSeams(story);
+      scheduleUpdate();
+    };
+
+    update();
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", onResize);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -56,7 +86,7 @@ export function Navigation() {
 
   return (
     <>
-      <header className="site-header" ref={headerRef}>
+      <header className={`site-header ${visible ? "is-visible" : ""}`} ref={headerRef} inert={!visible}>
         <a
           className="wordmark"
           href="#top"
