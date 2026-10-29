@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useMotionValueEvent, useTransform } from "motion/react";
 import { measureSeams, pinnedProgress } from "@/components/pinned-progress";
 
-const TOTAL_FRAMES = 181;
-const frameSrc = (index: number) => `/section-2/frame-${String(index + 1).padStart(3, "0")}.webp`;
+const TOTAL_FRAMES = 302;
+const frameSrc = (index: number) => `/section-2/frame-${String(index + 1).padStart(3, "0")}.webp?v=5acc0008`;
 
 export function WormViewStory() {
   const storyRef = useRef<HTMLElement>(null);
@@ -13,7 +13,6 @@ export function WormViewStory() {
   const progressRef = useRef<HTMLDivElement>(null);
   const desiredFrame = useRef(0);
   const drawRequested = useRef<(() => void) | null>(null);
-  const loadAround = useRef<((index: number) => void) | null>(null);
 
   const [prefersReduced, setPrefersReduced] = useState(false);
   const [activeChapter, setActiveChapter] = useState<"arrival" | "summit" | "none">("arrival");
@@ -50,7 +49,6 @@ export function WormViewStory() {
       const next = Math.round(progress * (TOTAL_FRAMES - 1));
       if (next !== desiredFrame.current) {
         desiredFrame.current = next;
-        loadAround.current?.(next);
         drawRequested.current?.();
       }
     };
@@ -84,7 +82,7 @@ export function WormViewStory() {
     }
   });
 
-  // Canvas drawing & preloading engine with LRU cache
+  // Canvas drawing and bounded frame preloading
   useEffect(() => {
     if (prefersReduced) return;
     const canvas = canvasRef.current;
@@ -93,15 +91,19 @@ export function WormViewStory() {
 
     const cache = new Map<number, HTMLImageElement>();
     const loading = new Set<number>();
+    const pending = new Set<number>();
     const isMobile = window.matchMedia("(max-width: 768px)").matches;
-    const cacheLimit = isMobile ? 32 : 64;
+    const cacheLimit = isMobile ? 20 : 40;
+    const loadLimit = isMobile ? 3 : 5;
+    const preloadRadius = isMobile ? 7 : 12;
+    let playhead = desiredFrame.current;
     let lastDrawn = -1;
+    let lastTick = 0;
     let raf = 0;
     let disposed = false;
 
     const draw = () => {
-      raf = 0;
-      const target = desiredFrame.current;
+      const target = Math.round(playhead);
       let selected = cache.has(target) ? target : -1;
 
       if (selected < 0) {
@@ -159,45 +161,65 @@ export function WormViewStory() {
       lastDrawn = selected;
     };
 
-    const queueDraw = () => {
-      if (!raf) raf = requestAnimationFrame(draw);
-    };
+    function queueDraw() {
+      if (!raf) raf = requestAnimationFrame(tick);
+    }
 
-    const loadFrame = (index: number) => {
-      if (index < 0 || index >= TOTAL_FRAMES || cache.has(index) || loading.has(index)) return;
-      loading.add(index);
-      const img = new Image();
-      img.src = frameSrc(index);
-      img
-        .decode()
-        .then(() => {
-          if (disposed) return;
-          cache.set(index, img);
-          while (cache.size > cacheLimit) {
-            const oldest = cache.keys().next().value;
-            if (oldest === undefined) break;
-            cache.delete(oldest);
-          }
-          queueDraw();
-        })
-        .catch(() => {})
-        .finally(() => loading.delete(index));
-    };
-
-    const around = (index: number) => {
-      loadFrame(index);
-      const radius = isMobile ? 6 : 10;
-      for (let i = 1; i <= radius; i++) {
-        loadFrame(index + i);
-        loadFrame(index - i);
+    function pump() {
+      while (!disposed && loading.size < loadLimit && pending.size) {
+        const index = pending.values().next().value as number;
+        pending.delete(index);
+        if (cache.has(index) || loading.has(index)) continue;
+        loading.add(index);
+        const img = new Image();
+        img.src = frameSrc(index);
+        img.decode()
+          .then(() => {
+            if (disposed) return;
+            cache.set(index, img);
+            while (cache.size > cacheLimit) {
+              const oldest = cache.keys().next().value;
+              if (oldest === undefined) break;
+              cache.delete(oldest);
+            }
+            queueDraw();
+          })
+          .catch(() => {})
+          .finally(() => {
+            loading.delete(index);
+            pump();
+          });
       }
-    };
+    }
 
-    loadAround.current = around;
+    function around(index: number) {
+      pending.clear();
+      const direction = desiredFrame.current >= playhead ? 1 : -1;
+      const enqueue = (frame: number) => {
+        if (frame >= 0 && frame < TOTAL_FRAMES && !cache.has(frame) && !loading.has(frame)) pending.add(frame);
+      };
+      enqueue(index);
+      for (let i = 1; i <= preloadRadius; i++) enqueue(index + direction * i);
+      for (let i = 1; i <= preloadRadius; i++) enqueue(index - direction * i);
+      pump();
+    }
+
+    function tick(time: number) {
+      raf = 0;
+      const elapsed = lastTick ? Math.min(time - lastTick, 50) : 16;
+      lastTick = time;
+      const distance = desiredFrame.current - playhead;
+      const advance = Math.max(1, elapsed * 0.18);
+      playhead = Math.abs(distance) <= advance ? desiredFrame.current : playhead + Math.sign(distance) * advance;
+      around(Math.round(playhead));
+      draw();
+      if (Math.abs(desiredFrame.current - playhead) > 0.01) queueDraw();
+    }
+
     drawRequested.current = queueDraw;
 
-    // Initial load around start
-    around(0);
+    // Initial load around the current scroll position
+    around(Math.round(playhead));
 
     const resizeObserver = new ResizeObserver(() => {
       lastDrawn = -1;
@@ -209,8 +231,8 @@ export function WormViewStory() {
       disposed = true;
       resizeObserver.disconnect();
       cancelAnimationFrame(raf);
-      loadAround.current = null;
       drawRequested.current = null;
+      pending.clear();
       cache.clear();
     };
   }, [prefersReduced]);

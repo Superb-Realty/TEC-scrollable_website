@@ -8,7 +8,6 @@ import { AmenityMarquee } from "@/components/amenity-marquee";
 import { EnquiryModal } from "@/components/enquiry-modal";
 import { SectionReveal } from "@/components/section-reveal";
 import { site } from "@/content/site";
-import Image from "next/image";
 
 export default function Home() {
   return (
@@ -18,15 +17,6 @@ export default function Home() {
         <link rel="preload" as="image" href="/sequence/frame-001.webp" />
         <SequenceStory />
         
-        <section className="address-note blend-in blend-sm" aria-label="The Eastern Chambers at a glance">
-          <p className="eyebrow">NEXT-GEN CHAMBERS</p>
-          <p>Grade A+ Commercial Workspaces<br />Designed for the <em>Businesses of Tomorrow.</em></p>
-          <div>
-            <span className="font-mono">Grade A+</span>
-            <span className="font-mono">Commercial Workspaces</span>
-          </div>
-        </section>
-
         <WormViewStory />
         <BenchmarksScene />
         <BuildingBreakdown />
@@ -52,48 +42,9 @@ export default function Home() {
         {/* 4. Interactive Amenity Marquee & Cinematic Slide Flow */}
         <AmenityMarquee />
 
-        <section className="vision blend-in blend-sm blend-out" id="vision" aria-labelledby="vision-title">
-          <div className="vision-top">
-            <p className="eyebrow">OWN THE FUTURE, BEFORE THE MARKET PRICES IT IN</p>
-            <p>The Eastern Chambers<br />Grade A+ Commercial Workspaces</p>
-          </div>
-          <h2 id="vision-title">POWAI BRINGS THE DEMAND,<br /><em>VIKHROLI HOLDS THE VALUE.</em></h2>
-          <div className="vision-bottom">
-            <p className="vision-lead">Less than 2 km from Powai, Vikhroli has an established ecosystem of businesses, enterprises and communities.</p>
-            <div>
-              <p>Its seamless connectivity and proximity to Mumbai’s strategic business and employment nodes are accelerating its evolution from a well-connected business location into a high-potential commercial node. Vikhroli is transforming into a preferred CBD because of its multi-level connectivity to MMR’s established &amp; emerging business districts.</p>
-            </div>
-          </div>
-        </section>
       </main>
 
-      <footer className="closing blend-in" id="enquire">
-        <div className="closing-top">
-          <p className="eyebrow light">THE FUTURE WORKS HERE</p>
-          <span className="eyebrow light font-mono">The Eastern Chambers</span>
-        </div>
-        <div className="closing-main">
-          <div className="closing-copy">
-            <p className="eyebrow light">TWO LEGACIES. ONE PROGRESSIVE VISION.</p>
-            <h2>A WORLD-CLASS EPICENTRE<br /><em>UNFOLDS AT VIKHROLI.</em></h2>
-            <p>Strategically positioned on LBS Marg, The Eastern Chambers brings together Grade A+ commercial assets with intelligent design, integrated infrastructure and high-speed connectivity access in one future-ready address.</p>
-            <div className="closing-cta-wrap">
-              <a href="#enquire" className="btn-closing-enquire">
-                Begin a conversation <span aria-hidden="true">↗</span>
-              </a>
-            </div>
-          </div>
-          <div className="closing-image">
-            <Image
-              src="/pillars/pillar-03.webp"
-              alt="Artistic Impression"
-              fill
-              sizes="(max-width: 600px) 240vw, 120vw"
-            />
-            <span>Artistic Impression</span>
-          </div>
-        </div>
-
+      <footer className="closing" id="enquire">
         {/* 5. MahaRERA & Developer Credentials Legal Seal Bar */}
         <div className="closing-legal-bar" aria-label="Legal compliance and developer pedigree">
           <div className="closing-rera-card">

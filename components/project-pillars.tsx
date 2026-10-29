@@ -8,7 +8,7 @@ export interface PillarData {
   number: string;
   tabLabel: string;
   leadWord: string;
-  titleRest: string;
+  titleRest: React.ReactNode;
   description: string;
   image: string;
   alt: string;
@@ -49,34 +49,24 @@ export const PILLARS: PillarData[] = [
     id: "pillar-02",
     number: "PILLAR 02",
     tabLabel: "Architecture",
-    leadWord: "Designed",
-    titleRest: "for the future of work.",
+    leadWord: "DESIGNED",
+    titleRest: (
+      <>
+        FOR<br />THE FUTURE OF WORK.
+      </>
+    ),
     description:
       "Every design decision is rooted in the realities of contemporary business, balancing functionality, flexibility and architectural distinction to create a workplace that works intuitively.",
-    image: "/sequence/frame-192.webp",
-    alt: "The Eastern Chambers facade rising above the mangrove landscape",
+    image: "/pillars/Pillar_02.jpg",
+    alt: "Artistic impression of The Eastern Chambers double-height arrival lobby and contemporary facade",
     features: [
-      {
-        text: "Stone, Metal and Glass Façade",
-      },
-      {
-        text: "Triple-Side Views (Mangroves, Mountains & City)",
-      },
-      {
-        text: "Biophilic Landscape",
-      },
-      {
-        text: "Double-Height Arrival Lobby with Café",
-      },
-      {
-        text: "Column-Free Floor Plates",
-      },
-      {
-        text: "Eight High-Speed Elevators",
-      },
-      {
-        text: "Natural Daylight on Every Side",
-      },
+      { text: "Triple-Side Views - Mangroves, Mountains and City" },
+      { text: "Stone, Metal and Glass Façade" },
+      { text: "Biophilic Landscape" },
+      { text: "Hospitality-Grade Double-Height Arrival Lobby with Café" },
+      { text: "Column-Free Floor Plates" },
+      { text: "Eight High-Speed Elevators" },
+      { text: "Natural Daylight on Every Side" },
     ],
   },
   {
@@ -153,6 +143,72 @@ const PILLAR_01_ICONS = [
   <svg key="app" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"><rect x="10" y="3.5" width="12" height="25" rx="2" /><path d="M14.5 6.5h3M15.2 25.2h1.6" /></svg>,
 ];
 
+/* Line icons for the pillar 02 feature grid (order matches PILLARS[1].features). */
+const PILLAR_02_ICONS = [
+  // 1. Triple-Side Views - Mangroves, Mountains and City
+  <svg key="views" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="4.5" y="6.5" width="23" height="17" rx="2" />
+    <path d="M7 9l1 1M25 9l-1 1M7 21l1-1M25 21l-1-1" strokeWidth="1" />
+    <circle cx="16" cy="11.5" r="2.2" />
+    <path d="M16 7.8v1.2M16 14v1.2M12.3 11.5h1.2M18.5 11.5h1.2M13.4 8.9l.8.8M17.8 13.3l.8.8M13.4 14.1l.8-.8M17.8 9.7l.8-.8" strokeWidth="1" />
+    <path d="M5.5 22.5l6-5.5 4 3.5 5.5-5 5.5 5.5" />
+  </svg>,
+  // 2. Stone, Metal and Glass Façade
+  <svg key="facade" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="6.5" y="5.5" width="19" height="21" rx="2" />
+    <path d="M12.5 5.5l-6 6M18.5 5.5l-12 12M24.5 5.5l-18 18M25.5 10.5l-13 13M25.5 16.5l-7 7" />
+    <path d="M4.5 9.5V4.5h5M22.5 27.5h5v-5" />
+  </svg>,
+  // 3. Biophilic Landscape
+  <svg key="landscape" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4.5 25.5h23" />
+    <path d="M16 7.5a4.5 5.5 0 0 1 0 11a4.5 5.5 0 0 1 0-11" />
+    <path d="M16 18.5v7M16 14.5l2.5-2M16 16.5l-2-1.8" />
+    <path d="M9.5 12.5a3.5 4.5 0 0 1 0 9a3.5 4.5 0 0 1 0-9" />
+    <path d="M9.5 21.5v4M9.5 17.5l2-1.5" />
+    <path d="M22.5 13a3.5 4.5 0 0 1 0 9a3.5 4.5 0 0 1 0-9" />
+    <path d="M22.5 22v3.5M22.5 18l-2-1.5" />
+    <circle cx="24.5" cy="8" r="1.8" />
+  </svg>,
+  // 4. Hospitality-Grade Double-Height Arrival Lobby with Café
+  <svg key="lobby" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="22" cy="7.5" r="2.2" />
+    <path d="M18.5 14a3.5 3.5 0 0 1 7 0" />
+    <path d="M22 10.5v3.5" />
+    <rect x="6.5" y="9" width="6.5" height="5" rx="1" />
+    <path d="M9.8 14v2M7.5 16h4.5" />
+    <rect x="5" y="16" width="22" height="9.5" rx="1.5" />
+    <rect x="8" y="18.5" width="16" height="4.5" rx="1" />
+  </svg>,
+  // 5. Column-Free Floor Plates
+  <svg key="floorplates" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="5" y="5" width="4.5" height="4.5" />
+    <path d="M5 5l4.5 4.5M9.5 5L5 9.5" strokeWidth="0.8" />
+    <rect x="5" y="22.5" width="4.5" height="4.5" />
+    <path d="M5 22.5l4.5 4.5M9.5 22.5L5 27" strokeWidth="0.8" />
+    <rect x="22.5" y="22.5" width="4.5" height="4.5" />
+    <path d="M22.5 22.5l4.5 4.5M27 22.5l-4.5 4.5" strokeWidth="0.8" />
+    <path d="M9.5 7h6M20 7h2.5M7 9.5v13M25 9.5v13M9.5 25h13" />
+    <path d="M16 5v5h4" />
+    <rect x="18" y="13" width="3" height="3" strokeDasharray="1.5 1.5" />
+    <rect x="18" y="18" width="3" height="3" strokeDasharray="1.5 1.5" />
+  </svg>,
+  // 6. Eight High-Speed Elevators
+  <svg key="elevators" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M6.5 26.5V9.5a3 3 0 0 1 3-3h13a3 3 0 0 1 3 3v17" />
+    <path d="M4.5 26.5h23" />
+    <rect x="8.5" y="9.5" width="7" height="17" />
+    <rect x="16.5" y="9.5" width="7" height="17" />
+    <circle cx="26" cy="16.5" r="1" />
+    <circle cx="26" cy="19.5" r="1" />
+  </svg>,
+  // 7. Natural Daylight on Every Side
+  <svg key="daylight" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="16" cy="16" r="4.8" />
+    <path d="M16 4v3.5M16 24.5V28M4 16h3.5M24.5 16H28M7.5 7.5l2.5 2.5M22 22l2.5 2.5M7.5 24.5l2.5-2.5M22 10l2.5-2.5M10.2 5.9l1.7 3.1M20.1 23l1.7 3.1M5.9 21.8l3.1-1.7M23 11.9l3.1-1.7" />
+  </svg>,
+];
+
 /* Line icons for the pillar 03 feature grid (order matches PILLARS[2].features). */
 const PILLAR_03_ICONS = [
   // LEED Gold rosette
@@ -193,7 +249,7 @@ function PillarFeature({
   panelClass?: string;
 }) {
   const [label, num] = pillar.number.split(" ");
-  const rowCountClass = pillar.features.length > 4 ? "is-6" : "is-4";
+  const rowCountClass = pillar.features.length > 6 ? "is-7" : pillar.features.length > 4 ? "is-6" : "is-4";
   return (
     <article className="pillar-feature" id={pillar.id}>
       <div className={`pf-panel ${panelClass}`} aria-hidden="true" />
@@ -203,8 +259,8 @@ function PillarFeature({
         <p className="pf-desc">{pillar.description}</p>
       </div>
       <figure className="pf-media">
-        <Image src={pillar.image} alt={pillar.alt} fill sizes="(max-width: 900px) 100vw, 92vw" className="pf-media-img" />
-        <figcaption>{pillar.id === "pillar-04" ? "Artistic impression" : "Representative image"}</figcaption>
+        <Image src={pillar.image} alt={pillar.alt} fill sizes="(max-width: 900px) 100vw, 92vw" className="pf-media-img" priority={pillar.id === "pillar-01"} />
+        <figcaption>{pillar.id === "pillar-04" || pillar.id === "pillar-02" ? "Artistic Impression" : "Representative image"}</figcaption>
       </figure>
       <div className="pf-features-wrap">
         <ul className={`pf-features ${rowCountClass}`}>
@@ -257,43 +313,16 @@ export function ProjectPillars() {
           if (idx === 0) {
             return <PillarFeature pillar={pillar} key={pillar.id} icons={PILLAR_01_ICONS} panelClass="pf-panel-sand" />;
           }
+          if (idx === 1) {
+            return <PillarFeature pillar={pillar} key={pillar.id} icons={PILLAR_02_ICONS} panelClass="pf-panel-leather" />;
+          }
           if (idx === 2) {
             return <PillarFeature pillar={pillar} key={pillar.id} icons={PILLAR_03_ICONS} panelClass="pf-panel-leather" />;
           }
           if (idx === 3) {
             return <PillarFeature pillar={pillar} key={pillar.id} icons={PILLAR_04_ICONS} panelClass="pf-panel-plaster" />;
           }
-          return (
-            <article className="pillar-editorial-slide" key={pillar.id} id={pillar.id}>
-            <div className="slide-content">
-              <div className="slide-eyebrow-line">
-                <span className="slide-num font-mono">0{idx + 1} / 04</span>
-                <span>{pillar.tabLabel}</span>
-              </div>
-              <h3 className="slide-title">{pillar.leadWord} {pillar.titleRest}</h3>
-            </div>
-            <div className="slide-panoramic-viewport">
-              <Image
-                src={pillar.image}
-                alt={pillar.alt}
-                fill
-                sizes={idx === 2 ? "(max-width: 600px) 300vw, 90vw" : "(max-width: 600px) 300vw, 150vw"}
-                className="slide-panoramic-img"
-              />
-              <span className="slide-caption-overlay">Artist&apos;s impression</span>
-            </div>
-            <div className="slide-details">
-              <p className="slide-lead-p">{pillar.description}</p>
-              <div>
-                <p className="slide-details-label">In practice</p>
-                <ul className="slide-specs-list">
-                  {pillar.features.map((feature) => <li key={feature.text}>{feature.text}</li>)}
-                </ul>
-                {pillar.footnote && <p className="spec-footnote">{pillar.footnote}</p>}
-              </div>
-            </div>
-          </article>
-          );
+          return null;
         })}
       </div>
     </section>

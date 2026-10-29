@@ -55,13 +55,11 @@ h1 em,h2 em{font-family:Georgia,serif;font-weight:400;font-style:italic;letter-s
 
 /* A quiet, persistent masthead — dark translucent bar floating seamlessly over content. */
 .site-header{position:fixed;z-index:30;inset:0 0 auto;height:72px;padding:0 var(--gutter);display:flex;align-items:center;justify-content:space-between;color:#ffffff;background:rgba(18,28,23,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08);box-shadow:0 4px 24px rgba(0,0,0,.15)}
-.site-header-left{display:flex;align-items:center;min-width:70px}
-.site-header-center{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;justify-content:center}
-.site-header-right{display:flex;align-items:center;justify-content:flex-end;min-width:70px}
-.wordmark{display:flex;align-items:center}
+.site-header-actions{display:flex;align-items:center;gap:clamp(10px,1.5vw,22px);margin-left:auto}
+.wordmark{display:flex;align-items:center;flex-shrink:0}
 .wordmark img{width:138px;height:auto;display:block;filter:brightness(0) invert(1)}
 
-/* Minimalist Left-end Hamburger Button */
+/* Minimalist right-end hamburger button */
 .menu-toggle{display:inline-flex;align-items:center;justify-content:center;border:0;background:transparent;padding:10px;color:#ffffff;cursor:pointer;transition:opacity .2s ease;min-width:44px;min-height:44px}
 .menu-toggle:hover{opacity:.75}
 .menu-burger{display:flex;flex-direction:column;justify-content:center;gap:4.5px;width:22px;height:14px}
@@ -187,10 +185,10 @@ h1 em,.reveal-copy em{color:#ddd8bd}
 .address-note>div span:last-child{font-size:var(--fs-micro);letter-spacing:.11em;text-transform:uppercase;color:#69745f}
 
 /* Scrollable worm's-eye architectural elevation animation */
-.worm-story{height:calc(260svh + var(--blend-lg) * 2);position:relative;background:#0F1216;color:var(--ivory);overflow:clip}
+.worm-story{height:calc(360svh + var(--blend-lg) * 2);position:relative;background:#0F1216;color:var(--ivory);overflow:clip}
 .worm-story::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 70% 45% at 50% 35%,rgba(195,172,123,.065) 0%,rgba(15,18,22,0) 70%);z-index:1}
 .worm-sticky{position:sticky;top:0;height:100svh;overflow:hidden}
-.worm-stage{position:absolute;inset:0;background:#0F1216 url('/section-2/frame-001.webp') center/cover}
+.worm-stage{position:absolute;inset:0;background:#0F1216 url('/section-2/frame-001.webp?v=5acc0008') center/cover}
 .worm-canvas{position:absolute;inset:0;display:block;width:100%;height:100%}
 .worm-vignette{display:none}
 .worm-captions{position:absolute;left:calc(var(--gutter) - 14px);right:30px;bottom:105px;pointer-events:none;z-index:2;max-width:720px}
@@ -313,12 +311,21 @@ h1 em,.reveal-copy em{color:#ddd8bd}
 .pf-desc{max-width:400px;margin:0;font-size:var(--fs-small);line-height:1.6;color:#3d3c38}
 .pf-media{grid-column:1/-1;position:relative;margin:24px 0 0;aspect-ratio:4.9/1;min-height:200px;overflow:hidden;background:#d9d2c5}
 .pf-media-img{object-fit:cover;object-position:center 60%;transition:transform 1.2s}
+#pillar-02 .pf-media-img{object-position:center bottom}
 #pillar-04 .pf-media-img{object-position:center 36%}
 .pf-media figcaption{position:absolute;left:14px;bottom:8px;font-size:var(--fs-micro);color:#fff;opacity:.85;text-shadow:0 1px 6px #14231a}
 .pf-features-wrap{grid-column:2;padding:20px 0 0 clamp(28px,6vw,96px)}
 .pf-features{display:grid;grid-template-columns:1fr 1fr;grid-auto-flow:column;gap:18px 36px;margin:0;padding:0;list-style:none}
 .pf-features.is-4{grid-template-rows:repeat(2,auto)}
 .pf-features.is-6{grid-template-rows:repeat(3,auto)}
+.pf-features.is-7{grid-template-rows:repeat(4,auto)}
+.pf-features.is-7 li:nth-child(1){grid-column:1;grid-row:1}
+.pf-features.is-7 li:nth-child(2){grid-column:1;grid-row:2}
+.pf-features.is-7 li:nth-child(3){grid-column:1;grid-row:3}
+.pf-features.is-7 li:nth-child(4){grid-column:2;grid-row:1}
+.pf-features.is-7 li:nth-child(5){grid-column:2;grid-row:2}
+.pf-features.is-7 li:nth-child(6){grid-column:2;grid-row:3}
+.pf-features.is-7 li:nth-child(7){grid-column:2;grid-row:4}
 .pf-features li{display:flex;align-items:flex-start;gap:14px;font-size:var(--fs-small);line-height:1.5;color:#2e2e2b}
 .pf-features li>span:last-child{padding-top:4px}
 .pf-icon{flex:none;width:28px;height:28px;color:#3a3a36}
@@ -440,6 +447,7 @@ h1 em,.reveal-copy em{color:#ddd8bd}
 .pillar-feature{grid-template-columns:1fr;margin-inline:calc(-1 * var(--gutter));width:auto;padding:60px var(--gutter) 65px}
 .pf-panel{width:100%;left:0;right:0;bottom:auto;height:290px}
 .pf-head,.pf-features-wrap{grid-column:1}.pf-features-wrap{padding-left:0;padding-top:28px}.pf-media{aspect-ratio:16/10;min-height:0}
+#pillar-02 .pf-media{aspect-ratio:2.2}
 .closing-main{gap:6vw}
 }
 @media(max-width:600px){
@@ -461,7 +469,7 @@ h1{margin:16px 0 18px}
 .address-note>div{border-left:0;border-top:1px solid var(--line);padding-left:0;padding-top:18px;display:flex;flex-direction:row;align-items:baseline;justify-content:space-between;width:100%}
 .address-note>div span:first-child{font-size:24px;line-height:1}
 .address-note>div span:last-child{font-size:11px}
-.worm-story{height:calc(220svh + var(--blend-lg) * 2)}
+.worm-story{height:calc(300svh + var(--blend-lg) * 2)}
 .worm-captions{left:var(--gutter);right:var(--gutter);bottom:85px;max-width:100%}
 .worm-copy h2{font-size:var(--fs-display);line-height:1.05;margin:12px 0}
 .worm-copy-desc{max-width:320px;font-size:14px;line-height:1.55}
@@ -935,7 +943,7 @@ html{scroll-behavior:auto}
 /* Horizontal Track */
 .amenity-marquee-viewport {
   overflow-x: auto;
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   cursor: grab;
   padding-right: var(--gutter);
   padding-bottom: 20px;
@@ -968,11 +976,18 @@ html{scroll-behavior:auto}
   box-shadow: 0 14px 34px rgba(10,24,18,0.08);
 }
 .amenity-card-visual {
+  display: block;
   position: relative;
+  width: 100%;
   aspect-ratio: 16/10;
   overflow: hidden;
   background: #d8ded5;
+  border: 0;
+  padding: 0;
+  text-align: left;
+  cursor: zoom-in;
 }
+.amenity-card-visual:focus-visible{outline:3px solid var(--gold);outline-offset:-3px}
 .amenity-card-img {
   object-fit: cover;
   transition: transform 0.8s ease;
@@ -1037,6 +1052,19 @@ html{scroll-behavior:auto}
   color: #55624f;
   margin: 0;
 }
+.amenity-lightbox{position:fixed;inset:auto;top:50%;left:50%;margin:0;width:max-content;max-width:94vw;max-height:94svh;padding:0;border:0;border-radius:5px;overflow:hidden;background:var(--ivory);color:var(--forest);box-shadow:0 24px 80px #0008;transform:translate(-50%,-50%)}
+.amenity-lightbox::backdrop{background:#0b1d17d9;backdrop-filter:blur(8px)}
+.amenity-lightbox[open]::backdrop{animation:amenity-backdrop-in .65s ease both}
+.amenity-lightbox[open] .amenity-lightbox-image img{animation:amenity-image-in .6s cubic-bezier(.2,.8,.2,1) both}
+@keyframes amenity-backdrop-in{from{opacity:0}to{opacity:1}}
+@keyframes amenity-image-in{from{opacity:.55}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.amenity-lightbox[open]::backdrop,.amenity-lightbox[open] .amenity-lightbox-image img{animation:none}}
+.amenity-lightbox-content{position:relative;padding:10px}
+.amenity-lightbox-image img{display:block;width:auto;height:auto;max-width:min(calc(94vw - 20px),1380px);max-height:calc(90svh - 86px);object-fit:contain}
+.amenity-lightbox-content>p{margin:0;padding:14px 6px 8px;text-align:center;font-family:var(--font-minion),Georgia,serif;font-size:clamp(19px,2vw,26px);line-height:1.2}
+.amenity-lightbox-close{position:absolute;top:22px;right:22px;z-index:1;display:grid;place-items:center;width:40px;height:40px;border:1px solid #fff9;border-radius:50%;background:#182d27cc;color:#fff;font-size:26px;line-height:1;cursor:pointer}
+.amenity-lightbox-close:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+@media(max-width:600px){.amenity-lightbox-content{padding:7px}.amenity-lightbox-image img{max-width:calc(94vw - 14px);max-height:calc(90svh - 72px)}.amenity-lightbox-close{top:17px;right:17px;width:36px;height:36px}}
 
 /* ==========================================================================
    4. PERSISTENT CONVERSION ARCHITECTURE & TRUST PILL

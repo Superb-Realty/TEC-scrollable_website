@@ -12,7 +12,6 @@ const links = [
   { num: "03", label: "Innovation Shaping Business", href: "#architecture" },
   { num: "04", label: "Four Pillars", href: "#pillars" },
   { num: "05", label: "Wellness & Amenities", href: "#amenities" },
-  { num: "06", label: "Powai & Vikhroli", href: "#vision" },
 ];
 
 export function Navigation() {
@@ -58,7 +57,26 @@ export function Navigation() {
   return (
     <>
       <header className="site-header" ref={headerRef}>
-        <div className="site-header-left">
+        <a
+          className="wordmark"
+          href="#top"
+          onClick={() => setOpen(false)}
+          aria-label={`${site.name}, back to top`}
+        >
+          <Image src={chamberLogo} alt={site.name} priority />
+        </a>
+
+        <div className="site-header-actions">
+          <button
+            type="button"
+            className="nav-enquire-btn"
+            onClick={() => {
+              setOpen(false);
+              openEnquiryModal();
+            }}
+          >
+            Enquire
+          </button>
           <button
             className={`menu-toggle ${open ? "is-active" : ""}`}
             type="button"
@@ -72,30 +90,6 @@ export function Navigation() {
               <span />
               <span />
             </span>
-          </button>
-        </div>
-
-        <div className="site-header-center">
-          <a
-            className="wordmark"
-            href="#top"
-            onClick={() => setOpen(false)}
-            aria-label={`${site.name}, back to top`}
-          >
-            <Image src={chamberLogo} alt={site.name} priority />
-          </a>
-        </div>
-
-        <div className="site-header-right">
-          <button
-            type="button"
-            className="nav-enquire-btn"
-            onClick={() => {
-              setOpen(false);
-              openEnquiryModal();
-            }}
-          >
-            Enquire
           </button>
         </div>
       </header>

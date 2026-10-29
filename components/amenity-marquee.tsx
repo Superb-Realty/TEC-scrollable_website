@@ -1,8 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
-import Image from "next/image";
+import { useEffect, useLayoutEffect, useRef, useState, useCallback } from "react";
+import Image, { type StaticImageData } from "next/image";
 import { openEnquiryModal } from "@/components/enquiry-modal";
+import elevatedWorkspace from "@/assets/amenities/13_Elevated Workspace.jpg";
+import urbanCourt from "@/assets/amenities/14_Urban Court.jpg";
+import twilightTerrace from "@/assets/amenities/15_Twilight Terrace.jpg";
+import sitoutGarden from "@/assets/amenities/16_Sitout Garden.jpg";
 
 interface AmenitySlide {
   id: string;
@@ -10,7 +14,7 @@ interface AmenitySlide {
   level: string;
   title: string;
   benefit: string;
-  image: string;
+  image: string | StaticImageData;
   alt: string;
 }
 
@@ -18,104 +22,130 @@ const AMENITY_SLIDES: AmenitySlide[] = [
   {
     id: "green-reserve",
     pill: "01 / Green Reserve",
-    level: "10,000 SQ. FT. DEDICATED",
-    title: "10,000 Sq.Ft. Dedicated Green Reserve",
-    benefit: "Natural light, greenery, cleaner air and biophilic landscape for greater comfort and balance.",
+    level: "LANDSCAPED RESERVE",
+    title: "Green Reserve",
+    benefit: "A quiet place to pause outdoors.",
     image: "/pillars/pillar-03.webp",
     alt: "Dedicated green reserve and biophilic landscape",
   },
   {
-    id: "rooftop-amenities",
-    pill: "02 / Rooftop Amenities",
-    level: "ROOFTOP BREAKOUT ZONES",
-    title: "Landscaped Rooftop with Breakout Zones",
-    benefit: "Triple-side views across mangroves, mountains and city with spaces to pause, connect and recharge.",
-    image: "/pillars/Pillar_04.png",
-    alt: "Landscaped rooftop with breakout zones",
+    id: "elevated-workspace",
+    pill: "02 / Elevated Workspace",
+    level: "ROOFTOP AMENITIES",
+    title: "Elevated Workspace",
+    benefit: "Work and downtime above the city.",
+    image: elevatedWorkspace,
+    alt: "Aerial view of rooftop work, garden and recreation spaces",
   },
   {
-    id: "arrival-lobby",
-    pill: "03 / Hospitality Lobby",
-    level: "GROUND + 1ST FLOOR",
-    title: "Hospitality-Grade Double-Height Arrival Lobby with Café",
-    benefit: "Biophilic arrival experience with ground + 1st floor high-street retail at the base.",
-    image: "/pillars/pillar-01.webp",
-    alt: "Hospitality-grade double-height arrival lobby with café",
+    id: "urban-court",
+    pill: "03 / Urban Court",
+    level: "OUTDOOR RECREATION",
+    title: "Urban Court",
+    benefit: "A court for a quick reset.",
+    image: urbanCourt,
+    alt: "Outdoor racket court surrounded by rooftop planting",
   },
   {
-    id: "triple-view",
-    pill: "04 / Triple-Side Views",
-    level: "NATURAL DAYLIGHT",
-    title: "Triple-Side Views - Mangroves, Mountains and City",
-    benefit: "Contemporary façade comprising of stone, metal & glass with natural daylight on every side.",
-    image: "/sequence/frame-192.webp",
-    alt: "Triple-side views across mangroves, mountains and city",
+    id: "twilight-terrace",
+    pill: "04 / Twilight Terrace",
+    level: "OPEN-AIR TERRACE",
+    title: "Twilight Terrace",
+    benefit: "Meet and unwind in the open air.",
+    image: twilightTerrace,
+    alt: "Covered terrace with seating and a green lawn at dusk",
   },
   {
-    id: "aqi-wellness",
-    pill: "05 / AQI Infrastructure",
-    level: "COMMON AREAS",
-    title: "AQI Infrastructure in Common Areas",
-    benefit: "Cleaner air and spaces to pause, connect and recharge bring greater comfort and balance to the working day.",
-    image: "/urban_elegance.webp",
-    alt: "AQI infrastructure in common areas",
-  },
-  {
-    id: "retail-dining",
-    pill: "06 / High-Street Retail",
-    level: "GROUND + 1ST FLOOR",
-    title: "Retail and Dining at the Base",
-    benefit: "Reserved indoor amenity space and 100% parking provision across five levels.",
-    image: "/pillars/pillar-02.webp",
-    alt: "Retail and dining at the base",
+    id: "sitout-garden",
+    pill: "05 / Sitout Garden",
+    level: "GARDEN SITOUT",
+    title: "Sitout Garden",
+    benefit: "A green space to connect and recharge.",
+    image: sitoutGarden,
+    alt: "Landscaped garden with seating beside the building",
   },
 ];
 
 export function AmenityMarquee() {
   const marqueeRef = useRef<HTMLDivElement>(null);
-  const [isPaused, setIsPaused] = useState(false);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const openOriginRef = useRef<DOMRect | null>(null);
+  const openingAnimationRef = useRef<Animation | null>(null);
+  const [selectedSlide, setSelectedSlide] = useState<AmenitySlide | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const isDragging = useRef(false);
+  const wasDragged = useRef(false);
   const startX = useRef(0);
   const scrollLeftStart = useRef(0);
+
+  useLayoutEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    if (selectedSlide && !dialog.open) {
+      openingAnimationRef.current?.cancel();
+      dialog.showModal();
+      const origin = openOriginRef.current;
+      if (origin && typeof dialog.animate === "function" && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        const destination = dialog.getBoundingClientRect();
+        const dx = origin.left + origin.width / 2 - destination.left - destination.width / 2;
+        const dy = origin.top + origin.height / 2 - destination.top - destination.height / 2;
+        const scale = Math.max(0.35, Math.min(0.8, origin.width / destination.width));
+        const animation = dialog.animate([
+          { opacity: 0.3, transform: `translate(-50%, -50%) translate(${dx}px, ${dy}px) scale(${scale})`, filter: "blur(8px)" },
+          { opacity: 1, transform: "translate(-50%, -50%) scale(1)", filter: "blur(0px)" },
+        ], { duration: 700, easing: "cubic-bezier(.16, 1, .3, 1)", fill: "both" });
+        openingAnimationRef.current = animation;
+        animation.onfinish = () => {
+          animation.cancel();
+          if (openingAnimationRef.current === animation) openingAnimationRef.current = null;
+        };
+      }
+    }
+    if (!selectedSlide && dialog.open) dialog.close();
+  }, [selectedSlide]);
 
   // Auto-pan marquee smoothly
   useEffect(() => {
     const el = marqueeRef.current;
-    if (!el || isPaused) return;
+    if (!el) return;
 
     let animId: number;
-    const speed = 0.65; // pixels per frame
+    let lastFrame = 0;
+    const speed = 65; // pixels per second
+    const cards = el.querySelectorAll<HTMLElement>(".amenity-slide-card");
 
-    const step = () => {
-      if (!isPaused && el) {
-        el.scrollLeft += speed;
-        // Infinite loop wrap-around logic
-        const maxScroll = el.scrollWidth - el.clientWidth;
-        if (el.scrollLeft >= maxScroll - 4) {
-          el.scrollLeft = 0;
-        }
+    const step = (time: number) => {
+      if (lastFrame && !isDragging.current) {
+        el.scrollLeft += Math.min(time - lastFrame, 50) * speed / 1000;
+        const loopPoint = cards.length > AMENITY_SLIDES.length
+          ? cards[AMENITY_SLIDES.length].offsetLeft - cards[0].offsetLeft
+          : 0;
+        if (loopPoint && el.scrollLeft >= loopPoint) el.scrollLeft -= loopPoint;
       }
+      lastFrame = time;
       animId = requestAnimationFrame(step);
     };
 
     animId = requestAnimationFrame(step);
     return () => cancelAnimationFrame(animId);
-  }, [isPaused]);
+  }, []);
 
   // Track active slide based on scroll
   const handleScroll = useCallback(() => {
     const el = marqueeRef.current;
     if (!el) return;
-    const cardWidth = 380;
-    const index = Math.round(el.scrollLeft / cardWidth) % AMENITY_SLIDES.length;
+    const cards = el.querySelectorAll<HTMLElement>(".amenity-slide-card");
+    const cardStep = cards.length > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : 1;
+    const index = Math.round(el.scrollLeft / cardStep) % AMENITY_SLIDES.length;
     setActiveIndex(index);
   }, []);
 
   const scrollByAmount = (direction: -1 | 1) => {
     const el = marqueeRef.current;
     if (!el) return;
-    const scrollAmount = 390 * direction;
+    const cards = el.querySelectorAll<HTMLElement>(".amenity-slide-card");
+    const cardStep = cards.length > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : 390;
+    const scrollAmount = cardStep * direction;
     el.scrollBy({ left: scrollAmount, behavior: "smooth" });
   };
 
@@ -124,6 +154,7 @@ export function AmenityMarquee() {
     const el = marqueeRef.current;
     if (!el) return;
     isDragging.current = true;
+    wasDragged.current = false;
     startX.current = e.pageX - el.offsetLeft;
     scrollLeftStart.current = el.scrollLeft;
   };
@@ -135,6 +166,7 @@ export function AmenityMarquee() {
     if (!el) return;
     const x = e.pageX - el.offsetLeft;
     const walk = (x - startX.current) * 1.5;
+    if (Math.abs(walk) > 6) wasDragged.current = true;
     el.scrollLeft = scrollLeftStart.current - walk;
   };
 
@@ -151,14 +183,9 @@ export function AmenityMarquee() {
       <div className="amenity-layout">
         {/* Sticky Editorial Left Column */}
         <div className="amenity-editorial-sticky">
-          <p className="eyebrow">WELLNESS ENABLING NEXT-GEN OFFICE CULTURE</p>
-          <h2 id="amenities-marquee-title" className="amenity-editorial-title">
-            WELLNESS ENABLING<br />
-            <em>NEXT-GEN OFFICE CULTURE.</em>
-          </h2>
-          <p className="amenity-editorial-copy">
-            Natural light, greenery, cleaner air and spaces to pause, connect and recharge bring greater comfort and balance to the working day.
-          </p>
+          <p className="eyebrow">THE EASTERN CHAMBERS</p>
+          <h2 id="amenities-marquee-title" className="amenity-editorial-title">AMENITIES.</h2>
+          <p className="amenity-editorial-copy">Pause. Play. Connect.</p>
 
           <div className="amenity-nav-controls">
             <div className="amenity-arrows">
@@ -185,9 +212,7 @@ export function AmenityMarquee() {
               <span>
                 {String(activeIndex + 1).padStart(2, "0")} / {String(AMENITY_SLIDES.length).padStart(2, "0")}
               </span>
-              <span className="amenity-pause-note font-mono">
-                {isPaused ? "PAUSED" : "AUTO-FLOW"}
-              </span>
+              <span className="amenity-pause-note font-mono">AUTO-FLOW</span>
             </div>
           </div>
 
@@ -206,11 +231,7 @@ export function AmenityMarquee() {
         <div
           className="amenity-marquee-viewport"
           ref={marqueeRef}
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => {
-            setIsPaused(false);
-            isDragging.current = false;
-          }}
+          onMouseLeave={() => { isDragging.current = false; }}
           onMouseDown={onMouseDown}
           onMouseMove={onMouseMove}
           onMouseUp={onMouseUp}
@@ -227,7 +248,19 @@ export function AmenityMarquee() {
                 className="amenity-slide-card"
                 aria-label={slide.title}
               >
-                <div className="amenity-card-visual">
+                <button
+                  type="button"
+                  className="amenity-card-visual"
+                  aria-label={`Enlarge ${slide.title} image`}
+                  onClick={(event) => {
+                    if (wasDragged.current) {
+                      wasDragged.current = false;
+                      return;
+                    }
+                    openOriginRef.current = event.currentTarget.getBoundingClientRect();
+                    setSelectedSlide(slide);
+                  }}
+                >
                   <Image
                     src={slide.image}
                     alt={slide.alt}
@@ -246,7 +279,7 @@ export function AmenityMarquee() {
 
                   {/* Level Tag */}
                   <span className="amenity-level-tag font-mono">{slide.level}</span>
-                </div>
+                </button>
 
                 <div className="amenity-card-content">
                   <h3 className="amenity-card-title">{slide.title}</h3>
@@ -257,6 +290,30 @@ export function AmenityMarquee() {
           </div>
         </div>
       </div>
+      <dialog
+        ref={dialogRef}
+        className="amenity-lightbox"
+        aria-label={selectedSlide ? `${selectedSlide.title} enlarged image` : "Enlarged amenity image"}
+        onClose={() => setSelectedSlide(null)}
+        onClick={() => dialogRef.current?.close()}
+      >
+        {selectedSlide && (
+          <div className="amenity-lightbox-content">
+            <button type="button" className="amenity-lightbox-close" aria-label="Close enlarged image" onClick={() => dialogRef.current?.close()}>×</button>
+            <div className="amenity-lightbox-image">
+              <Image
+                src={selectedSlide.image}
+                alt={selectedSlide.alt}
+                width={typeof selectedSlide.image === "string" ? 2560 : selectedSlide.image.width}
+                height={typeof selectedSlide.image === "string" ? 852 : selectedSlide.image.height}
+                sizes="(max-width: 768px) 94vw, 90vw"
+                placeholder={typeof selectedSlide.image === "string" ? "empty" : "blur"}
+              />
+            </div>
+            <p>{selectedSlide.title}</p>
+          </div>
+        )}
+      </dialog>
     </section>
   );
 }

@@ -9,15 +9,9 @@ import { useEffect } from "react";
  * is hidden without JavaScript or when reduced motion is requested.
  */
 const TARGETS = [
-  ".address-note > *",
   ".benchmarks-title",
   ".benchmarks-intro",
   ".benchmarks-footnote",
-  ".breakdown-heading",
-  ".breakdown-intro > p",
-  ".breakdown-scroll-note",
-  ".breakdown-details > .eyebrow",
-  ".breakdown-detail-grid > article",
   ".architecture-heading > .eyebrow",
   ".architecture-heading > h2",
   ".architecture-copy > p",
@@ -26,11 +20,6 @@ const TARGETS = [
   ".pillars-heading > h2",
   ".pillars-intro",
   ".pf-head",
-  ".vision-top",
-  ".vision h2",
-  ".vision-bottom > *",
-  ".closing-top",
-  ".closing-copy > *",
 ].join(",");
 
 export function SectionReveal() {

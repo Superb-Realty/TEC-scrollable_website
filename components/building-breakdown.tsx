@@ -152,26 +152,14 @@ export function BuildingBreakdown() {
     };
   }, [reducedMotion]);
 
-  return <section className="breakdown blend-in blend-out" id="breakdown" aria-labelledby="breakdown-title">
-    <div className="breakdown-intro">
-      <div className="breakdown-heading"><p className="eyebrow light">THE CHAMBERS OF CORPORATE POWER</p><h2 id="breakdown-title">THE CHAMBERS OF<br /><em>CORPORATE POWER.</em></h2></div>
-      <p>Strategically positioned on LBS Marg, The Eastern Chambers brings together Grade A+ commercial assets with intelligent design, integrated infrastructure and high-speed connectivity access in one future-ready address.</p>
-      <span className="breakdown-scroll-note">The Future Works Here<span aria-hidden="true">↓</span></span>
-    </div>
+  return <section className="breakdown blend-in blend-out" id="breakdown" aria-label="Building architectural cutaway breakdown">
+    <h2 className="sr-only">Building Cutaway Breakdown</h2>
     <div className={reducedMotion ? "breakdown-sequence is-still" : "breakdown-sequence"} ref={sequenceRef}>
       <div className="breakdown-sticky">
         {reducedMotion
           ? <img className="breakdown-still" src={frameSrc(FRAME_COUNT - 1)} alt="The Eastern Chambers cutaway showing 1st - 17th floor commercial workspaces, contemporary facade, boutique offices, podium amenities and parking" />
           : <canvas ref={canvasRef} role="img" aria-label="Scroll controlled architectural cutaway of The Eastern Chambers, showing rooftop amenities, commercial workspaces, boutique offices and podium amenities" />}
         {!reducedMotion && <div className="breakdown-progress" aria-hidden="true"><div ref={progressRef} /></div>}
-      </div>
-    </div>
-    <div className="breakdown-details" aria-label="Building features">
-      <p className="eyebrow light">GRADE A+ COMMERCIAL WORKSPACES</p>
-      <div className="breakdown-detail-grid">
-        <article><span className="font-mono">01 / ROOFTOP</span><h3>Rooftop Amenities</h3><p>Contemporary Façade Comprising of Stone, Metal &amp; Glass with 11’4” Floor-to-Floor Height.</p></article>
-        <article><span className="font-mono">02 / WORKSPACES</span><h3>1st - 17th Floor Commercial Workspaces</h3><p>Boutique Offices Starting at <strong className="font-mono">391 Sq.Ft.</strong> and <strong className="font-mono">13,500 Sq.Ft.</strong> Full Floors, Column-Free.</p></article>
-        <article><span className="font-mono">03 / PODIUM</span><h3>Podium Amenities &amp; Arrival</h3><p>Ground + 1st Floor Hospitality Lobby &amp; High-Street Retail with <strong className="font-mono">100%</strong> Parking Provision Across Five Levels.</p></article>
       </div>
     </div>
   </section>;
