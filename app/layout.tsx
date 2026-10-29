@@ -27,8 +27,8 @@ const ibmMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "The Eastern Chambers | Grade A+ Commercial Landmark",
-  description: "A cinematic introduction to The Eastern Chambers, where nature reveals future-ready commercial architecture.",
+  title: "The Eastern Chambers | Grade A+ Commercial Workspaces",
+  description: "Grade A+ Commercial Workspaces Designed for the Businesses of Tomorrow. Strategically positioned on LBS Marg, Vikhroli West.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

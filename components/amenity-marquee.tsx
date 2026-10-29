@@ -16,58 +16,58 @@ interface AmenitySlide {
 
 const AMENITY_SLIDES: AmenitySlide[] = [
   {
-    id: "sky-lounge",
-    pill: "01 / Sky Lounge & Terrace",
-    level: "LEVEL 36 • ROOFTOP",
-    title: "Panoramic Skyline Breakouts",
-    benefit: "Open-air rooftop terrace with expansive mangrove horizons for executive downtime and informal deals.",
-    image: "/pillars/Pillar_04.png",
-    alt: "Landscaped rooftop amenity deck with loungers and sweeping city views",
-  },
-  {
-    id: "biophilic-deck",
-    pill: "02 / Biophilic Green Reserve",
-    level: "PODIUM DECK • 10,000 SQ. FT.",
-    title: "Oxygen-Rich Workstations",
-    benefit: "10,000 sq. ft. dedicated landscaped park with outdoor power ports and high-speed campus Wi-Fi.",
+    id: "green-reserve",
+    pill: "01 / Green Reserve",
+    level: "10,000 SQ. FT. DEDICATED",
+    title: "10,000 Sq.Ft. Dedicated Green Reserve",
+    benefit: "Natural light, greenery, cleaner air and biophilic landscape for greater comfort and balance.",
     image: "/pillars/pillar-03.webp",
-    alt: "Lush landscaped terrace deck with contemporary timber seating and greenery",
+    alt: "Dedicated green reserve and biophilic landscape",
   },
   {
-    id: "triple-view",
-    pill: "03 / Triple-Side Glass Façade",
-    level: "FLOORS 1–35 • FULL PERIMETER",
-    title: "Natural Daylight on Every Side",
-    benefit: "Acoustically insulated double-glazed curtain wall with unobstructed city, mountain, and mangrove vistas.",
-    image: "/sequence/frame-192.webp",
-    alt: "The Eastern Chambers glass facade rising majestically above the green reserve",
+    id: "rooftop-amenities",
+    pill: "02 / Rooftop Amenities",
+    level: "ROOFTOP BREAKOUT ZONES",
+    title: "Landscaped Rooftop with Breakout Zones",
+    benefit: "Triple-side views across mangroves, mountains and city with spaces to pause, connect and recharge.",
+    image: "/pillars/Pillar_04.png",
+    alt: "Landscaped rooftop with breakout zones",
   },
   {
     id: "arrival-lobby",
-    pill: "04 / Grand Arrival Atrium",
-    level: "GROUND LEVEL • 8.5M ATRIUM",
-    title: "Hospitality-Led First Impression",
-    benefit: "Double-height lobby with concierge check-in, biometric speed-gates, and an artisanal espresso bar.",
+    pill: "03 / Hospitality Lobby",
+    level: "GROUND + 1ST FLOOR",
+    title: "Hospitality-Grade Double-Height Arrival Lobby with Café",
+    benefit: "Biophilic arrival experience with ground + 1st floor high-street retail at the base.",
     image: "/pillars/pillar-01.webp",
-    alt: "Grand architectural entrance and arrival lobby at dusk",
+    alt: "Hospitality-grade double-height arrival lobby with café",
+  },
+  {
+    id: "triple-view",
+    pill: "04 / Triple-Side Views",
+    level: "NATURAL DAYLIGHT",
+    title: "Triple-Side Views - Mangroves, Mountains and City",
+    benefit: "Contemporary façade comprising of stone, metal & glass with natural daylight on every side.",
+    image: "/sequence/frame-192.webp",
+    alt: "Triple-side views across mangroves, mountains and city",
   },
   {
     id: "aqi-wellness",
-    pill: "05 / Pure Air & Executive Health",
-    level: "TOWER-WIDE • IBMS CONTROLLED",
-    title: "Smart Indoor Environmental Quality",
-    benefit: "Centralized MERV-13 air filtration with real-time AQI monitoring to keep workforce energy peak all day.",
+    pill: "05 / AQI Infrastructure",
+    level: "COMMON AREAS",
+    title: "AQI Infrastructure in Common Areas",
+    benefit: "Cleaner air and spaces to pause, connect and recharge bring greater comfort and balance to the working day.",
     image: "/urban_elegance.webp",
-    alt: "Architectural dusk perspective representing intelligent building performance",
+    alt: "AQI infrastructure in common areas",
   },
   {
     id: "retail-dining",
-    pill: "06 / High-Street Retail & Dining",
-    level: "GROUND & MEZZANINE • G+1",
-    title: "Curated Culinary Promenade",
-    benefit: "On-site gourmet dining, grab-and-go health delis, and executive business lunch venues at your doorstep.",
+    pill: "06 / High-Street Retail",
+    level: "GROUND + 1ST FLOOR",
+    title: "Retail and Dining at the Base",
+    benefit: "Reserved indoor amenity space and 100% parking provision across five levels.",
     image: "/pillars/pillar-02.webp",
-    alt: "Retail and commercial base integrated with pedestrian plazas",
+    alt: "Retail and dining at the base",
   },
 ];
 
@@ -144,22 +144,20 @@ export function AmenityMarquee() {
 
   return (
     <section
-      className="amenity-marquee-section blend-in blend-sm blend-out blend-out-sm"
+      className="amenity-marquee-section"
       id="amenities"
       aria-labelledby="amenities-marquee-title"
     >
       <div className="amenity-layout">
         {/* Sticky Editorial Left Column */}
         <div className="amenity-editorial-sticky">
-          <p className="eyebrow">03.2 / AMENITIES &amp; LIFESTYLE MATRIX</p>
+          <p className="eyebrow">WELLNESS ENABLING NEXT-GEN OFFICE CULTURE</p>
           <h2 id="amenities-marquee-title" className="amenity-editorial-title">
-            Where a walk through nature isn’t a weekend getaway—<br />
-            <em>it’s your lunch break.</em>
+            WELLNESS ENABLING<br />
+            <em>NEXT-GEN OFFICE CULTURE.</em>
           </h2>
           <p className="amenity-editorial-copy">
-            Static office parks belong to the past. The Eastern Chambers is built for the
-            modern enterprise where executive recovery, biophilic serenity, and high-impact
-            work seamlessly intersect.
+            Natural light, greenery, cleaner air and spaces to pause, connect and recharge bring greater comfort and balance to the working day.
           </p>
 
           <div className="amenity-nav-controls">
@@ -199,7 +197,7 @@ export function AmenityMarquee() {
               className="btn-amenity-schedule"
               onClick={() => openEnquiryModal()}
             >
-              Schedule Private Campus Walkthrough <span aria-hidden="true">→</span>
+              Begin a conversation <span aria-hidden="true">→</span>
             </button>
           </div>
         </div>

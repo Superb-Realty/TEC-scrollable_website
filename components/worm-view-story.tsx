@@ -226,29 +226,17 @@ export function WormViewStory() {
         <div className="worm-captions" aria-live="polite">
           {activeChapter === "arrival" && (
             <motion.div className="worm-copy" style={{ opacity: arrivalOpacity }}>
-              <p className="eyebrow light">THE ARRIVAL <span>/</span> PLAZA & SCALE</p>
-              <h2>From the ground up,<br /><em>built to inspire.</em></h2>
-              <p className="worm-copy-desc">A grand arrival plaza welcomes ambitious enterprises to a workplace of uncommon presence.</p>
+              <h2>THE CHAMBERS OF<br /><em>CORPORATE POWER.</em></h2>
             </motion.div>
           )}
 
           {activeChapter === "summit" && (
             <motion.div className="worm-copy" style={{ opacity: summitOpacity }}>
-              <p className="eyebrow light">THE SUMMIT</p>
-              <h2>A soaring<br /><em>vertical statement.</em></h2>
-              <p className="worm-copy-desc">Reaching toward tomorrow with uncompromising architectural clarity.</p>
+              <p className="eyebrow light">1ST - 17TH FLOOR</p>
+              <h2>Contemporary Façade<br /><em>Stone, Metal &amp; Glass</em></h2>
+              <p className="worm-copy-desc">Commercial workspaces with 13,500 Sq.Ft. column-free full floors, boutique offices starting at 391 Sq.Ft., 11’4” floor-to-floor height and rooftop amenities.</p>
             </motion.div>
           )}
-        </div>
-
-        <div className="worm-hud">
-          <div className="worm-scroll-indicator">
-            <span>↓</span>
-            <span>Scroll to ascend</span>
-          </div>
-          <div className="worm-progress-track">
-            <div ref={progressRef} className="worm-progress-bar" />
-          </div>
         </div>
       </div>
     </section>

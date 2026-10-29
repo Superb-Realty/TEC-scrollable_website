@@ -11,10 +11,10 @@ interface FormState {
 }
 
 const AREA_PRESETS = [
-  "5,000 – 10,000 sq. ft.",
-  "10,000 – 25,000 sq. ft.",
-  "25,000 – 50,000 sq. ft.",
-  "Full Floor / 50k+ sq. ft.",
+  "From 391 Sq.Ft. (Boutique Offices)",
+  "5,000 – 10,000 Sq.Ft.",
+  "13,500 Sq.Ft. (Full Floors, Column-Free)",
+  "Multiple Floors / Custom Requirement",
 ];
 
 const BUDGET_PRESETS = [
@@ -281,10 +281,10 @@ export function EnquiryModal() {
         ) : (
           <div className="modal-body">
             <div className="modal-header">
-              <p className="eyebrow light">EASTERN CHAMBER • LEASING DESK</p>
+              <p className="eyebrow light">THE EASTERN CHAMBERS • COMMERCIAL WORKSPACES</p>
               <h2 id="enquiry-modal-title">Commercial Enquiry</h2>
               <p className="modal-subtitle">
-                Reserve space, request architectural specification decks, or schedule a private preview walkthrough.
+                Designed for institutional occupiers, established enterprises and luxury boutique businesses.
               </p>
               <div className="modal-direct-contact">
                 <span className="modal-direct-label font-mono">DIRECT LEASING HOTLINE:</span>

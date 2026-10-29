@@ -154,24 +154,24 @@ export function BuildingBreakdown() {
 
   return <section className="breakdown blend-in blend-out" id="breakdown" aria-labelledby="breakdown-title">
     <div className="breakdown-intro">
-      <div className="breakdown-heading"><p className="eyebrow light">02 / THE BUILDING</p><h2 id="breakdown-title">Inside the<br /><em>architecture.</em></h2></div>
-      <p>Explore the layers of The Eastern Chamber, from its rooftop amenities and commercial workspaces to the podium below.</p>
-      <span className="breakdown-scroll-note">Scroll to experience<span aria-hidden="true">↓</span></span>
+      <div className="breakdown-heading"><p className="eyebrow light">THE CHAMBERS OF CORPORATE POWER</p><h2 id="breakdown-title">THE CHAMBERS OF<br /><em>CORPORATE POWER.</em></h2></div>
+      <p>Strategically positioned on LBS Marg, The Eastern Chambers brings together Grade A+ commercial assets with intelligent design, integrated infrastructure and high-speed connectivity access in one future-ready address.</p>
+      <span className="breakdown-scroll-note">The Future Works Here<span aria-hidden="true">↓</span></span>
     </div>
     <div className={reducedMotion ? "breakdown-sequence is-still" : "breakdown-sequence"} ref={sequenceRef}>
       <div className="breakdown-sticky">
         {reducedMotion
-          ? <img className="breakdown-still" src={frameSrc(FRAME_COUNT - 1)} alt="Cutaway of The Eastern Chamber showing commercial workspaces, a contemporary facade, boutique offices, podium amenities and parking" />
-          : <canvas ref={canvasRef} role="img" aria-label="Scroll controlled architectural cutaway of The Eastern Chamber, revealing rooftop amenities, commercial workspaces, boutique offices and the podium" />}
+          ? <img className="breakdown-still" src={frameSrc(FRAME_COUNT - 1)} alt="The Eastern Chambers cutaway showing 1st - 17th floor commercial workspaces, contemporary facade, boutique offices, podium amenities and parking" />
+          : <canvas ref={canvasRef} role="img" aria-label="Scroll controlled architectural cutaway of The Eastern Chambers, showing rooftop amenities, commercial workspaces, boutique offices and podium amenities" />}
         {!reducedMotion && <div className="breakdown-progress" aria-hidden="true"><div ref={progressRef} /></div>}
       </div>
     </div>
     <div className="breakdown-details" aria-label="Building features">
-      <p className="eyebrow light">THE BUILDING / AT A GLANCE</p>
+      <p className="eyebrow light">GRADE A+ COMMERCIAL WORKSPACES</p>
       <div className="breakdown-detail-grid">
-        <article><span className="font-mono">01 / ABOVE</span><h3>Rooftop amenities</h3><p>Rooftop space sits above a contemporary facade of stone, metal and glass.</p></article>
-        <article><span className="font-mono">02 / WITHIN</span><h3>Flexible workspaces</h3><p>Commercial floors <strong className="font-mono">1–17</strong>, boutique offices from <strong className="font-mono">400 SQ. FT.</strong> and <strong className="font-mono">12,500 SQ. FT.</strong> full floors.</p></article>
-        <article><span className="font-mono">03 / BELOW</span><h3>Podium &amp; arrival</h3><p>Podium amenities, an <strong className="font-mono">8.5M</strong> hospitality lobby, high-street retail and <strong className="font-mono">8</strong> levels of parking.</p></article>
+        <article><span className="font-mono">01 / ROOFTOP</span><h3>Rooftop Amenities</h3><p>Contemporary Façade Comprising of Stone, Metal &amp; Glass with 11’4” Floor-to-Floor Height.</p></article>
+        <article><span className="font-mono">02 / WORKSPACES</span><h3>1st - 17th Floor Commercial Workspaces</h3><p>Boutique Offices Starting at <strong className="font-mono">391 Sq.Ft.</strong> and <strong className="font-mono">13,500 Sq.Ft.</strong> Full Floors, Column-Free.</p></article>
+        <article><span className="font-mono">03 / PODIUM</span><h3>Podium Amenities &amp; Arrival</h3><p>Ground + 1st Floor Hospitality Lobby &amp; High-Street Retail with <strong className="font-mono">100%</strong> Parking Provision Across Five Levels.</p></article>
       </div>
     </div>
   </section>;

@@ -7,13 +7,12 @@ import chamberLogo from "@/assets/the_eastern_chambers_logo/the_eastern_chambers
 import { openEnquiryModal } from "@/components/enquiry-modal";
 
 const links = [
-  { num: "01", label: "Proof of scale", href: "#quick-facts" },
-  { num: "02", label: "Benchmarks", href: "#benchmarks" },
-  { num: "03", label: "The building", href: "#breakdown" },
-  { num: "04", label: "Architecture", href: "#architecture" },
-  { num: "05", label: "The pillars", href: "#pillars" },
-  { num: "06", label: "Amenities & lifestyle", href: "#amenities" },
-  { num: "07", label: "Vision", href: "#vision" },
+  { num: "01", label: "Three Global Benchmarks", href: "#benchmarks" },
+  { num: "02", label: "The Chambers of Corporate Power", href: "#breakdown" },
+  { num: "03", label: "Innovation Shaping Business", href: "#architecture" },
+  { num: "04", label: "Four Pillars", href: "#pillars" },
+  { num: "05", label: "Wellness & Amenities", href: "#amenities" },
+  { num: "06", label: "Powai & Vikhroli", href: "#vision" },
 ];
 
 export function Navigation() {
@@ -156,7 +155,7 @@ export function Navigation() {
           </button>
           <div className="nav-drawer-meta">
             <span className="nav-drawer-brand">The Eastern Chambers</span>
-            <span className="nav-drawer-sub">Grade A+ Commercial Workspace</span>
+            <span className="nav-drawer-sub">Grade A+ Commercial Workspaces</span>
           </div>
         </div>
       </aside>
