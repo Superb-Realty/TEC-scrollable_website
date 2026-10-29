@@ -1404,17 +1404,12 @@ html{scroll-behavior:auto}
   position: relative;
   z-index: 1;
   isolation: isolate;
-  background: #101c17;
-  color: #f4f3ef;
-  padding: 85px var(--gutter) 95px;
-  overflow: hidden;
-  border-top: 1px solid rgba(200, 178, 127, 0.15);
-  border-bottom: 1px solid rgba(200, 178, 127, 0.15);
-}
-
-.tec-locality-section.theme-light {
   background: #e7e7dc;
   color: #182d27;
+  padding: 85px var(--gutter) 95px;
+  overflow: hidden;
+  border-top: 1px solid rgba(24, 45, 39, 0.12);
+  border-bottom: 1px solid rgba(24, 45, 39, 0.12);
 }
 
 .tec-locality-header {
@@ -1435,12 +1430,8 @@ html{scroll-behavior:auto}
   font-size: 12px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #c8b27f;
-  font-weight: 600;
-}
-
-.theme-light .tec-eyebrow {
   color: #68735d;
+  font-weight: 600;
 }
 
 .tec-status-pill {
@@ -1449,17 +1440,11 @@ html{scroll-behavior:auto}
   gap: 8px;
   padding: 6px 14px;
   border-radius: 999px;
-  background: rgba(200, 178, 127, 0.12);
-  border: 1px solid rgba(200, 178, 127, 0.3);
+  background: rgba(24, 45, 39, 0.06);
+  border: 1px solid rgba(24, 45, 39, 0.15);
   font-family: var(--font-mono), monospace;
   font-size: 11px;
   letter-spacing: 0.05em;
-  color: #e5d7ba;
-}
-
-.theme-light .tec-status-pill {
-  background: rgba(24, 45, 39, 0.06);
-  border-color: rgba(24, 45, 39, 0.15);
   color: #182d27;
 }
 
@@ -1492,17 +1477,13 @@ html{scroll-behavior:auto}
   font-weight: 300;
   letter-spacing: -0.035em;
   margin: 0;
-  color: inherit;
+  color: #182d27;
 }
 
 .tec-locality-title em {
   font-family: var(--font-proxima), Arial, sans-serif;
   font-style: normal;
   font-weight: 300;
-  color: inherit;
-}
-
-.theme-light .tec-locality-title em {
   color: inherit;
 }
 
@@ -1518,10 +1499,6 @@ html{scroll-behavior:auto}
   line-height: 1.55;
   font-weight: 300;
   margin: 0;
-  color: #b8c7bf;
-}
-
-.theme-light .tec-locality-description p {
   color: #586551;
 }
 
@@ -1533,16 +1510,10 @@ html{scroll-behavior:auto}
   margin: 0 auto;
   display: grid;
   grid-template-columns: 360px 1fr;
-  background: #0b1511;
-  border: 1px solid rgba(200, 178, 127, 0.25);
+  background: #fbfaf7;
+  border: 1px solid rgba(24, 45, 39, 0.15);
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
-}
-
-.theme-light .tec-map-wrapper {
-  background: #fbfaf7;
-  border-color: rgba(24, 45, 39, 0.15);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
 }
 
@@ -1553,17 +1524,12 @@ html{scroll-behavior:auto}
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: #111e19;
-  border-right: 1px solid rgba(200, 178, 127, 0.15);
+  background: #f4f2ec;
+  border-right: 1px solid rgba(24, 45, 39, 0.12);
   padding: 28px 24px 22px;
   gap: 20px;
   overflow-y: auto;
   max-height: 720px;
-}
-
-.theme-light .tec-map-console {
-  background: #f4f2ec;
-  border-right-color: rgba(24, 45, 39, 0.12);
 }
 
 .tec-console-top {
@@ -1577,12 +1543,8 @@ html{scroll-behavior:auto}
   font-family: var(--font-mono), monospace;
   font-size: 10px;
   letter-spacing: 0.16em;
-  color: #c8b27f;
-  margin-bottom: 4px;
-}
-
-.theme-light .tec-console-brand .tec-console-sub {
   color: #7a7960;
+  margin-bottom: 4px;
 }
 
 .tec-console-title {
@@ -1590,22 +1552,14 @@ html{scroll-behavior:auto}
   font-size: 24px;
   line-height: 1.2;
   margin: 0;
-  color: #fff;
-}
-
-.theme-light .tec-console-title {
   color: #182d27;
 }
 
 .tec-console-caption {
   font-size: 12px;
   line-height: 1.4;
-  color: #8c9e95;
-  margin: 4px 0 0;
-}
-
-.theme-light .tec-console-caption {
   color: #6a7c73;
+  margin: 4px 0 0;
 }
 
 .tec-console-actions {
@@ -1614,27 +1568,21 @@ html{scroll-behavior:auto}
 }
 
 .tec-console-icon-btn {
-  padding: 6px 12px;
+  padding: 7px 14px;
   font-family: var(--font-mono), monospace;
   font-size: 11px;
-  color: #e2dbce;
-  background: rgba(200, 178, 127, 0.1);
-  border: 1px solid rgba(200, 178, 127, 0.25);
+  color: #182d27;
+  background: rgba(24, 45, 39, 0.05);
+  border: 1px solid rgba(24, 45, 39, 0.2);
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.theme-light .tec-console-icon-btn {
-  background: rgba(24, 45, 39, 0.05);
-  border-color: rgba(24, 45, 39, 0.15);
-  color: #182d27;
-}
-
 .tec-console-icon-btn:hover {
-  background: #c8b27f;
-  color: #182d27;
-  border-color: #c8b27f;
+  background: #182d27;
+  color: #f4f3ef;
+  border-color: #182d27;
 }
 
 /* Category Filter Pills */
@@ -1653,7 +1601,7 @@ html{scroll-behavior:auto}
   border-radius: 8px;
   background: transparent;
   border: 1px solid transparent;
-  color: #b8c7bf;
+  color: #3b4e45;
   font-family: var(--font-proxima), Arial, sans-serif;
   font-size: 13px;
   text-align: left;
@@ -1661,31 +1609,16 @@ html{scroll-behavior:auto}
   transition: all 0.2s ease;
 }
 
-.theme-light .tec-category-pill {
-  color: #3b4e45;
-}
-
 .tec-category-pill:hover {
-  background: rgba(200, 178, 127, 0.08);
-  color: #f4f3ef;
-}
-
-.theme-light .tec-category-pill:hover {
   background: rgba(24, 45, 39, 0.06);
   color: #182d27;
 }
 
 .tec-category-pill.is-active {
-  background: rgba(200, 178, 127, 0.16);
-  border-color: rgba(200, 178, 127, 0.4);
-  color: #ffffff;
-  font-weight: 600;
-}
-
-.theme-light .tec-category-pill.is-active {
   background: rgba(24, 45, 39, 0.12);
   border-color: rgba(24, 45, 39, 0.3);
   color: #182d27;
+  font-weight: 600;
 }
 
 .tec-pill-indicator {
@@ -1709,26 +1642,18 @@ html{scroll-behavior:auto}
 /* Selected Card & Legend Footer */
 .tec-console-footer {
   padding-top: 16px;
-  border-top: 1px solid rgba(200, 178, 127, 0.15);
+  border-top: 1px solid rgba(24, 45, 39, 0.12);
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
 
-.theme-light .tec-console-footer {
-  border-top-color: rgba(24, 45, 39, 0.12);
-}
-
 .tec-selected-card {
   padding: 12px 14px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(200, 178, 127, 0.25);
-}
-
-.theme-light .tec-selected-card {
   background: #ffffff;
-  border-color: rgba(24, 45, 39, 0.15);
+  border: 1px solid rgba(24, 45, 39, 0.15);
+  box-shadow: 0 4px 12px rgba(24, 45, 39, 0.06);
 }
 
 .tec-card-meta {
@@ -1751,10 +1676,6 @@ html{scroll-behavior:auto}
   font-family: var(--font-mono), monospace;
   font-size: 12px;
   font-weight: 600;
-  color: #c8b27f;
-}
-
-.theme-light .tec-card-time {
   color: #182d27;
 }
 
@@ -1762,10 +1683,6 @@ html{scroll-behavior:auto}
   font-family: var(--font-minion), Georgia, serif;
   font-size: 16px;
   margin: 0 0 4px;
-  color: #fff;
-}
-
-.theme-light .tec-card-name {
   color: #182d27;
 }
 
@@ -1779,7 +1696,7 @@ html{scroll-behavior:auto}
 .tec-card-clear {
   background: none;
   border: none;
-  color: #c8b27f;
+  color: #68735d;
   font-size: 11px;
   cursor: pointer;
   padding: 0;
@@ -1795,16 +1712,12 @@ html{scroll-behavior:auto}
 .tec-legend-tip {
   font-size: 12px;
   line-height: 1.5;
-  color: #9cb0a6;
+  color: #55665d;
   margin: 0;
 }
 
-.theme-light .tec-legend-tip {
-  color: #55665d;
-}
-
 .tec-tip-icon {
-  color: #c8b27f;
+  color: #68735d;
   margin-right: 6px;
 }
 
@@ -1819,7 +1732,7 @@ html{scroll-behavior:auto}
 .tec-legend-line {
   width: 22px;
   height: 2px;
-  background: linear-gradient(90deg, #c8b27f, transparent);
+  background: linear-gradient(90deg, #182d27, transparent);
   border-radius: 2px;
 }
 
@@ -1829,23 +1742,19 @@ html{scroll-behavior:auto}
   justify-content: space-between;
   gap: 10px;
   padding: 8px 10px;
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(24, 45, 39, 0.05);
   border-radius: 6px;
   font-size: 11px;
 }
 
-.theme-light .tec-scroll-mode-bar {
-  background: rgba(24, 45, 39, 0.05);
-}
-
 .tec-scroll-mode-text {
-  color: #8c9e95;
+  color: #6a7c73;
 }
 
 .tec-scroll-mode-toggle {
   background: none;
-  border: 1px solid rgba(200, 178, 127, 0.3);
-  color: #c8b27f;
+  border: 1px solid rgba(24, 45, 39, 0.25);
+  color: #182d27;
   padding: 3px 7px;
   border-radius: 4px;
   font-size: 10px;
@@ -1854,16 +1763,6 @@ html{scroll-behavior:auto}
 }
 
 .tec-scroll-mode-toggle.active {
-  background: #c8b27f;
-  color: #182d27;
-}
-
-.theme-light .tec-scroll-mode-toggle {
-  border-color: rgba(24, 45, 39, 0.25);
-  color: #182d27;
-}
-
-.theme-light .tec-scroll-mode-toggle.active {
   background: #182d27;
   color: #c8b27f;
 }
@@ -1877,10 +1776,6 @@ html{scroll-behavior:auto}
   width: 100%;
   height: 100%;
   min-height: 580px;
-  background: #09120e;
-}
-
-.theme-light .tec-map-canvas-container {
   background: #f0eee8;
 }
 
@@ -1891,13 +1786,8 @@ html{scroll-behavior:auto}
   background: transparent;
 }
 
-/* Luxury Dark Tile Filter: converts OpenStreetMap into an architectural dark blueprint */
-.theme-dark .tec-leaflet-element .leaflet-tile-pane {
-  filter: brightness(0.64) invert(1) contrast(3.4) hue-rotate(205deg) saturate(0.24);
-  transition: filter 0.3s ease;
-}
-
-.theme-light .tec-leaflet-element .leaflet-tile-pane {
+/* Light Architectural Map Tile Treatment */
+.tec-leaflet-element .leaflet-tile-pane {
   filter: saturate(0.8) contrast(1.04) brightness(1.01);
   transition: filter 0.3s ease;
 }
@@ -1916,29 +1806,23 @@ html{scroll-behavior:auto}
   align-items: center;
   gap: 8px;
   padding: 6px 12px;
-  background: rgba(13, 25, 20, 0.82);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(200, 178, 127, 0.35);
+  border: 1px solid rgba(24, 45, 39, 0.2);
   border-radius: 6px;
   font-family: var(--font-mono), monospace;
   font-size: 10px;
   letter-spacing: 0.1em;
-  color: #e5d7ba;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
-}
-
-.theme-light .tec-hud-badge {
-  background: rgba(255, 255, 255, 0.88);
-  border-color: rgba(24, 45, 39, 0.2);
   color: #182d27;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
 }
 
 .tec-hud-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #c8b27f;
-  box-shadow: 0 0 6px #c8b27f;
+  background: #182d27;
+  box-shadow: 0 0 6px rgba(24, 45, 39, 0.4);
 }
 
 /* Animated Bezier Curves */
@@ -1984,7 +1868,7 @@ html{scroll-behavior:auto}
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  border: 2px solid #c8b27f;
+  border: 2px solid #182d27;
   animation: tec-radar 2.4s ease-out infinite;
 }
 
@@ -2008,7 +1892,7 @@ html{scroll-behavior:auto}
   font-weight: 700;
   font-size: 11px;
   letter-spacing: 0.05em;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
 }
 
 .tec-beacon-core::after {
@@ -2042,46 +1926,32 @@ html{scroll-behavior:auto}
   border-radius: 50%;
   background: var(--node-color, #c8b27f);
   border: 2.5px solid #ffffff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 /* Leaflet Custom Tooltips & Popups */
 .leaflet-tooltip.tec-tooltip {
-  background: rgba(14, 26, 21, 0.92);
+  background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(200, 178, 127, 0.35);
+  border: 1px solid rgba(24, 45, 39, 0.2);
   border-radius: 8px;
   padding: 6px 10px;
-  color: #f4f3ef;
-  font-family: var(--font-proxima), Arial, sans-serif;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
-}
-
-.theme-light .leaflet-tooltip.tec-tooltip {
-  background: rgba(255, 255, 255, 0.95);
-  border-color: rgba(24, 45, 39, 0.2);
   color: #182d27;
+  font-family: var(--font-proxima), Arial, sans-serif;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
 }
 
 .leaflet-tooltip-top.tec-tooltip::before {
-  border-top-color: rgba(14, 26, 21, 0.92);
-}
-
-.theme-light .leaflet-tooltip-top.tec-tooltip::before {
-  border-top-color: rgba(255, 255, 255, 0.95);
+  border-top-color: rgba(255, 255, 255, 0.96);
 }
 
 .tec-project-tooltip {
-  border-color: #c8b27f !important;
-}
-
-.theme-light .tec-project-tooltip {
   background: #182d27 !important;
   border-color: #c8b27f !important;
   color: #ffffff !important;
 }
 
-.theme-light .leaflet-tooltip-top.tec-project-tooltip::before {
+.leaflet-tooltip-top.tec-project-tooltip::before {
   border-top-color: #182d27 !important;
 }
 
@@ -2089,20 +1959,12 @@ html{scroll-behavior:auto}
   display: block;
   font-family: var(--font-minion), Georgia, serif;
   font-size: 13px;
-  color: #c8b27f;
-}
-
-.theme-light .tec-project-tooltip .tec-center-tooltip strong {
   color: #c8b27f !important;
 }
 
 .tec-center-tooltip span {
   display: block;
   font-size: 10px;
-  color: #a4b6ad;
-}
-
-.theme-light .tec-project-tooltip .tec-center-tooltip span {
   color: #dcd7ca !important;
 }
 
@@ -2110,6 +1972,7 @@ html{scroll-behavior:auto}
   display: block;
   font-weight: 600;
   font-size: 11px;
+  color: #182d27;
 }
 
 .tec-node-tooltip .tec-node-meta {
@@ -2120,24 +1983,14 @@ html{scroll-behavior:auto}
 }
 
 .leaflet-popup-content-wrapper {
-  background: #111e19 !important;
-  color: #f4f3ef !important;
-  border: 1px solid rgba(200, 178, 127, 0.3) !important;
-  border-radius: 10px !important;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6) !important;
-}
-
-.theme-light .leaflet-popup-content-wrapper {
   background: #ffffff !important;
   color: #182d27 !important;
-  border-color: rgba(24, 45, 39, 0.2) !important;
+  border: 1px solid rgba(24, 45, 39, 0.18) !important;
+  border-radius: 10px !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15) !important;
 }
 
 .leaflet-popup-tip {
-  background: #111e19 !important;
-}
-
-.theme-light .leaflet-popup-tip {
   background: #ffffff !important;
 }
 
@@ -2150,20 +2003,12 @@ html{scroll-behavior:auto}
   font-family: var(--font-minion), Georgia, serif;
   font-size: 16px;
   margin: 2px 0 6px;
-  color: #c8b27f;
-}
-
-.theme-light .tec-popup-body h3 {
   color: #182d27;
 }
 
 .tec-popup-body p {
   font-size: 12px;
   margin: 0;
-  color: #a4b6ad;
-}
-
-.theme-light .tec-popup-body p {
   color: #55665d;
 }
 
@@ -2178,12 +2023,12 @@ html{scroll-behavior:auto}
   display: inline-block;
   margin-top: 8px;
   padding: 3px 8px;
-  background: rgba(200, 178, 127, 0.15);
-  border: 1px solid rgba(200, 178, 127, 0.3);
+  background: rgba(24, 45, 39, 0.08);
+  border: 1px solid rgba(24, 45, 39, 0.2);
   border-radius: 4px;
   font-family: var(--font-mono), monospace;
   font-size: 10px;
-  color: #e5d7ba;
+  color: #182d27;
 }
 
 /* Responsive adjustments */
@@ -2199,7 +2044,7 @@ html{scroll-behavior:auto}
   .tec-map-console {
     max-height: none;
     border-right: none;
-    border-bottom: 1px solid rgba(200, 178, 127, 0.15);
+    border-bottom: 1px solid rgba(24, 45, 39, 0.12);
   }
   .tec-category-group {
     display: flex;

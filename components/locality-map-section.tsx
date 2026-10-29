@@ -40,7 +40,6 @@ export function LocalityMapSection() {
   const [activeCategory, setActiveCategory] = useState<CategoryKey | "all">("all");
   const [selectedNode, setSelectedNode] = useState<LocalityNode | null>(null);
   const [mapReady, setMapReady] = useState(false);
-  const [mapTheme, setMapTheme] = useState<"dark" | "light">("light");
   const [wheelZoomActive, setWheelZoomActive] = useState(false);
 
   const categoryEntries = useMemo(() => Object.entries(CATEGORIES) as [CategoryKey, typeof CATEGORIES[CategoryKey]][], []);
@@ -259,7 +258,7 @@ export function LocalityMapSection() {
 
   return (
     <section
-      className={`tec-locality-section ${mapTheme === "dark" ? "theme-dark" : "theme-light"}`}
+      className="tec-locality-section"
       id="architecture"
       aria-labelledby="architecture-title"
     >
@@ -303,19 +302,10 @@ export function LocalityMapSection() {
               <button
                 type="button"
                 className="tec-console-icon-btn"
-                onClick={() => setMapTheme(mapTheme === "dark" ? "light" : "dark")}
-                title={`Switch to ${mapTheme === "dark" ? "light" : "dark"} map mode`}
-                aria-label="Toggle map theme"
-              >
-                {mapTheme === "dark" ? "☀ Light" : "☾ Dark"}
-              </button>
-              <button
-                type="button"
-                className="tec-console-icon-btn"
                 onClick={resetToCenter}
                 title="Reset map view to The Eastern Chambers"
               >
-                ⊙ Recenter
+                ⊙ Recenter View
               </button>
             </div>
           </div>
