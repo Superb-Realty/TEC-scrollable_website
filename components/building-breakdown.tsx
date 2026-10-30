@@ -152,7 +152,7 @@ export function BuildingBreakdown() {
     };
   }, [reducedMotion]);
 
-  return <section className="breakdown blend-in blend-out" id="breakdown" aria-label="Building architectural cutaway breakdown">
+  return <section className="breakdown blend-in" id="breakdown" aria-label="Building architectural cutaway breakdown">
     <h2 className="sr-only">Building Cutaway Breakdown</h2>
     <div className={reducedMotion ? "breakdown-sequence is-still" : "breakdown-sequence"} ref={sequenceRef}>
       <div className="breakdown-sticky">
