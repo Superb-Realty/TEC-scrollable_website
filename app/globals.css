@@ -293,9 +293,9 @@ h1 em,.reveal-copy em{color:#ddd8bd}
 .worm-brand-copy h2{margin:0;color:#fff;font-family:var(--font-proxima),Arial,sans-serif;font-size:clamp(34px,3.5vw,58px);font-weight:700;line-height:.92;letter-spacing:-.035em;text-shadow:0 2px 12px rgba(0,0,0,.6)}
 .worm-brand-copy h2 span{display:block}
 .worm-summit-tagline{position:absolute;z-index:2;top:clamp(100px,13vh,145px);right:var(--gutter);max-width:520px;text-align:right;pointer-events:none}
-.worm-summit-tagline p{margin:0;color:#fff;font-family:var(--font-minion),Georgia,serif;font-size:clamp(26px,3vw,46px);line-height:1.05;letter-spacing:-.035em;text-shadow:0 2px 14px rgba(0,0,0,.7)}
-.worm-summit-tagline em{color:#ddd8bd;font-family:Georgia,serif;font-weight:400}
-.worm-summit-tagline span{display:block;margin-top:14px;color:rgba(255,255,255,.88);font-family:var(--font-proxima),Arial,sans-serif;font-size:clamp(13px,1.15vw,17px);font-weight:300;letter-spacing:.08em;text-shadow:0 1px 8px rgba(0,0,0,.65)}
+.worm-summit-tagline p{margin:0;color:#fff;font-family:var(--font-proxima),Arial,sans-serif;font-weight:300;font-style:normal;font-size:clamp(26px,2.35vw,38px);line-height:1.28;letter-spacing:-.02em;text-shadow:0 2px 14px rgba(0,0,0,.7)}
+.worm-summit-tagline em{color:inherit;font-family:inherit;font-weight:inherit;font-style:normal}
+.worm-summit-tagline span{display:block;margin-top:18px;color:rgba(255,255,255,.88);font-family:var(--font-proxima),Arial,sans-serif;font-size:clamp(12px,.95vw,15px);font-weight:300;letter-spacing:.06em;text-shadow:0 1px 8px rgba(0,0,0,.65)}
 .worm-hud{position:absolute;left:calc(var(--gutter) - 14px);right:calc(var(--gutter) - 14px);bottom:35px;display:flex;justify-content:space-between;align-items:center;z-index:2;pointer-events:none}
 .worm-scroll-indicator{display:inline-flex;align-items:center;gap:14px;font-size:var(--fs-micro);letter-spacing:.19em;text-transform:uppercase;font-weight:600;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.8)}
 .worm-scroll-indicator span:first-child{display:inline-grid;place-items:center;width:32px;height:32px;border:1px solid rgba(255,255,255,.5);background:rgba(0,0,0,.2);font-size:16px}
@@ -1986,9 +1986,9 @@ html{scroll-behavior:auto}
   background: transparent;
 }
 
-/* Full-Color Interactive Map Tile Treatment */
+/* Monochrome Architectural Map Tile Treatment */
 .tec-leaflet-element .leaflet-tile-pane {
-  filter: none;
+  filter: grayscale(100%) contrast(0.95) brightness(1.04);
   transition: filter 0.3s ease;
 }
 
@@ -2008,6 +2008,16 @@ html{scroll-behavior:auto}
   border-radius: 50%;
   background: var(--marker, #2563eb);
   box-shadow: 0 2px 9px rgba(0, 0, 0, 0.4);
+  transition: transform 0.25s ease, opacity 0.25s ease, box-shadow 0.25s ease;
+}
+.place-marker.is-highlighted {
+  transform: scale(1.12);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.52);
+}
+.place-marker.is-dimmed {
+  opacity: 0.22;
+  transform: scale(0.76);
+  box-shadow: none;
 }
 .project-marker {
   display: grid;
@@ -2029,40 +2039,61 @@ html{scroll-behavior:auto}
   letter-spacing: 0.06em;
 }
 .leaflet-tooltip.location-label {
-  max-width: 180px;
-  padding: 3px 7px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  max-width: 195px;
+  padding: 4px 8px;
   overflow: hidden;
-  border: 1px solid rgba(24, 45, 39, 0.16);
-  border-radius: 5px;
-  background: rgba(255, 255, 255, 0.94);
-  color: #182d27;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 6px;
+  background: rgba(18, 30, 26, 0.94);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.32);
   font-family: var(--font-proxima), Arial, sans-serif;
-  font-size: 10px;
-  line-height: 1.15;
+  font-size: 10.5px;
+  line-height: 1.2;
   pointer-events: none;
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(8px);
+}
+.location-label-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.35);
 }
 .location-label span,
 .location-label strong {
   display: block;
   overflow: hidden;
   font-weight: 600;
+  letter-spacing: 0.01em;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 .leaflet-tooltip-top.location-label::before {
-  border-top-color: rgba(255, 255, 255, 0.94);
+  border-top-color: rgba(18, 30, 26, 0.94);
+}
+.leaflet-tooltip-bottom.location-label::before {
+  border-bottom-color: rgba(18, 30, 26, 0.94);
+}
+.leaflet-tooltip-left.location-label::before {
+  border-left-color: rgba(18, 30, 26, 0.94);
+}
+.leaflet-tooltip-right.location-label::before {
+  border-right-color: rgba(18, 30, 26, 0.94);
 }
 .project-label {
   z-index: 650 !important;
-  padding: 4px 9px !important;
-  border-color: #c8b27f !important;
-  background: #182d27 !important;
-  color: #ffffff !important;
+  padding: 5px 10px !important;
+  border: 1.5px solid #c8b27f !important;
+  background: #0d1c17 !important;
+  color: #f3e2b8 !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45) !important;
 }
 .leaflet-tooltip-top.project-label::before {
-  border-top-color: #182d27 !important;
+  border-top-color: #0d1c17 !important;
 }
 .connection-base,
 .connection-light {
@@ -2741,3 +2772,9 @@ html{scroll-behavior:auto}
  .portfolio-meta { font-size:11px; }
  .portfolio-disclaimer { font-size:10.5px; margin-top:14px; }
 }
+
+.worm-brand-logo{position:relative;left:-8px;display:block;width:clamp(180px,21vw,310px);max-width:100%;height:auto;object-fit:contain;filter:brightness(0) invert(1);}
+
+/* Keep the elevation logo 25px from the viewport edge. */
+.worm-captions{left:25px;}
+.worm-brand-logo{left:0;}

@@ -1,5 +1,6 @@
 "use client";
 
+import NextImage from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useMotionValueEvent, useTransform } from "motion/react";
 import { measureSeams, pinnedProgress } from "@/components/pinned-progress";
@@ -250,7 +251,7 @@ export function WormViewStory() {
         <div className="worm-captions" aria-live="polite">
           {activeChapter === "summit" && (
             <motion.div className="worm-brand-copy" style={{ opacity: summitOpacity }}>
-              <h2><span>THE</span><span>EASTERN</span><span>CHAMBERS</span></h2>
+              <NextImage src="/logo-eastern-chambers.png" alt="The Eastern Chambers" width={679} height={368} sizes="(max-width: 600px) 80vw, 540px" className="worm-brand-logo" />
             </motion.div>
           )}
         </div>

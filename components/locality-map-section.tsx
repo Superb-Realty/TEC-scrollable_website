@@ -38,7 +38,8 @@ export function LocalityMapSection() {
   const markersMapRef = useRef<Record<string, import("leaflet").Marker>>({});
   const tileLayerRef = useRef<import("leaflet").TileLayer | null>(null);
 
-  const [activeCategory, setActiveCategory] = useState<CategoryKey | "all">("all");
+  const [activeCategory, setActiveCategory] = useState<CategoryKey | null>(null);
+  const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const [selectedNode, setSelectedNode] = useState<LocalityNode | null>(null);
   const [mapReady, setMapReady] = useState(false);
   const [wheelZoomActive, setWheelZoomActive] = useState(false);
@@ -46,7 +47,7 @@ export function LocalityMapSection() {
   const categoryEntries = useMemo(() => Object.entries(CATEGORIES) as [CategoryKey, typeof CATEGORIES[CategoryKey]][], []);
 
   const visibleNodes = useMemo(() => {
-    if (activeCategory === "all") return NODES;
+    if (!activeCategory) return NODES;
     return NODES.filter((n) => n.category === activeCategory);
   }, [activeCategory]);
 
@@ -59,7 +60,8 @@ export function LocalityMapSection() {
 
       const map = L.map(mapContainerRef.current, {
         center: [PROJECT_CENTER.lat, PROJECT_CENTER.lng],
-        zoom: 12,
+        zoom: 13.5,
+        zoomSnap: 0.5,
         minZoom: 10,
         maxZoom: 16,
         zoomControl: false,
@@ -77,7 +79,7 @@ export function LocalityMapSection() {
         .addAttribution('&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a> contributors')
         .addTo(map);
 
-      // Authentic full-color OpenStreetMap basemap with natural water, vegetation & transit routes
+      // Key-free OpenStreetMap basemap (styled in monochrome via CSS)
       const tileUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
       const tiles = L.tileLayer(tileUrl, {
         maxZoom: 19,
@@ -182,54 +184,112 @@ export function LocalityMapSection() {
 
       centerMarker.on("click", () => {
         setSelectedNode(null);
-        map.flyTo([PROJECT_CENTER.lat, PROJECT_CENTER.lng], 13, { duration: 1 });
+        setActiveCategory(null);
+        setDropdownOpen(false);
+        map.flyTo([PROJECT_CENTER.lat, PROJECT_CENTER.lng], 13.5, { duration: 1 });
       });
 
-      // Render visible connection curves & destination nodes
-      visibleNodes.forEach((node, index) => {
+      // Render all nodes as pin points; when a specific cluster is active, highlight only that cluster
+      NODES.forEach((node, index) => {
         const catInfo = CATEGORIES[node.category as CategoryKey] || { color: "#2563eb", label: node.category };
-        const curve = curveTo(node.lat, node.lng, index);
+        const isClusterActive = activeCategory !== null;
+        const isHighlighted = !isClusterActive || node.category === activeCategory;
+        const showClusterDetails = isClusterActive && node.category === activeCategory;
 
-        // Faint baseline path
-        L.polyline(curve, {
-          className: "connection-base",
-          color: catInfo.color,
-          weight: 1.4,
-          opacity: 0.25,
-          interactive: false,
-        }).addTo(markersGroup);
+        if (showClusterDetails) {
+          const curve = curveTo(node.lat, node.lng, index);
 
-        // Pulsing glowing dashline
-        const pulse = L.polyline(curve, {
-          className: "connection-light",
-          color: catInfo.color,
-          weight: 2.2,
-          opacity: 0.9,
-          dashArray: "2 12",
-          lineCap: "round",
-          interactive: false,
-        }).addTo(markersGroup);
+          // Faint baseline path
+          L.polyline(curve, {
+            className: "connection-base",
+            color: catInfo.color,
+            weight: 1.4,
+            opacity: 0.28,
+            interactive: false,
+          }).addTo(markersGroup);
 
-        const pathEl = pulse.getElement();
-        if (pathEl instanceof SVGElement) {
-          pathEl.style.setProperty("--flow-delay", `${-index * 0.12}s`);
+          // Pulsing glowing dashline
+          const pulse = L.polyline(curve, {
+            className: "connection-light",
+            color: catInfo.color,
+            weight: 2.2,
+            opacity: 0.9,
+            dashArray: "2 12",
+            lineCap: "round",
+            interactive: false,
+          }).addTo(markersGroup);
+
+          const pathEl = pulse.getElement();
+          if (pathEl instanceof SVGElement) {
+            pathEl.style.setProperty("--flow-delay", `${-index * 0.12}s`);
+          }
         }
 
-        // Marker pin
+        // Marker pin point (all shown as pins initially; non-matching pins dim when a cluster is selected)
+        const stateClass = isClusterActive
+          ? isHighlighted
+            ? "is-highlighted"
+            : "is-dimmed"
+          : "";
         const nodeIcon = L.divIcon({
           className: "map-marker-shell",
-          html: `<span class="place-marker" style="--marker: ${catInfo.color}"></span>`,
+          html: `<span class="place-marker ${stateClass}" style="--marker: ${catInfo.color}"></span>`,
           iconSize: [18, 18],
           iconAnchor: [9, 9],
         });
 
-        const marker = L.marker([node.lat, node.lng], { icon: nodeIcon })
+        const labelDirByNodeId: Record<string, "top" | "bottom" | "left" | "right"> = {
+          "bp-91": "bottom",
+          "bp-embassy": "right",
+          "bp-godrej-one": "right",
+          "bp-powai-supreme": "left",
+          "bp-mapletree": "top",
+          "bp-amani": "left",
+          "hc-samarth": "left",
+          "hc-nursing": "bottom",
+          "hc-godrej-mem": "right",
+          "hc-sai": "right",
+          "hc-atul": "right",
+          "hc-hiranandani": "left",
+          "hc-supreme": "left",
+          "hc-parakh": "bottom",
+          "hs-ibis": "right",
+          "hs-taj-trees": "bottom",
+          "hs-meluha": "left",
+          "en-rcity": "right",
+          "en-naturebasket": "left",
+          "en-hiranandanidmart": "bottom",
+          "ec-green4": "left",
+          "ec-vikhroli-stn": "right",
+          "ec-vikhroli-bridge": "bottom",
+          "ec-eeh": "right",
+          "ec-blueline": "left",
+          "ec-east-freeway": "right",
+          "ec-sclr": "left",
+          "ec-t1": "bottom",
+          "ui-green4": "bottom",
+          "ui-pink6": "left",
+          "ui-magenta14": "right",
+          "ui-90feet": "left",
+        };
+        const dir: "top" | "bottom" | "left" | "right" = labelDirByNodeId[node.id] || "top";
+        const offsetMap: Record<"top" | "bottom" | "left" | "right", [number, number]> = {
+          top: [0, -9],
+          bottom: [0, 9],
+          left: [-10, 0],
+          right: [10, 0],
+        };
+
+        const marker = L.marker([node.lat, node.lng], {
+          icon: nodeIcon,
+          zIndexOffset: showClusterDetails ? 400 : isHighlighted ? 100 : -100,
+        })
           .bindTooltip(
-            `<span>${node.name}</span>`,
+            `<i class="location-label-dot" style="background:${catInfo.color}"></i><span>${node.name}</span>`,
             {
-              permanent: true,
-              direction: "top",
-              offset: [0, -9],
+              permanent: showClusterDetails,
+              direction: dir,
+              offset: offsetMap[dir],
               className: "location-label",
             }
           )
@@ -243,6 +303,8 @@ export function LocalityMapSection() {
           .addTo(markersGroup);
 
         marker.on("click", () => {
+          setActiveCategory(node.category as CategoryKey);
+          setDropdownOpen(true);
           setSelectedNode(node);
           marker.openPopup();
           map.flyTo([node.lat, node.lng], Math.max(map.getZoom(), 14), { duration: 0.8 });
@@ -251,23 +313,27 @@ export function LocalityMapSection() {
         markersMapRef.current[node.id] = marker;
       });
 
-      // Fit map viewport comfortably to visible nodes + center only when category/visible nodes change
-      if (visibleNodes.length > 0) {
+      // Fit map viewport to active cluster (or ~5km radius overview around The Eastern Chambers on initial view)
+      if (activeCategory && visibleNodes.length > 0) {
         const bounds: [number, number][] = [
           [PROJECT_CENTER.lat, PROJECT_CENTER.lng],
           ...visibleNodes.map((n) => [n.lat, n.lng] as [number, number]),
         ];
-        map.fitBounds(bounds, { padding: [48, 48], maxZoom: 13.5 });
+        map.fitBounds(bounds, { padding: [48, 48], maxZoom: 14 });
+      } else {
+        map.setView([PROJECT_CENTER.lat, PROJECT_CENTER.lng], 13.5, { animate: true });
       }
     });
-  }, [visibleNodes, mapReady]);
+  }, [activeCategory, visibleNodes, mapReady]);
 
-  // Re-center map to The Eastern Chambers
+  // Reset map to show ~5km radius pin-point overview centered on The Eastern Chambers
   const resetToCenter = () => {
     if (!mapRef.current) return;
     setSelectedNode(null);
+    setActiveCategory(null);
+    setDropdownOpen(false);
     mapRef.current.closePopup();
-    mapRef.current.flyTo([PROJECT_CENTER.lat, PROJECT_CENTER.lng], 13, { duration: 1 });
+    mapRef.current.flyTo([PROJECT_CENTER.lat, PROJECT_CENTER.lng], 13.5, { duration: 0.9 });
   };
 
   const handleSelectPlace = (node: LocalityNode) => {
@@ -352,40 +418,26 @@ export function LocalityMapSection() {
 
           {/* Category Filter Pills & Expandable Places Dropdown */}
           <div className="tec-category-group" role="tablist" aria-label="Transit categories">
-            <button
-              type="button"
-              role="tab"
-              aria-selected={activeCategory === "all"}
-              className={`tec-category-pill ${activeCategory === "all" ? "is-active" : ""}`}
-              onClick={() => {
-                setActiveCategory("all");
-                setSelectedNode(null);
-              }}
-            >
-              <span className="tec-pill-indicator all-pill" />
-              <span className="tec-pill-name">All Corridors</span>
-              <span className="tec-pill-right">
-                <span className="tec-pill-count">{NODES.length}</span>
-              </span>
-            </button>
-
             {categoryEntries.map(([key, cat]) => {
               const categoryNodes = NODES.filter((n) => n.category === key);
               const isActive = activeCategory === key;
+              const isOpen = isActive && dropdownOpen;
               return (
-                <div key={key} className={`tec-category-accordion ${isActive ? "is-open" : ""}`}>
+                <div key={key} className={`tec-category-accordion ${isOpen ? "is-open" : ""}`}>
                   <button
                     type="button"
                     role="tab"
                     aria-selected={isActive}
-                    aria-expanded={isActive}
+                    aria-expanded={isOpen}
                     className={`tec-category-pill ${isActive ? "is-active" : ""}`}
                     onClick={() => {
                       if (isActive) {
-                        setActiveCategory("all");
+                        setActiveCategory(null);
+                        setDropdownOpen(false);
                         setSelectedNode(null);
                       } else {
                         setActiveCategory(key);
+                        setDropdownOpen(true);
                         setSelectedNode(null);
                       }
                     }}
@@ -395,7 +447,7 @@ export function LocalityMapSection() {
                     <span className="tec-pill-right">
                       <span className="tec-pill-count">{categoryNodes.length}</span>
                       <svg
-                        className={`tec-pill-chevron ${isActive ? "is-open" : ""}`}
+                        className={`tec-pill-chevron ${isOpen ? "is-open" : ""}`}
                         width="12"
                         height="12"
                         viewBox="0 0 12 12"
@@ -413,7 +465,7 @@ export function LocalityMapSection() {
                     </span>
                   </button>
 
-                  {isActive && (
+                  {isOpen && (
                     <div className="tec-category-dropdown" role="region" aria-label={`${cat.label} places`}>
                       {categoryNodes.map((node) => {
                         const isPlaceSelected = selectedNode?.id === node.id;
@@ -441,7 +493,7 @@ export function LocalityMapSection() {
           </div>
 
           {/* Mobile Active Category Places Dropdown */}
-          {activeCategory !== "all" && (
+          {activeCategory && dropdownOpen && (
             <div className="tec-mobile-category-dropdown" role="region" aria-label="Category places">
               {visibleNodes.map((node) => {
                 const catColor = CATEGORIES[node.category as CategoryKey]?.color || "#182d27";
@@ -525,7 +577,7 @@ export function LocalityMapSection() {
         </aside>
 
         {/* Map Viewport Canvas */}
-        <div className={`tec-map-canvas-container ${activeCategory === "all" ? "is-all-corridors" : "is-filtered-category"}`}>
+        <div className="tec-map-canvas-container">
           <div ref={mapContainerRef} className="tec-leaflet-element" />
 
           {/* Floating Quick Action Overlay */}
