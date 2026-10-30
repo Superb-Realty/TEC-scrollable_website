@@ -35,6 +35,7 @@ export function LocalityMapSection() {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<import("leaflet").Map | null>(null);
   const markersLayerRef = useRef<import("leaflet").LayerGroup | null>(null);
+  const markersMapRef = useRef<Record<string, import("leaflet").Marker>>({});
   const tileLayerRef = useRef<import("leaflet").TileLayer | null>(null);
 
   const [activeCategory, setActiveCategory] = useState<CategoryKey | "all">("all");
@@ -63,6 +64,8 @@ export function LocalityMapSection() {
         maxZoom: 16,
         zoomControl: false,
         scrollWheelZoom: false, // Prevents scroll hijacking on the scrollytelling page!
+        touchZoom: true,
+        dragging: true,
         attributionControl: false,
       });
 
@@ -74,15 +77,52 @@ export function LocalityMapSection() {
         .addAttribution('&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a> contributors')
         .addTo(map);
 
+      // Authentic full-color OpenStreetMap basemap with natural water, vegetation & transit routes
       const tileUrl = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
       const tiles = L.tileLayer(tileUrl, {
         maxZoom: 19,
+        subdomains: ["a", "b", "c"],
       }).addTo(map);
 
       tileLayerRef.current = tiles;
       markersLayerRef.current = L.layerGroup().addTo(map);
       mapRef.current = map;
       setMapReady(true);
+
+      // Responsive resize & intersection observers to keep Leaflet coordinate-to-pixel projection exact
+      const handleResize = () => {
+        if (mapRef.current) {
+          mapRef.current.invalidateSize();
+        }
+      };
+      window.addEventListener("resize", handleResize);
+
+      let resizeObserver: ResizeObserver | null = null;
+      if (typeof ResizeObserver !== "undefined" && mapContainerRef.current) {
+        resizeObserver = new ResizeObserver(() => {
+          map.invalidateSize();
+        });
+        resizeObserver.observe(mapContainerRef.current);
+      }
+
+      let intersectionObserver: IntersectionObserver | null = null;
+      if (typeof IntersectionObserver !== "undefined" && mapContainerRef.current) {
+        intersectionObserver = new IntersectionObserver(
+          (entries) => {
+            if (entries[0]?.isIntersecting) {
+              map.invalidateSize();
+            }
+          },
+          { threshold: 0.05 }
+        );
+        intersectionObserver.observe(mapContainerRef.current);
+      }
+
+      return () => {
+        window.removeEventListener("resize", handleResize);
+        resizeObserver?.disconnect();
+        intersectionObserver?.disconnect();
+      };
     });
 
     return () => {
@@ -116,27 +156,20 @@ export function LocalityMapSection() {
       if (!markersGroup || !map) return;
 
       markersGroup.clearLayers();
+      markersMapRef.current = {};
 
       // Project Center Landmark Pin (The Eastern Chambers)
       const projectIcon = L.divIcon({
-        className: "tec-map-marker-anchor",
-        html: `
-          <div class="tec-project-beacon">
-            <span class="tec-beacon-pulse"></span>
-            <span class="tec-beacon-core">TEC</span>
-          </div>
-        `,
-        iconSize: [48, 48],
-        iconAnchor: [24, 24],
+        className: "map-marker-shell",
+        html: `<span class="project-marker"><i>TEC</i></span>`,
+        iconSize: [42, 42],
+        iconAnchor: [21, 21],
       });
 
-      const centerMarker = L.marker([PROJECT_CENTER.lat, PROJECT_CENTER.lng], { icon: projectIcon, zIndexOffset: 100 })
+      const centerMarker = L.marker([PROJECT_CENTER.lat, PROJECT_CENTER.lng], { icon: projectIcon, zIndexOffset: 1000 })
         .bindTooltip(
-          `<div class="tec-center-tooltip">
-            <strong>${PROJECT_NAME}</strong>
-            <span>${PROJECT_LOCATION}</span>
-          </div>`,
-          { permanent: true, direction: "top", offset: [0, -24], className: "tec-tooltip tec-project-tooltip" }
+          `<strong>${PROJECT_NAME}</strong>`,
+          { permanent: true, direction: "top", offset: [0, -22], className: "location-label project-label" }
         )
         .bindPopup(
           `<div class="tec-popup-body">
@@ -154,12 +187,12 @@ export function LocalityMapSection() {
 
       // Render visible connection curves & destination nodes
       visibleNodes.forEach((node, index) => {
-        const catInfo = CATEGORIES[node.category as CategoryKey] || { color: "#b59a57", label: node.category };
+        const catInfo = CATEGORIES[node.category as CategoryKey] || { color: "#2563eb", label: node.category };
         const curve = curveTo(node.lat, node.lng, index);
 
         // Faint baseline path
         L.polyline(curve, {
-          className: "tec-connection-base",
+          className: "connection-base",
           color: catInfo.color,
           weight: 1.4,
           opacity: 0.25,
@@ -168,43 +201,36 @@ export function LocalityMapSection() {
 
         // Pulsing glowing dashline
         const pulse = L.polyline(curve, {
-          className: "tec-connection-light",
+          className: "connection-light",
           color: catInfo.color,
           weight: 2.2,
-          opacity: 0.85,
-          dashArray: "3 14",
+          opacity: 0.9,
+          dashArray: "2 12",
           lineCap: "round",
           interactive: false,
         }).addTo(markersGroup);
 
         const pathEl = pulse.getElement();
         if (pathEl instanceof SVGElement) {
-          pathEl.style.setProperty("--flow-delay", `${-index * 0.14}s`);
+          pathEl.style.setProperty("--flow-delay", `${-index * 0.12}s`);
         }
 
         // Marker pin
         const nodeIcon = L.divIcon({
-          className: "tec-map-marker-node",
-          html: `
-            <div class="tec-node-pin" style="--node-color: ${catInfo.color}">
-              <span class="tec-node-dot"></span>
-            </div>
-          `,
-          iconSize: [22, 22],
-          iconAnchor: [11, 11],
+          className: "map-marker-shell",
+          html: `<span class="place-marker" style="--marker: ${catInfo.color}"></span>`,
+          iconSize: [18, 18],
+          iconAnchor: [9, 9],
         });
 
         const marker = L.marker([node.lat, node.lng], { icon: nodeIcon })
           .bindTooltip(
-            `<div class="tec-node-tooltip">
-              <span class="tec-node-title">${node.name}</span>
-              <span class="tec-node-meta" style="color:${catInfo.color}">${node.meta}</span>
-            </div>`,
+            `<span>${node.name}</span>`,
             {
-              permanent: false,
+              permanent: true,
               direction: "top",
-              offset: [0, -12],
-              className: "tec-tooltip tec-node-hover-tooltip",
+              offset: [0, -9],
+              className: "location-label",
             }
           )
           .bindPopup(
@@ -219,8 +245,10 @@ export function LocalityMapSection() {
         marker.on("click", () => {
           setSelectedNode(node);
           marker.openPopup();
-          map.flyTo([node.lat, node.lng], Math.max(map.getZoom(), 13.5), { duration: 0.8 });
+          map.flyTo([node.lat, node.lng], Math.max(map.getZoom(), 14), { duration: 0.8 });
         });
+
+        markersMapRef.current[node.id] = marker;
       });
 
       // Fit map viewport comfortably to visible nodes + center only when category/visible nodes change
@@ -240,6 +268,18 @@ export function LocalityMapSection() {
     setSelectedNode(null);
     mapRef.current.closePopup();
     mapRef.current.flyTo([PROJECT_CENTER.lat, PROJECT_CENTER.lng], 13, { duration: 1 });
+  };
+
+  const handleSelectPlace = (node: LocalityNode) => {
+    setSelectedNode(node);
+    const map = mapRef.current;
+    const marker = markersMapRef.current[node.id];
+    if (map) {
+      map.flyTo([node.lat, node.lng], Math.max(map.getZoom(), 14), { duration: 0.8 });
+    }
+    if (marker) {
+      marker.openPopup();
+    }
   };
 
   const handleClearSelection = () => {
@@ -268,7 +308,7 @@ export function LocalityMapSection() {
           <span className="tec-eyebrow">03 / STRATEGIC CONNECTIVITY & HUB</span>
           <span className="tec-status-pill">
             <span className="tec-live-pulse" />
-            45 Key Nodes Mapped
+            {NODES.length} Key Nodes Mapped
           </span>
         </div>
 
@@ -310,7 +350,7 @@ export function LocalityMapSection() {
             </div>
           </div>
 
-          {/* Category Filter Pills */}
+          {/* Category Filter Pills & Expandable Places Dropdown */}
           <div className="tec-category-group" role="tablist" aria-label="Transit categories">
             <button
               type="button"
@@ -324,31 +364,106 @@ export function LocalityMapSection() {
             >
               <span className="tec-pill-indicator all-pill" />
               <span className="tec-pill-name">All Corridors</span>
-              <span className="tec-pill-count">{NODES.length}</span>
+              <span className="tec-pill-right">
+                <span className="tec-pill-count">{NODES.length}</span>
+              </span>
             </button>
 
             {categoryEntries.map(([key, cat]) => {
-              const count = NODES.filter((n) => n.category === key).length;
+              const categoryNodes = NODES.filter((n) => n.category === key);
               const isActive = activeCategory === key;
               return (
-                <button
-                  key={key}
-                  type="button"
-                  role="tab"
-                  aria-selected={isActive}
-                  className={`tec-category-pill ${isActive ? "is-active" : ""}`}
-                  onClick={() => {
-                    setActiveCategory(key);
-                    setSelectedNode(null);
-                  }}
-                >
-                  <span className="tec-pill-indicator" style={{ backgroundColor: cat.color }} />
-                  <span className="tec-pill-name">{cat.label}</span>
-                  <span className="tec-pill-count">{count}</span>
-                </button>
+                <div key={key} className={`tec-category-accordion ${isActive ? "is-open" : ""}`}>
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    aria-expanded={isActive}
+                    className={`tec-category-pill ${isActive ? "is-active" : ""}`}
+                    onClick={() => {
+                      if (isActive) {
+                        setActiveCategory("all");
+                        setSelectedNode(null);
+                      } else {
+                        setActiveCategory(key);
+                        setSelectedNode(null);
+                      }
+                    }}
+                  >
+                    <span className="tec-pill-indicator" style={{ backgroundColor: cat.color }} />
+                    <span className="tec-pill-name">{cat.label}</span>
+                    <span className="tec-pill-right">
+                      <span className="tec-pill-count">{categoryNodes.length}</span>
+                      <svg
+                        className={`tec-pill-chevron ${isActive ? "is-open" : ""}`}
+                        width="12"
+                        height="12"
+                        viewBox="0 0 12 12"
+                        fill="none"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M3 4.5L6 7.5L9 4.5"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+
+                  {isActive && (
+                    <div className="tec-category-dropdown" role="region" aria-label={`${cat.label} places`}>
+                      {categoryNodes.map((node) => {
+                        const isPlaceSelected = selectedNode?.id === node.id;
+                        return (
+                          <button
+                            key={node.id}
+                            type="button"
+                            className={`tec-dropdown-place ${isPlaceSelected ? "is-selected" : ""}`}
+                            onClick={() => handleSelectPlace(node)}
+                          >
+                            <span
+                              className="tec-dropdown-place-dot"
+                              style={{ backgroundColor: cat.color }}
+                            />
+                            <span className="tec-dropdown-place-name">{node.name}</span>
+                            <span className="tec-dropdown-place-meta">{node.meta}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
               );
             })}
           </div>
+
+          {/* Mobile Active Category Places Dropdown */}
+          {activeCategory !== "all" && (
+            <div className="tec-mobile-category-dropdown" role="region" aria-label="Category places">
+              {visibleNodes.map((node) => {
+                const catColor = CATEGORIES[node.category as CategoryKey]?.color || "#182d27";
+                const isPlaceSelected = selectedNode?.id === node.id;
+                return (
+                  <button
+                    key={node.id}
+                    type="button"
+                    className={`tec-dropdown-place ${isPlaceSelected ? "is-selected" : ""}`}
+                    onClick={() => handleSelectPlace(node)}
+                  >
+                    <span
+                      className="tec-dropdown-place-dot"
+                      style={{ backgroundColor: catColor }}
+                    />
+                    <span className="tec-dropdown-place-name">{node.name}</span>
+                    <span className="tec-dropdown-place-meta">{node.meta}</span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
 
           {/* Selected Node Inspector or Legend */}
           <div className="tec-console-footer">
@@ -417,9 +532,50 @@ export function LocalityMapSection() {
           <div className="tec-map-floating-overlay">
             <div className="tec-hud-badge">
               <span className="tec-hud-dot" />
-              <span>THE EASTERN CHAMBERS · 19.1096° N, 72.9258° E · LBS MARG</span>
+              <span className="tec-hud-text-desktop">
+                THE EASTERN CHAMBERS · {PROJECT_CENTER.lat.toFixed(4)}° N, {PROJECT_CENTER.lng.toFixed(4)}° E · LBS MARG
+              </span>
+              <span className="tec-hud-text-mobile">
+                TEC · {PROJECT_CENTER.lat.toFixed(4)}° N, {PROJECT_CENTER.lng.toFixed(4)}° E
+              </span>
             </div>
           </div>
+
+          {/* Mobile Bottom Sheet Inspector (Smooth slide-up on marker tap) */}
+          {selectedNode && (
+            <div className="tec-mobile-selected-sheet" role="region" aria-label="Selected destination details">
+              <div className="tec-card-meta">
+                <span
+                  className="tec-card-tag"
+                  style={{
+                    backgroundColor: `${CATEGORIES[selectedNode.category as CategoryKey]?.color || "#b59a57"}22`,
+                    color: CATEGORIES[selectedNode.category as CategoryKey]?.color || "#b59a57",
+                    borderColor: CATEGORIES[selectedNode.category as CategoryKey]?.color || "#b59a57",
+                  }}
+                >
+                  {CATEGORIES[selectedNode.category as CategoryKey]?.label || selectedNode.category}
+                </span>
+                <span className="tec-card-time">{selectedNode.meta}</span>
+              </div>
+              <div className="tec-mobile-sheet-content">
+                <div className="tec-mobile-sheet-info">
+                  <h4 className="tec-card-name">{selectedNode.name}</h4>
+                  <p className="tec-card-coord">
+                    Lat: {selectedNode.lat.toFixed(4)}° · Lng: {selectedNode.lng.toFixed(4)}°
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  className="tec-card-clear-btn"
+                  onClick={handleClearSelection}
+                  aria-label="Close details"
+                  title="Close details"
+                >
+                  ✕
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </section>

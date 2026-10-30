@@ -20,6 +20,14 @@ export function SequenceStory() {
   const scrollYProgress = useMotionValue(0);
   const introOpacity = useTransform(scrollYProgress, [0, 0.09], [1, 0]);
   const revealOpacity = useTransform(scrollYProgress, [0.85, 0.93], [0, 1]);
+  const scrollCuePointerEvents = useTransform(scrollYProgress, (v) => (v > 0.08 ? "none" : "auto"));
+
+  const handleScrollToExperience = () => {
+    window.scrollTo({
+      top: window.innerHeight * 0.85,
+      behavior: "smooth",
+    });
+  };
 
   useEffect(() => {
     const story = storyRef.current;
@@ -169,11 +177,50 @@ export function SequenceStory() {
         <div className="story-vignette" aria-hidden="true" />
       </div>
       <div className="story-caption">
-        {(reduced || activeCopy === "intro") && <motion.div className="opening-copy" style={reduced ? undefined : { opacity: introOpacity }}>
-          <h1>A WORLD-CLASS<br /><em>EPICENTRE UNFOLDS</em></h1>
-        </motion.div>}
-        {!reduced && activeCopy === "reveal" && <motion.div className="reveal-copy" style={{ opacity: revealOpacity }}><p className="eyebrow light">NEXT-GEN CHAMBERS</p><h2>Designed for the<br /><em>Businesses of Tomorrow.</em></h2></motion.div>}
-        {reduced && <button className="enable-animation" type="button" onClick={() => setMotionOverride(true)}>Enable scroll animation <span aria-hidden="true">↗</span></button>}
+        {(reduced || activeCopy === "intro") && (
+          <motion.div className="opening-copy" style={reduced ? undefined : { opacity: introOpacity }}>
+            <h1>A WORLD-CLASS<br /><em>EPICENTRE UNFOLDS</em></h1>
+          </motion.div>
+        )}
+        {(reduced || activeCopy === "intro") && (
+          <motion.div
+            className="story-scroll-wrap"
+            style={reduced ? undefined : { opacity: introOpacity, pointerEvents: scrollCuePointerEvents }}
+          >
+            <div
+              onClick={handleScrollToExperience}
+              className="story-scroll-cue"
+              role="button"
+              tabIndex={0}
+              aria-label="Scroll to explore"
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  handleScrollToExperience();
+                }
+              }}
+            >
+              <div className="scroll-cue-mouse" aria-hidden="true">
+                <div className="scroll-cue-dot" />
+              </div>
+              <span className="scroll-cue-text">SCROLL</span>
+              <svg className="scroll-cue-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+                <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+          </motion.div>
+        )}
+        {!reduced && activeCopy === "reveal" && (
+          <motion.div className="reveal-copy" style={{ opacity: revealOpacity }}>
+            <p className="eyebrow light">NEXT-GEN CHAMBERS</p>
+            <h2>Designed for the<br /><em>Businesses of Tomorrow.</em></h2>
+          </motion.div>
+        )}
+        {reduced && (
+          <button className="enable-animation" type="button" onClick={() => setMotionOverride(true)}>
+            Enable scroll animation <span aria-hidden="true">↗</span>
+          </button>
+        )}
       </div>
     </div>
   </section>;

@@ -248,13 +248,11 @@ function PillarFeature({
   icons: React.ReactNode[];
   panelClass?: string;
 }) {
-  const [label, num] = pillar.number.split(" ");
   const rowCountClass = pillar.features.length > 6 ? "is-7" : pillar.features.length > 4 ? "is-6" : "is-4";
   return (
     <article className="pillar-feature" id={pillar.id}>
       <div className={`pf-panel ${panelClass}`} aria-hidden="true" />
       <div className="pf-head">
-        <p className="pf-eyebrow"><span>{label}</span><span className="pf-eyebrow-num font-mono">{num}</span><span className="pf-eyebrow-rule" /></p>
         <h3 className="pf-title"><strong>{pillar.leadWord}</strong> {pillar.titleRest}</h3>
         <p className="pf-desc">{pillar.description}</p>
       </div>

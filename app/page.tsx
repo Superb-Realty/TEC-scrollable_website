@@ -6,6 +6,7 @@ import { BuildingBreakdown } from "@/components/building-breakdown";
 import { LocalityMapSection } from "@/components/locality-map-section";
 import { ProjectPillars } from "@/components/project-pillars";
 import { AmenityMarquee } from "@/components/amenity-marquee";
+import { DeveloperLegacies } from "@/components/developer-legacies";
 import { EnquiryModal } from "@/components/enquiry-modal";
 import { SectionReveal } from "@/components/section-reveal";
 import { site } from "@/content/site";
@@ -30,6 +31,9 @@ export default function Home() {
 
         {/* 4. Interactive Amenity Marquee & Cinematic Slide Flow */}
         <AmenityMarquee />
+
+        {/* 5. Two Legacies • One Progressive Vision (Developer Pedigree & Landmark Portfolio) */}
+        <DeveloperLegacies />
 
       </main>
 
