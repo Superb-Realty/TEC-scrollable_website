@@ -525,7 +525,7 @@ export function LocalityMapSection() {
         </aside>
 
         {/* Map Viewport Canvas */}
-        <div className="tec-map-canvas-container">
+        <div className={`tec-map-canvas-container ${activeCategory === "all" ? "is-all-corridors" : "is-filtered-category"}`}>
           <div ref={mapContainerRef} className="tec-leaflet-element" />
 
           {/* Floating Quick Action Overlay */}

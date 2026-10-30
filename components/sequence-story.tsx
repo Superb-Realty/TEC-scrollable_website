@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useMotionValueEvent, useTransform } from "motion/react";
 import { measureSeams, pinnedProgress } from "@/components/pinned-progress";
 
-const LAST = 191;
-const src = (index: number) => `/sequence/frame-${String(index + 1).padStart(3, "0")}.webp`;
+const LAST = 189;
+const src = (index: number) => `/sequence/frame-${String(index + 1).padStart(3, "0")}.webp?v=video2`;
 
 export function SequenceStory() {
   const storyRef = useRef<HTMLElement>(null);
@@ -109,12 +109,21 @@ export function SequenceStory() {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.fillStyle = "#17211c";
       ctx.fillRect(0, 0, width, height);
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
       const sw = image.naturalWidth;
       const sh = image.naturalHeight;
-      const scale = Math.max(width / sw, height / sh);
-      const dw = sw * scale;
-      const dh = sh * scale;
-      ctx.drawImage(image, 0, 0, sw, sh, (width - dw) / 2, (height - dh) / 2, dw, dh);
+      // Slight 1.035 bleed crops corner watermark; portrait viewports pan toward the building facade on the right
+      const isPortrait = width < height;
+      const baseScale = Math.max(width / sw, height / sh) * 1.035;
+      const dw = sw * baseScale;
+      const dh = sh * baseScale;
+      const progressRatio = Math.max(0, Math.min(1, selected / LAST));
+      const focalX = isPortrait ? 0.58 + progressRatio * 0.11 : 0.52;
+      const focalY = isPortrait ? 0.46 : 0.48;
+      const dx = (width - dw) * focalX;
+      const dy = (height - dh) * focalY;
+      ctx.drawImage(image, 0, 0, sw, sh, dx, dy, dw, dh);
       lastDrawn = selected;
     };
     const requestDraw = () => { if (!raf) raf = requestAnimationFrame(paint); };

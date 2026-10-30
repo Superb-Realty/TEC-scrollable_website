@@ -16,7 +16,7 @@ export default function Home() {
     <>
       <Navigation />
       <main id="main-content">
-        <link rel="preload" as="image" href="/sequence/frame-001.webp" />
+        <link rel="preload" as="image" href="/sequence/frame-001.webp?v=video2" />
         <SequenceStory />
         
         <WormViewStory />
