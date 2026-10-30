@@ -19,7 +19,7 @@ export function WormViewStory() {
   const [activeChapter, setActiveChapter] = useState<"arrival" | "summit" | "none">("arrival");
 
   const scrollYProgress = useMotionValue(0);
-  const arrivalOpacity = useTransform(scrollYProgress, [0, 0.08], [1, 0]);
+  const arrivalOpacity = useTransform(scrollYProgress, [0, 0.24, 0.3], [1, 1, 0]);
   const summitOpacity = useTransform(scrollYProgress, [0.86, 0.94], [0, 1]);
 
   useEffect(() => {
@@ -74,7 +74,7 @@ export function WormViewStory() {
   }, [scrollYProgress, prefersReduced]);
 
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
-    if (progress < 0.10) {
+    if (progress < 0.31) {
       setActiveChapter("arrival");
     } else if (progress >= 0.86) {
       setActiveChapter("summit");
@@ -249,8 +249,8 @@ export function WormViewStory() {
         </div>
 
         <div className="worm-captions" aria-live="polite">
-          {activeChapter === "summit" && (
-            <motion.div className="worm-brand-copy" style={{ opacity: summitOpacity }}>
+          {activeChapter === "arrival" && (
+            <motion.div className="worm-brand-copy" style={{ opacity: arrivalOpacity }}>
               <NextImage src="/logo-eastern-chambers.png" alt="The Eastern Chambers" width={679} height={368} sizes="(max-width: 600px) 80vw, 540px" className="worm-brand-logo" />
             </motion.div>
           )}

@@ -5,7 +5,7 @@ import { motion, useMotionValue, useMotionValueEvent, useTransform } from "motio
 import { measureSeams, pinnedProgress } from "@/components/pinned-progress";
 
 const LAST = 189;
-const src = (index: number) => `/sequence/frame-${String(index + 1).padStart(3, "0")}.webp?v=video2`;
+const src = (index: number) => `/sequence/frame-${String(index + 1).padStart(3, "0")}.webp?v=video2-oct30`;
 
 export function SequenceStory() {
   const storyRef = useRef<HTMLElement>(null);
@@ -221,8 +221,7 @@ export function SequenceStory() {
         )}
         {!reduced && activeCopy === "reveal" && (
           <motion.div className="reveal-copy" style={{ opacity: revealOpacity }}>
-            <p className="eyebrow light">NEXT-GEN CHAMBERS</p>
-            <h2>Designed for the<br /><em>Businesses of Tomorrow.</em></h2>
+            <h2>Vikhroli</h2>
           </motion.div>
         )}
         {reduced && (

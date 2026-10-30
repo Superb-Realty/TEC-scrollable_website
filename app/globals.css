@@ -158,7 +158,7 @@ h1 em,h2 em{font-family:Georgia,serif;font-weight:400;font-style:italic;letter-s
 .story{height:calc(260svh + var(--blend-lg));position:relative;background:#0F1216}
 .story::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 65% 50% at 50% 25%,rgba(195,172,123,.065) 0%,rgba(15,18,22,0) 70%);z-index:1}
 .story-sticky{position:sticky;top:0;height:100svh;overflow:hidden;padding:0}
-.story-stage{position:absolute;inset:0;overflow:hidden;background:#0F1216 url('/sequence/frame-001.webp?v=video2') center/cover}
+.story-stage{position:absolute;inset:0;overflow:hidden;background:#0F1216 url('/sequence/frame-001.webp?v=video2-oct30') center/cover}
 .story-sticky canvas,.still-frame,.still-frame img{display:block;width:100%;height:100%}
 .story-sticky canvas,.still-frame{position:absolute;inset:0}
 .still-frame img{object-fit:cover}
@@ -283,7 +283,7 @@ h1 em,.reveal-copy em{color:#ddd8bd}
 .worm-stage{position:absolute;inset:0;background:#0F1216 url('/section-2/frame-001.webp?v=b202db4b') center bottom/cover}
 .worm-canvas{position:absolute;inset:0;display:block;width:100%;height:100%}
 .worm-vignette{display:none}
-.worm-captions{position:absolute;left:calc(var(--gutter) - 14px);right:30px;bottom:105px;pointer-events:none;z-index:2;max-width:720px}
+.worm-captions{position:absolute;left:calc(var(--gutter) - 14px);right:30px;top:auto;bottom:max(23vh,13.2vw);pointer-events:none;z-index:2;max-width:720px}
 .worm-copy{margin:0}
 .worm-copy .eyebrow{color:#e5e7d7;letter-spacing:.18em;font-weight:600;margin:0 0 8px;text-shadow:0 1px 12px rgba(0,0,0,.85)}
 .worm-copy .eyebrow span{color:var(--gold);padding:0 10px}
@@ -576,7 +576,7 @@ h1{font-size:clamp(30px,8.2vw,44px);line-height:1.06;margin:14px 0 16px;text-sha
 .address-note>div span:first-child{font-size:24px;line-height:1}
 .address-note>div span:last-child{font-size:11px}
 .worm-story{height:calc(300svh + var(--blend-lg) * 2)}
-.worm-captions{left:var(--gutter);right:var(--gutter);bottom:85px;max-width:100%}
+.worm-captions{left:var(--gutter);right:var(--gutter);top:auto;bottom:22vh;max-width:100%}
 .worm-copy h2{font-size:var(--fs-display);line-height:1.05;margin:12px 0}
 .worm-copy-desc{max-width:320px;font-size:14px;line-height:1.55}
 .worm-brand-copy h2{font-size:clamp(30px,8vw,44px)}
@@ -2773,10 +2773,10 @@ html{scroll-behavior:auto}
  .portfolio-disclaimer { font-size:10.5px; margin-top:14px; }
 }
 
-.worm-brand-logo{position:relative;left:-8px;display:block;width:clamp(180px,21vw,310px);max-width:100%;height:auto;object-fit:contain;filter:brightness(0) invert(1);}
+.worm-brand-logo{position:relative;left:-8px;display:block;width:clamp(155px,15.5vw,235px);max-width:100%;height:auto;object-fit:contain;filter:brightness(0) invert(1) drop-shadow(0 0 1px #ffffff) drop-shadow(0 0 12px rgba(255,255,255,.65)) drop-shadow(0 3px 12px rgba(8,20,35,.35));}
 
-/* Keep the elevation logo 25px from the viewport edge. */
-.worm-captions{left:25px;}
+/* Keep the elevation logo 25px from the viewport edge at the bottom-left, just above the background buildings/trees and clear of the main facade. */
+.worm-captions{left:25px;top:auto;bottom:max(23vh,13.2vw);}
 .worm-brand-logo{left:0;}
 
 /* Clear contact hierarchy in the closing footer. */
@@ -2795,3 +2795,6 @@ html{scroll-behavior:auto}
 @media(max-width:600px){.closing-contact-address{font-size:16px;}.closing-contact-links{gap:16px 28px;}.closing-contact-links a{font-size:17px;}}
 
 @media(min-width:901px){.closing-pedigree{margin-left:clamp(24px,3vw,56px);}}
+
+.reveal-copy h2{font-family:var(--font-proxima),Arial,sans-serif;font-weight:300;text-transform:uppercase;letter-spacing:-.025em;font-size:calc(var(--fs-display) + 20px);}
+@media(max-width:600px){.reveal-copy h2{font-size:calc(clamp(28px,7.8vw,42px) + 20px);}}
