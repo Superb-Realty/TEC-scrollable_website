@@ -2778,3 +2778,20 @@ html{scroll-behavior:auto}
 /* Keep the elevation logo 25px from the viewport edge. */
 .worm-captions{left:25px;}
 .worm-brand-logo{left:0;}
+
+/* Clear contact hierarchy in the closing footer. */
+.closing-legal-bar{grid-template-columns:1fr 1fr;align-items:start;padding-bottom:32px;}
+.closing-rera-card{align-items:center;align-self:start;}
+.closing-pedigree{gap:16px;}
+.closing-contact-label{margin:0;color:var(--gold);font-size:11px;font-weight:600;letter-spacing:.16em;}
+.closing-contact-address{font-style:normal;font-size:17px;line-height:1.6;color:#f1f3ec;}
+.closing-contact-links{display:flex;flex-wrap:wrap;gap:20px 40px;}
+.closing-contact-links a{display:flex;flex-direction:column;gap:5px;color:#fff;font-size:18px;font-weight:600;line-height:1.4;padding:4px 0;}
+.closing-contact-links a span{font-size:10px;font-weight:400;letter-spacing:.12em;color:#b8c5b9;}
+.closing-contact-links a:hover{color:var(--gold);}
+.closing-developer-credit{margin:4px 0 0;padding-top:16px;border-top:1px solid rgba(255,255,255,.12);font-size:12px;color:#b8c5b9;}
+.closing-developer-credit strong{color:#e1e7db;font-weight:600;}
+@media(max-width:900px){.closing-legal-bar{grid-template-columns:1fr;gap:30px;}}
+@media(max-width:600px){.closing-contact-address{font-size:16px;}.closing-contact-links{gap:16px 28px;}.closing-contact-links a{font-size:17px;}}
+
+@media(min-width:901px){.closing-pedigree{margin-left:clamp(24px,3vw,56px);}}

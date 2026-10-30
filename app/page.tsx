@@ -75,18 +75,16 @@ export default function Home() {
           </div>
 
           <div className="closing-pedigree">
-            <h3 className="closing-pedigree-title">Superb Realty &amp; GHP Group • Two Legacies</h3>
-            <p className="closing-pedigree-copy">
-              Two established Mumbai developers with decades of experience in development, delivery and value creation across residential and commercial real estate.
-            </p>
-            <div className="closing-pedigree-badges font-mono">
-              <span className="closing-pedigree-badge">80+ YRS COLLECTIVE LEGACY</span>
-              <span className="closing-pedigree-badge">8.5M+ SQ.FT. DELIVERED</span>
-              <span className="closing-pedigree-badge">50+ PROJECTS COMPLETED</span>
+            <p className="closing-contact-label">VISIT &amp; CONNECT</p>
+            <address className="closing-contact-address">
+              Amber Compound, Plot No. 11A, LBS Marg,<br />
+              Vikhroli West, Mumbai – 400079
+            </address>
+            <div className="closing-contact-links">
+              <a href="tel:+919090263264"><span>CALL US</span>9090 263 264</a>
+              <a href="mailto:info@superbrealty.in"><span>EMAIL US</span>info@superbrealty.in</a>
             </div>
-            <p className="closing-pedigree-copy" style={{ marginTop: "8px", fontSize: "11px", color: "#8a9682" }}>
-              Amber Compound, Plot No. 11A, LBS Marg, Vikhroli West, Mumbai - 400079 • Phone: <a href="tel:+919090263264" style={{ color: "#d5ddca", textDecoration: "underline" }}>9090 263 264</a> • <a href="mailto:info@superbrealty.in" style={{ color: "#d5ddca", textDecoration: "underline" }}>info@superbrealty.in</a>
-            </p>
+            <p className="closing-developer-credit">A development by <strong>Superb Realty &amp; GHP Group</strong></p>
           </div>
         </div>
 
