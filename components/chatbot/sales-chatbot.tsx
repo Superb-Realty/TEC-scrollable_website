@@ -322,6 +322,12 @@ export function SalesChatbot() {
     e.preventDefault();
     if (!leadName.trim() || !leadPhone.trim() || leadSubmitting) return;
 
+    const digits = leadPhone.replace(/\D/g, "");
+    if (digits.length < 10) {
+      alert("Please enter a legitimate 10-digit mobile or WhatsApp number.");
+      return;
+    }
+
     setLeadSubmitting(true);
     try {
       const res = await fetch(`${CHATBOT_API_BASE}/api/leads`, {
@@ -530,11 +536,12 @@ export function SalesChatbot() {
               </label>
 
               <label className="tec-drawer-label font-mono">
-                PHONE / WHATSAPP NUMBER *
+                PHONE / WHATSAPP NUMBER (10 DIGITS) *
                 <input
                   type="tel"
                   required
-                  placeholder="e.g. +91 98200 12345"
+                  pattern="[0-9+ -]{10,18}"
+                  placeholder="e.g. 98200 12345 or +91 98200 12345"
                   value={leadPhone}
                   onChange={(e) => setLeadPhone(e.target.value)}
                   className="tec-drawer-input"
@@ -641,7 +648,7 @@ export function SalesChatbot() {
                   type="text"
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
-                  placeholder="Ask about floors, connectivity, RERA, or share your phone..."
+                  placeholder="Ask a question or share your 10-digit number..."
                   disabled={isStreaming}
                   className="tec-composer-input"
                   aria-label="Chat message input"

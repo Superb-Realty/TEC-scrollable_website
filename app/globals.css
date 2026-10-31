@@ -3246,21 +3246,26 @@ html{scroll-behavior:auto}
   padding: 10px 12px;
   background: rgba(15, 27, 22, 0.98);
   border-top: 1px solid rgba(195, 172, 123, 0.22);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .tec-composer-input {
-  flex: 1;
-  height: 40px;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 42px;
   padding: 0 12px;
   border-radius: 6px;
   border: 1px solid rgba(255, 255, 255, 0.14);
   background: rgba(255, 255, 255, 0.05);
   color: #ffffff;
-  font-size: 13.5px;
+  font-size: 14px;
+  box-sizing: border-box;
 }
 
 .tec-composer-input::placeholder {
   color: #8fa195;
+  font-size: 13px;
 }
 
 .tec-composer-input:focus {
@@ -3269,8 +3274,10 @@ html{scroll-behavior:auto}
 }
 
 .tec-composer-send {
-  width: 40px;
-  height: 40px;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
   border-radius: 6px;
   border: 1px solid var(--gold);
   background: var(--gold);
@@ -3368,11 +3375,27 @@ html{scroll-behavior:auto}
 
 @media (max-width: 600px) {
   .tec-chatbot-root {
-    right: 12px;
-    bottom: 12px;
+    right: 10px !important;
+    bottom: 10px !important;
   }
   .tec-chatbot-window {
-    width: calc(100vw - 24px);
-    height: min(560px, calc(100dvh - 80px));
+    position: fixed !important;
+    right: 8px !important;
+    bottom: 8px !important;
+    left: 8px !important;
+    top: auto !important;
+    width: auto !important;
+    max-width: none !important;
+    height: min(580px, calc(100dvh - 16px)) !important;
+    max-height: calc(100dvh - 16px) !important;
+    border-radius: 12px !important;
+    z-index: 10000 !important;
+    box-shadow: 0 16px 50px rgba(0, 0, 0, 0.7) !important;
+  }
+  .tec-composer-input {
+    font-size: 16px !important; /* Prevents iOS Safari from auto-zooming input */
+  }
+  .tec-chatbot-messages {
+    padding: 12px 10px;
   }
 }
