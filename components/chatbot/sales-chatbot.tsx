@@ -36,6 +36,91 @@ const INITIAL_GREETING: ChatMessage = {
   content: "Welcome to **The Eastern Chambers**. How can I assist you today?",
 };
 
+function getNextRecommendedTopics(messages: ChatMessage[]): string[] {
+  if (messages.length <= 1) {
+    return QUICK_PROMPTS;
+  }
+
+  const userMessages = messages.filter((m) => m.role === "user");
+  const lastUserMsg = userMessages[userMessages.length - 1]?.content.toLowerCase() || "";
+  const lastAssistantMsg = messages[messages.length - 1];
+
+  // If a lead was just registered in the conversation
+  if (lastAssistantMsg?.leadCaptured) {
+    return [
+      "Request Floor Plan PDF",
+      "Schedule Private Walkthrough",
+      "Location & Metro Access",
+      "Commercial Pricing Sheet",
+    ];
+  }
+
+  let recommendations: string[] = [];
+
+  if (/\b(floor|plan|size|carpet|sq|area|layout|jodi|office)\b/i.test(lastUserMsg)) {
+    recommendations = [
+      "Pricing Trend",
+      "Book Site Visit",
+      "Car Parking & Amenities",
+      "Location & Metro",
+    ];
+  } else if (/\b(location|metro|station|railway|connectivity|lbs|vikhroli|reach|distance|road|highway)\b/i.test(lastUserMsg)) {
+    recommendations = [
+      "Floor Plans & Sizes",
+      "Pricing Trend",
+      "Book Site Visit",
+      "Nearby Landmarks & Station",
+    ];
+  } else if (/\b(price|pricing|cost|rate|roi|budget|payment|crore|lakh)\b/i.test(lastUserMsg)) {
+    recommendations = [
+      "Floor Plans & Sizes",
+      "Book Site Visit",
+      "RERA & Possession Date",
+      "Connect with Sales Desk",
+    ];
+  } else if (/\b(visit|walkthrough|see|inspect|book|tour|site visit)\b/i.test(lastUserMsg)) {
+    recommendations = [
+      "Floor Plans & Sizes",
+      "Pricing Trend",
+      "Directions & Landmark",
+      "Car Parking & Amenities",
+    ];
+  } else if (/\b(amenit|park|terrace|lift|elevator|cafeteria|security|power|height)\b/i.test(lastUserMsg)) {
+    recommendations = [
+      "Floor Plans & Sizes",
+      "Pricing Trend",
+      "Book Site Visit",
+      "Location & Metro",
+    ];
+  } else if (/\b(rera|possession|date|completion|developer|superb|ghp|approval)\b/i.test(lastUserMsg)) {
+    recommendations = [
+      "Floor Plans & Sizes",
+      "Pricing Trend",
+      "Book Site Visit",
+      "Location & Metro",
+    ];
+  } else {
+    const askedQueries = userMessages.map((m) => m.content.toLowerCase());
+    const candidates = [
+      "Floor Plans & Sizes",
+      "Pricing Trend",
+      "Location & Metro",
+      "Book Site Visit",
+      "Car Parking & Amenities",
+      "RERA & Possession Date",
+    ];
+    recommendations = candidates.filter(
+      (c) => !askedQueries.some((q) => q.includes(c.toLowerCase().slice(0, 6)))
+    );
+  }
+
+  const filtered = recommendations.filter(
+    (rec) => !lastUserMsg.includes(rec.toLowerCase().slice(0, 6))
+  );
+
+  return (filtered.length >= 2 ? filtered : QUICK_PROMPTS).slice(0, 4);
+}
+
 const CHATBOT_API_BASE =
   process.env.NEXT_PUBLIC_CHATBOT_API_URL || "https://tec-chatbot.vercel.app";
 
@@ -628,14 +713,14 @@ export function SalesChatbot() {
                   </div>
                 ))}
 
-                {/* Starter Quick-Prompt Chips */}
-                {messages.length <= 2 && !isStreaming && (
+                {/* Dynamic Contextual Quick-Prompt Recommendation Chips */}
+                {!isStreaming && (
                   <div className="tec-quick-prompts">
                     <span className="tec-quick-label font-mono">
-                      SUGGESTED TOPICS:
+                      {messages.length <= 2 ? "SUGGESTED TOPICS:" : "RECOMMENDED NEXT:"}
                     </span>
                     <div className="tec-quick-chips">
-                      {QUICK_PROMPTS.map((prompt) => (
+                      {getNextRecommendedTopics(messages).map((prompt) => (
                         <button
                           key={prompt}
                           type="button"

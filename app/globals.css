@@ -3114,7 +3114,24 @@ html{scroll-behavior:auto}
   display: flex;
   flex-direction: column;
   gap: 12px;
-  background: radial-gradient(circle at top right, rgba(38, 62, 52, 0.35), rgba(15, 26, 21, 0.95));
+  background: #f8f7f3;
+}
+
+.tec-chatbot-messages::-webkit-scrollbar {
+  width: 5px;
+}
+
+.tec-chatbot-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tec-chatbot-messages::-webkit-scrollbar-thumb {
+  background: #d8cfbf;
+  border-radius: 999px;
+}
+
+.tec-chatbot-messages::-webkit-scrollbar-thumb:hover {
+  background: #ab925e;
 }
 
 .tec-msg-row {
@@ -3139,24 +3156,32 @@ html{scroll-behavior:auto}
 }
 
 .tec-msg-row.is-user .tec-msg-bubble {
-  background: linear-gradient(135deg, #c3ac7b 0%, #ab925e 100%);
-  color: #12201a;
-  font-weight: 500;
+  background: linear-gradient(135deg, #c9af7a 0%, #b3955a 100%);
+  color: #112019;
+  font-weight: 600;
   border-bottom-right-radius: 2px;
+  box-shadow: 0 2px 6px rgba(179, 149, 90, 0.22);
 }
 
 .tec-msg-row.is-assistant .tec-msg-bubble {
-  background: rgba(28, 49, 41, 0.92);
-  border: 1px solid rgba(195, 172, 123, 0.22);
-  color: #f3f0e8;
+  background: #ffffff;
+  border: 1px solid #e7e2d6;
+  color: #1a2821;
   border-bottom-left-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.tec-msg-row.is-assistant .tec-msg-bubble strong {
+  color: #0c1813;
+  font-weight: 600;
 }
 
 .tec-msg-source-badge {
   font-size: 9.5px;
-  color: var(--gold);
+  color: #8c7134;
   margin-bottom: 6px;
   letter-spacing: 0.04em;
+  font-weight: 600;
 }
 
 .tec-chat-paragraph {
@@ -3179,28 +3204,30 @@ html{scroll-behavior:auto}
 }
 
 .tec-chat-bullet-dot {
-  color: var(--gold);
+  color: #ab925e;
   font-size: 9px;
   margin-top: 4px;
   flex-shrink: 0;
 }
 
 .tec-chat-code {
-  background: rgba(0, 0, 0, 0.3);
+  background: #f1ede3;
+  border: 1px solid #e2dac9;
   padding: 1px 5px;
   border-radius: 3px;
   font-size: 12px;
-  color: var(--gold);
+  color: #7b6330;
 }
 
 .tec-msg-lead-pill {
   margin-top: 8px;
   padding: 5px 8px;
   border-radius: 4px;
-  background: rgba(74, 222, 128, 0.14);
-  border: 1px solid rgba(74, 222, 128, 0.35);
-  color: #bbf7d0;
+  background: rgba(22, 101, 52, 0.08);
+  border: 1px solid rgba(22, 101, 52, 0.25);
+  color: #15803d;
   font-size: 10.5px;
+  font-weight: 600;
 }
 
 .tec-typing-dots {
@@ -3214,7 +3241,7 @@ html{scroll-behavior:auto}
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--gold);
+  background: #ab925e;
   animation: tec-dot-bounce 1.2s infinite ease-in-out both;
 }
 
@@ -3246,7 +3273,8 @@ html{scroll-behavior:auto}
 .tec-quick-label {
   font-size: 9.5px;
   letter-spacing: 0.12em;
-  color: #9fb0a4;
+  color: #617367;
+  font-weight: 600;
 }
 
 .tec-quick-chips {
@@ -3258,17 +3286,20 @@ html{scroll-behavior:auto}
 .tec-quick-chip {
   padding: 6px 11px;
   border-radius: 999px;
-  border: 1px solid rgba(195, 172, 123, 0.35);
-  background: rgba(24, 45, 39, 0.75);
-  color: #e6ece7;
+  border: 1px solid #d9d2c3;
+  background: #ffffff;
+  color: #1e3027;
   font-size: 11.5px;
+  font-weight: 500;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   transition: all 0.2s ease;
 }
 
 .tec-quick-chip:hover {
-  background: rgba(195, 172, 123, 0.22);
-  border-color: var(--gold);
-  color: #ffffff;
+  background: #f4ede0;
+  border-color: #bfa56f;
+  color: #0f1c16;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .tec-chatbot-composer {
@@ -3276,8 +3307,8 @@ html{scroll-behavior:auto}
   align-items: center;
   gap: 8px;
   padding: 10px 12px;
-  background: rgba(15, 27, 22, 0.98);
-  border-top: 1px solid rgba(195, 172, 123, 0.22);
+  background: #ffffff;
+  border-top: 1px solid #e5ded2;
   width: 100%;
   box-sizing: border-box;
 }
@@ -3288,21 +3319,23 @@ html{scroll-behavior:auto}
   height: 42px;
   padding: 0 12px;
   border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.05);
-  color: #ffffff;
+  border: 1px solid #d8cfbe;
+  background: #f8f7f3;
+  color: #122019;
   font-size: 14px;
   box-sizing: border-box;
 }
 
 .tec-composer-input::placeholder {
-  color: #8fa195;
+  color: #7b8d82;
   font-size: 13px;
 }
 
 .tec-composer-input:focus {
   outline: none;
-  border-color: var(--gold);
+  border-color: #ab925e;
+  background: #ffffff;
+  box-shadow: 0 0 0 2px rgba(171, 142, 78, 0.18);
 }
 
 .tec-composer-send {
@@ -3311,9 +3344,9 @@ html{scroll-behavior:auto}
   height: 42px;
   min-width: 42px;
   border-radius: 6px;
-  border: 1px solid var(--gold);
-  background: var(--gold);
-  color: #13221c;
+  border: 1px solid #142820;
+  background: #142820;
+  color: #e5d1a4;
   font-size: 17px;
   font-weight: 700;
   display: inline-flex;
@@ -3334,14 +3367,15 @@ html{scroll-behavior:auto}
   display: flex;
   flex-direction: column;
   gap: 12px;
-  background: #14261f;
+  background: #faf8f4;
 }
 
 .tec-drawer-eyebrow {
   margin: 0;
   font-size: 9.5px;
   letter-spacing: 0.16em;
-  color: var(--gold);
+  color: #8c7134;
+  font-weight: 600;
 }
 
 .tec-drawer-title {
@@ -3349,13 +3383,13 @@ html{scroll-behavior:auto}
   font-family: var(--font-minion), Georgia, serif;
   font-size: 21px;
   font-weight: 400;
-  color: #ffffff;
+  color: #12211b;
 }
 
 .tec-drawer-desc {
   margin: 0 0 4px;
   font-size: 12.5px;
-  color: #c2cec5;
+  color: #4a5c52;
   line-height: 1.45;
 }
 
@@ -3365,16 +3399,17 @@ html{scroll-behavior:auto}
   gap: 5px;
   font-size: 10px;
   letter-spacing: 0.1em;
-  color: var(--gold);
+  color: #8c7134;
+  font-weight: 600;
 }
 
 .tec-drawer-input {
   height: 38px;
   padding: 0 11px;
   border-radius: 5px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(0, 0, 0, 0.24);
-  color: #ffffff;
+  border: 1px solid #d8cfbe;
+  background: #ffffff;
+  color: #12211b;
   font-family: var(--font-proxima), Arial, sans-serif;
   font-size: 13.5px;
 }
@@ -3384,9 +3419,9 @@ html{scroll-behavior:auto}
   width: 100%;
   height: 42px;
   border-radius: 5px;
-  border: 1px solid var(--gold);
-  background: var(--gold);
-  color: #13221c;
+  border: 1px solid #142820;
+  background: #142820;
+  color: #e5d1a4;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -3399,10 +3434,10 @@ html{scroll-behavior:auto}
   justify-content: center;
   gap: 8px;
   padding: 6px 12px;
-  background: #0d1814;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  background: #f0eee8;
+  border-top: 1px solid #e3ddd0;
   font-size: 9.5px;
-  color: #88998e;
+  color: #637369;
 }
 
 @media (max-width: 600px) {
