@@ -277,7 +277,7 @@ h1 em,.reveal-copy em{color:#ddd8bd}
 .address-note>div span:last-child{font-size:var(--fs-micro);letter-spacing:.11em;text-transform:uppercase;color:#69745f}
 
 /* Scrollable worm's-eye architectural elevation animation */
-.worm-story{height:calc(360svh + var(--blend-lg) * 2);position:relative;background:#0F1216;color:var(--ivory);overflow:clip}
+.worm-story{height:calc(230svh + var(--blend-lg) * 2);position:relative;background:#0F1216;color:var(--ivory);overflow:clip}
 .worm-story::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 70% 45% at 50% 35%,rgba(195,172,123,.065) 0%,rgba(15,18,22,0) 70%);z-index:1}
 .worm-sticky{position:sticky;top:0;height:100svh;overflow:hidden}
 .worm-stage{position:absolute;inset:0;background:#0F1216 url('/section-2/frame-001.webp?v=b202db4b') center bottom/cover}
@@ -575,7 +575,7 @@ h1{font-size:clamp(30px,8.2vw,44px);line-height:1.06;margin:14px 0 16px;text-sha
 .address-note>div{border-left:0;border-top:1px solid var(--line);padding-left:0;padding-top:18px;display:flex;flex-direction:row;align-items:baseline;justify-content:space-between;width:100%}
 .address-note>div span:first-child{font-size:24px;line-height:1}
 .address-note>div span:last-child{font-size:11px}
-.worm-story{height:calc(300svh + var(--blend-lg) * 2)}
+.worm-story{height:calc(200svh + var(--blend-lg) * 2)}
 .worm-captions{left:var(--gutter);right:var(--gutter);top:auto;bottom:22vh;max-width:100%}
 .worm-copy h2{font-size:var(--fs-display);line-height:1.05;margin:12px 0}
 .worm-copy-desc{max-width:320px;font-size:14px;line-height:1.55}
@@ -2966,9 +2966,51 @@ html{scroll-behavior:auto}
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 16px 12px;
+  padding: 13px 16px 11px;
   background: rgba(15, 27, 22, 0.95);
   border-bottom: 1px solid rgba(195, 172, 123, 0.18);
+}
+
+.tec-chatbot-logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.tec-chatbot-logo {
+  width: auto;
+  height: 22px;
+  max-width: 135px;
+  object-fit: contain;
+  display: block;
+  filter: brightness(0) invert(1);
+}
+
+.tec-chatbot-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(74, 222, 128, 0.12);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+}
+
+.tec-chatbot-status-pill .tec-chatbot-eyebrow {
+  font-size: 8.5px;
+  letter-spacing: 0.12em;
+  color: #7fe3b5;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.tec-launcher-logo-img {
+  width: 30px;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  filter: brightness(0) invert(1);
 }
 
 .tec-chatbot-status-row {
