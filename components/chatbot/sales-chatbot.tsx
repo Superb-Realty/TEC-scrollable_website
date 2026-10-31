@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
-import chamberLogo from "@/assets/the_eastern_chambers_logo/the_eastern_chambers_logo.png";
 import { openEnquiryModal } from "@/components/enquiry-modal";
 
 interface RagSource {
@@ -409,14 +408,22 @@ export function SalesChatbot() {
         >
           <span className="tec-launcher-badge" aria-hidden="true" />
           <span className="tec-launcher-icon" aria-hidden="true">
-            <Image
-              src={chamberLogo}
-              alt="The Eastern Chambers"
-              width={32}
-              height={18}
-              className="tec-launcher-logo-img"
-              priority
-            />
+            <svg
+              width="26"
+              height="26"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+              <circle cx="8.5" cy="11.5" r="1.1" fill="currentColor" stroke="none" />
+              <circle cx="12" cy="11.5" r="1.1" fill="currentColor" stroke="none" />
+              <circle cx="15.5" cy="11.5" r="1.1" fill="currentColor" stroke="none" />
+            </svg>
           </span>
           <span className="tec-launcher-tooltip font-mono">AI CONCIERGE</span>
         </button>
@@ -432,24 +439,26 @@ export function SalesChatbot() {
           {/* Top Gold Accent Bar */}
           <div className="tec-chatbot-gold-bar" aria-hidden="true" />
 
-          {/* Header */}
+          {/* Header designed like modern luxury webdesign */}
           <header className="tec-chatbot-header">
-            <div className="tec-chatbot-brand">
+            <div className="tec-chatbot-brand-col">
               <div className="tec-chatbot-logo-wrap">
                 <Image
-                  src={chamberLogo}
+                  src="/logo-eastern-chambers-v2.png"
                   alt="The Eastern Chambers"
-                  width={112}
-                  height={22}
+                  width={136}
+                  height={70}
                   className="tec-chatbot-logo"
                   priority
                 />
+              </div>
+              <div className="tec-chatbot-meta-row">
+                <h3 className="tec-chatbot-heading">Sales Concierge</h3>
                 <div className="tec-chatbot-status-pill">
                   <span className="tec-status-dot" aria-hidden="true" />
-                  <span className="tec-chatbot-eyebrow font-mono">ONLINE</span>
+                  <span className="tec-chatbot-status-text font-mono">ONLINE</span>
                 </div>
               </div>
-              <h3 className="tec-chatbot-heading">Sales Concierge</h3>
             </div>
 
             <div className="tec-chatbot-header-actions">

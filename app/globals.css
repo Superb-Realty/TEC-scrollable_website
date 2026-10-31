@@ -2964,60 +2964,64 @@ html{scroll-behavior:auto}
 
 .tec-chatbot-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  padding: 13px 16px 11px;
-  background: rgba(15, 27, 22, 0.95);
-  border-bottom: 1px solid rgba(195, 172, 123, 0.18);
+  padding: 15px 18px 13px;
+  background: linear-gradient(180deg, rgba(20, 36, 29, 0.98) 0%, rgba(13, 24, 19, 0.98) 100%);
+  border-bottom: 1px solid rgba(195, 172, 123, 0.22);
+}
+
+.tec-chatbot-brand-col {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
 }
 
 .tec-chatbot-logo-wrap {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 4px;
 }
 
 .tec-chatbot-logo {
-  width: auto;
-  height: 22px;
-  max-width: 135px;
+  width: 140px;
+  height: auto;
+  max-height: 52px;
   object-fit: contain;
   display: block;
-  filter: brightness(0) invert(1);
+}
+
+.tec-chatbot-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tec-chatbot-heading {
+  margin: 0;
+  font-family: var(--font-minion), Georgia, serif;
+  font-size: 16.5px;
+  font-weight: 500;
+  color: #f7f5ed;
+  letter-spacing: 0.015em;
+  line-height: 1.15;
 }
 
 .tec-chatbot-status-pill {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 2px 7px;
+  padding: 2.5px 8px;
   border-radius: 999px;
   background: rgba(74, 222, 128, 0.12);
-  border: 1px solid rgba(74, 222, 128, 0.3);
+  border: 1px solid rgba(74, 222, 128, 0.32);
 }
 
-.tec-chatbot-status-pill .tec-chatbot-eyebrow {
+.tec-chatbot-status-pill .tec-chatbot-status-text {
   font-size: 8.5px;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   color: #7fe3b5;
   font-weight: 600;
   line-height: 1;
-}
-
-.tec-launcher-logo-img {
-  width: 30px;
-  height: auto;
-  object-fit: contain;
-  display: block;
-  filter: brightness(0) invert(1);
-}
-
-.tec-chatbot-status-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 3px;
 }
 
 .tec-status-dot {
@@ -3025,21 +3029,7 @@ html{scroll-behavior:auto}
   height: 6px;
   border-radius: 50%;
   background: #4ade80;
-}
-
-.tec-chatbot-eyebrow {
-  font-size: 9.5px;
-  letter-spacing: 0.14em;
-  color: var(--gold);
-}
-
-.tec-chatbot-heading {
-  margin: 0;
-  font-family: var(--font-minion), Georgia, serif;
-  font-size: 20px;
-  font-weight: 400;
-  color: #ffffff;
-  letter-spacing: -0.01em;
+  box-shadow: 0 0 6px rgba(74, 222, 128, 0.85);
 }
 
 .tec-chatbot-header-actions {
