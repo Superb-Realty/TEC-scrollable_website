@@ -8,6 +8,7 @@ import { ProjectPillars } from "@/components/project-pillars";
 import { AmenityMarquee } from "@/components/amenity-marquee";
 import { DeveloperLegacies } from "@/components/developer-legacies";
 import { EnquiryModal } from "@/components/enquiry-modal";
+import { SalesChatbot } from "@/components/chatbot/sales-chatbot";
 import { SectionReveal } from "@/components/section-reveal";
 import { site } from "@/content/site";
 
@@ -97,6 +98,7 @@ export default function Home() {
 
       {/* 5. Persistent Conversion Architecture & Modals */}
       <EnquiryModal />
+      <SalesChatbot />
       <SectionReveal />
     </>
   );

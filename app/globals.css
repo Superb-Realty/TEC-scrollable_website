@@ -2843,3 +2843,536 @@ html{scroll-behavior:auto}
  .success-actions{flex-direction:column;gap:10px;}
  .btn-enquiry-primary,.btn-enquiry-secondary{width:100%;min-height:44px;padding:12px;}
 }
+
+/* ==========================================================================
+   AI SALES & LEASING CONCIERGE CHATBOT WIDGET (Quiet Luxury Aesthetic)
+   ========================================================================== */
+.tec-chatbot-root {
+  position: fixed;
+  right: clamp(16px, 2.4vw, 32px);
+  bottom: clamp(16px, 2.4vw, 28px);
+  z-index: 995;
+  font-family: var(--font-proxima), Arial, sans-serif;
+}
+
+.tec-chatbot-launcher {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1.5px solid rgba(195, 172, 123, 0.78);
+  background: radial-gradient(circle at 30% 25%, #233c32 0%, #12211b 75%, #0c1713 100%);
+  color: var(--gold);
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.42),
+    0 0 20px rgba(195, 172, 123, 0.25),
+    inset 0 0 0 3px rgba(195, 172, 123, 0.12);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.28s ease;
+}
+
+.tec-chatbot-launcher:hover {
+  transform: translateY(-3px) scale(1.04);
+  border-color: #e5d2a4;
+  color: #f3e5c2;
+  box-shadow:
+    0 16px 36px rgba(0, 0, 0, 0.52),
+    0 0 28px rgba(195, 172, 123, 0.45),
+    inset 0 0 0 3px rgba(195, 172, 123, 0.24);
+}
+
+.tec-launcher-badge {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #4ade80;
+  border: 2px solid #12211b;
+  box-shadow: 0 0 8px rgba(74, 222, 128, 0.85);
+}
+
+.tec-launcher-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+}
+
+.tec-launcher-tooltip {
+  position: absolute;
+  right: calc(100% + 12px);
+  white-space: nowrap;
+  padding: 6px 11px;
+  border-radius: 6px;
+  background: rgba(18, 33, 27, 0.96);
+  border: 1px solid rgba(195, 172, 123, 0.45);
+  color: var(--ivory);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(6px);
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+.tec-chatbot-launcher:hover .tec-launcher-tooltip {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.tec-chatbot-window {
+  width: min(365px, calc(100vw - 24px));
+  height: min(510px, calc(100dvh - 36px));
+  display: flex;
+  flex-direction: column;
+  background: #13221c;
+  color: var(--ivory);
+  border: 1px solid rgba(195, 172, 123, 0.38);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow:
+    0 28px 70px rgba(0, 0, 0, 0.58),
+    0 0 0 1px rgba(255, 255, 255, 0.04);
+  animation: tec-chat-slide-up 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes tec-chat-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.tec-chatbot-gold-bar {
+  height: 3px;
+  background: linear-gradient(90deg, #9f8654 0%, #dfd0a9 50%, #9f8654 100%);
+  flex-shrink: 0;
+}
+
+.tec-chatbot-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 12px;
+  background: rgba(15, 27, 22, 0.95);
+  border-bottom: 1px solid rgba(195, 172, 123, 0.18);
+}
+
+.tec-chatbot-status-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 3px;
+}
+
+.tec-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4ade80;
+}
+
+.tec-chatbot-eyebrow {
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  color: var(--gold);
+}
+
+.tec-chatbot-heading {
+  margin: 0;
+  font-family: var(--font-minion), Georgia, serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.tec-chatbot-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tec-header-icon-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: #d8dfd9;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.tec-header-icon-btn:hover {
+  background: rgba(195, 172, 123, 0.18);
+  border-color: var(--gold);
+  color: #ffffff;
+}
+
+.tec-chatbot-subbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(24, 45, 39, 0.85);
+  border-bottom: 1px solid rgba(195, 172, 123, 0.16);
+  font-size: 11px;
+}
+
+.tec-subbar-btn {
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(195, 172, 123, 0.45);
+  background: rgba(195, 172, 123, 0.12);
+  color: #f3f0e8;
+  font-size: 11px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.tec-subbar-btn:hover,
+.tec-subbar-btn.is-active {
+  background: var(--gold);
+  color: #13221c;
+}
+
+.tec-subbar-link {
+  background: transparent;
+  border: 0;
+  padding: 2px 4px;
+  font-size: 11px;
+  color: #d0d8d1;
+  transition: color 0.2s ease;
+}
+
+.tec-subbar-link:hover {
+  color: var(--gold);
+}
+
+.tec-lead-banner {
+  background: rgba(22, 101, 52, 0.35);
+  border-bottom: 1px solid rgba(74, 222, 128, 0.3);
+  color: #bbf7d0;
+  font-size: 10.5px;
+  padding: 6px 14px;
+}
+
+.tec-chatbot-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: radial-gradient(circle at top right, rgba(38, 62, 52, 0.35), rgba(15, 26, 21, 0.95));
+}
+
+.tec-msg-row {
+  display: flex;
+  width: 100%;
+}
+
+.tec-msg-row.is-user {
+  justify-content: flex-end;
+}
+
+.tec-msg-row.is-assistant {
+  justify-content: flex-start;
+}
+
+.tec-msg-bubble {
+  max-width: 87%;
+  padding: 11px 14px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  line-height: 1.52;
+}
+
+.tec-msg-row.is-user .tec-msg-bubble {
+  background: linear-gradient(135deg, #c3ac7b 0%, #ab925e 100%);
+  color: #12201a;
+  font-weight: 500;
+  border-bottom-right-radius: 2px;
+}
+
+.tec-msg-row.is-assistant .tec-msg-bubble {
+  background: rgba(28, 49, 41, 0.92);
+  border: 1px solid rgba(195, 172, 123, 0.22);
+  color: #f3f0e8;
+  border-bottom-left-radius: 2px;
+}
+
+.tec-msg-source-badge {
+  font-size: 9.5px;
+  color: var(--gold);
+  margin-bottom: 6px;
+  letter-spacing: 0.04em;
+}
+
+.tec-chat-paragraph {
+  margin: 0 0 6px;
+}
+
+.tec-chat-paragraph:last-child {
+  margin-bottom: 0;
+}
+
+.tec-chat-spacer {
+  height: 6px;
+}
+
+.tec-chat-bullet {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  margin: 4px 0;
+}
+
+.tec-chat-bullet-dot {
+  color: var(--gold);
+  font-size: 9px;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.tec-chat-code {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 12px;
+  color: var(--gold);
+}
+
+.tec-msg-lead-pill {
+  margin-top: 8px;
+  padding: 5px 8px;
+  border-radius: 4px;
+  background: rgba(74, 222, 128, 0.14);
+  border: 1px solid rgba(74, 222, 128, 0.35);
+  color: #bbf7d0;
+  font-size: 10.5px;
+}
+
+.tec-typing-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 2px;
+}
+
+.tec-typing-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: tec-dot-bounce 1.2s infinite ease-in-out both;
+}
+
+.tec-typing-dots span:nth-child(1) {
+  animation-delay: -0.24s;
+}
+.tec-typing-dots span:nth-child(2) {
+  animation-delay: -0.12s;
+}
+
+@keyframes tec-dot-bounce {
+  0%, 80%, 100% {
+    transform: scale(0.55);
+    opacity: 0.45;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.tec-quick-prompts {
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.tec-quick-label {
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  color: #9fb0a4;
+}
+
+.tec-quick-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tec-quick-chip {
+  padding: 6px 11px;
+  border-radius: 999px;
+  border: 1px solid rgba(195, 172, 123, 0.35);
+  background: rgba(24, 45, 39, 0.75);
+  color: #e6ece7;
+  font-size: 11.5px;
+  transition: all 0.2s ease;
+}
+
+.tec-quick-chip:hover {
+  background: rgba(195, 172, 123, 0.22);
+  border-color: var(--gold);
+  color: #ffffff;
+}
+
+.tec-chatbot-composer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background: rgba(15, 27, 22, 0.98);
+  border-top: 1px solid rgba(195, 172, 123, 0.22);
+}
+
+.tec-composer-input {
+  flex: 1;
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  font-size: 13.5px;
+}
+
+.tec-composer-input::placeholder {
+  color: #8fa195;
+}
+
+.tec-composer-input:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+.tec-composer-send {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  border: 1px solid var(--gold);
+  background: var(--gold);
+  color: #13221c;
+  font-size: 17px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.tec-composer-send:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.tec-lead-drawer {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #14261f;
+}
+
+.tec-drawer-eyebrow {
+  margin: 0;
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  color: var(--gold);
+}
+
+.tec-drawer-title {
+  margin: 0;
+  font-family: var(--font-minion), Georgia, serif;
+  font-size: 21px;
+  font-weight: 400;
+  color: #ffffff;
+}
+
+.tec-drawer-desc {
+  margin: 0 0 4px;
+  font-size: 12.5px;
+  color: #c2cec5;
+  line-height: 1.45;
+}
+
+.tec-drawer-label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+}
+
+.tec-drawer-input {
+  height: 38px;
+  padding: 0 11px;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(0, 0, 0, 0.24);
+  color: #ffffff;
+  font-family: var(--font-proxima), Arial, sans-serif;
+  font-size: 13.5px;
+}
+
+.tec-drawer-submit {
+  margin-top: 6px;
+  width: 100%;
+  height: 42px;
+  border-radius: 5px;
+  border: 1px solid var(--gold);
+  background: var(--gold);
+  color: #13221c;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tec-chatbot-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: #0d1814;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 9.5px;
+  color: #88998e;
+}
+
+@media (max-width: 600px) {
+  .tec-chatbot-root {
+    right: 12px;
+    bottom: 12px;
+  }
+  .tec-chatbot-window {
+    width: calc(100vw - 24px);
+    height: min(560px, calc(100dvh - 80px));
+  }
+}
