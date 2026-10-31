@@ -12,6 +12,7 @@ export function WormViewStory() {
   const storyRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
+  const logoWrapRef = useRef<HTMLDivElement>(null);
   const desiredFrame = useRef(0);
   const drawRequested = useRef<(() => void) | null>(null);
 
@@ -19,7 +20,6 @@ export function WormViewStory() {
   const [activeChapter, setActiveChapter] = useState<"arrival" | "summit" | "none">("arrival");
 
   const scrollYProgress = useMotionValue(0);
-  const arrivalOpacity = useTransform(scrollYProgress, [0, 0.24, 0.3], [1, 1, 0]);
   const summitOpacity = useTransform(scrollYProgress, [0.86, 0.94], [0, 1]);
 
   useEffect(() => {
@@ -45,6 +45,13 @@ export function WormViewStory() {
 
       if (progressRef.current) {
         progressRef.current.style.transform = `scaleX(${progress})`;
+      }
+
+      if (logoWrapRef.current) {
+        const rect = logoWrapRef.current.getBoundingClientRect();
+        // Keep logo at full opacity while on screen; fade out smoothly as it reaches the top edge (90px -> 24px)
+        const topFade = Math.max(0, Math.min(1, (rect.top - 24) / 66));
+        logoWrapRef.current.style.opacity = String(topFade);
       }
 
       const next = Math.round(progress * (TOTAL_FRAMES - 1));
@@ -74,12 +81,10 @@ export function WormViewStory() {
   }, [scrollYProgress, prefersReduced]);
 
   useMotionValueEvent(scrollYProgress, "change", (progress) => {
-    if (progress < 0.31) {
-      setActiveChapter("arrival");
-    } else if (progress >= 0.86) {
+    if (progress >= 0.86) {
       setActiveChapter("summit");
     } else {
-      setActiveChapter("none");
+      setActiveChapter("arrival");
     }
   });
 
@@ -249,11 +254,9 @@ export function WormViewStory() {
         </div>
 
         <div className="worm-captions" aria-live="polite">
-          {activeChapter === "arrival" && (
-            <motion.div className="worm-brand-copy" style={{ opacity: arrivalOpacity }}>
-              <NextImage src="/logo-eastern-chambers.png" alt="The Eastern Chambers" width={679} height={368} sizes="(max-width: 600px) 80vw, 540px" className="worm-brand-logo" />
-            </motion.div>
-          )}
+          <div id="worm-hero-logo" ref={logoWrapRef} className="worm-brand-copy">
+            <NextImage src="/logo-eastern-chambers-v2.png" alt="The Eastern Chambers" width={1542} height={792} sizes="(max-width: 600px) 80vw, 540px" className="worm-brand-logo" priority unoptimized />
+          </div>
         </div>
 
         {activeChapter === "summit" && (

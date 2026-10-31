@@ -5,24 +5,8 @@ import { useState, useEffect, useId, useCallback, useRef } from "react";
 interface FormState {
   name: string;
   phone: string;
-  areaRequired: string;
-  budget: string;
   additionalEnquiry: string;
 }
-
-const AREA_PRESETS = [
-  "From 391 Sq.Ft. (Boutique Offices)",
-  "5,000 – 10,000 Sq.Ft.",
-  "13,500 Sq.Ft. (Full Floors, Column-Free)",
-  "Multiple Floors / Custom Requirement",
-];
-
-const BUDGET_PRESETS = [
-  "Flexible / Open",
-  "₹120 – ₹160 / sq. ft.",
-  "₹160 – ₹220 / sq. ft.",
-  "Custom Commercial",
-];
 
 // Global helper to trigger modal from any component
 export function openEnquiryModal() {
@@ -38,8 +22,6 @@ export function EnquiryModal() {
   const [formData, setFormData] = useState<FormState>({
     name: "",
     phone: "",
-    areaRequired: "",
-    budget: "",
     additionalEnquiry: "",
   });
 
@@ -144,16 +126,6 @@ export function EnquiryModal() {
       return;
     }
 
-    if (!formData.areaRequired.trim()) {
-      setErrorMessage("Please specify the area required.");
-      return;
-    }
-
-    if (!formData.budget.trim()) {
-      setErrorMessage("Please select or enter your budget.");
-      return;
-    }
-
     setIsSubmitting(true);
 
     try {
@@ -176,8 +148,6 @@ export function EnquiryModal() {
       setFormData({
         name: "",
         phone: "",
-        areaRequired: "",
-        budget: "",
         additionalEnquiry: "",
       });
     } catch (err: any) {
@@ -245,14 +215,6 @@ export function EnquiryModal() {
                 <span>Contact Phone:</span>
                 <strong>{submittedData.phone}</strong>
               </div>
-              <div className="summary-row">
-                <span>Area Required:</span>
-                <strong>{submittedData.areaRequired}</strong>
-              </div>
-              <div className="summary-row">
-                <span>Budget:</span>
-                <strong>{submittedData.budget}</strong>
-              </div>
               {submittedData.additionalEnquiry && (
                 <div className="summary-row">
                   <span>Notes:</span>
@@ -283,11 +245,8 @@ export function EnquiryModal() {
             <div className="modal-header">
               <p className="eyebrow light">THE EASTERN CHAMBERS • COMMERCIAL WORKSPACES</p>
               <h2 id="enquiry-modal-title">Commercial Enquiry</h2>
-              <p className="modal-subtitle">
-                Designed for institutional occupiers, established enterprises and luxury boutique businesses.
-              </p>
               <div className="modal-direct-contact">
-                <span className="modal-direct-label font-mono">DIRECT LEASING HOTLINE:</span>
+                <span className="modal-direct-label font-mono">Contact Directly:</span>
                 <div className="modal-direct-links">
                   <a href="tel:+919090263264" className="modal-hotline-link font-mono">
                     <span aria-hidden="true">📞</span> +91 9090 263 264
@@ -354,67 +313,7 @@ export function EnquiryModal() {
                 />
               </div>
 
-              {/* 3. Area Required */}
-              <div className="form-group">
-                <label htmlFor={`${formId}-modal-area`}>
-                  AREA REQUIRED <span className="req">*</span>
-                </label>
-                <div className="preset-chips" role="group" aria-label="Area required options">
-                  {AREA_PRESETS.map((preset) => (
-                    <button
-                      type="button"
-                      key={preset}
-                      className={`preset-chip ${formData.areaRequired === preset ? "active" : ""}`}
-                      aria-pressed={formData.areaRequired === preset}
-                      onClick={() => setFormData({ ...formData, areaRequired: preset })}
-                    >
-                      {preset}
-                    </button>
-                  ))}
-                </div>
-                <input
-                  id={`${formId}-modal-area`}
-                  name="areaRequired"
-                  type="text"
-                  required
-                  placeholder="Or enter custom area (e.g. 18,500 sq. ft.)"
-                  value={formData.areaRequired}
-                  onChange={(e) => setFormData({ ...formData, areaRequired: e.target.value })}
-                  className="enquiry-input"
-                />
-              </div>
-
-              {/* 4. Budget */}
-              <div className="form-group">
-                <label htmlFor={`${formId}-modal-budget`}>
-                  BUDGET <span className="req">*</span>
-                </label>
-                <div className="preset-chips" role="group" aria-label="Budget options">
-                  {BUDGET_PRESETS.map((preset) => (
-                    <button
-                      type="button"
-                      key={preset}
-                      className={`preset-chip ${formData.budget === preset ? "active" : ""}`}
-                      aria-pressed={formData.budget === preset}
-                      onClick={() => setFormData({ ...formData, budget: preset })}
-                    >
-                      {preset}
-                    </button>
-                  ))}
-                </div>
-                <input
-                  id={`${formId}-modal-budget`}
-                  name="budget"
-                  type="text"
-                  required
-                  placeholder="Or enter custom budget (e.g. ₹150 / sq. ft.)"
-                  value={formData.budget}
-                  onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                  className="enquiry-input"
-                />
-              </div>
-
-              {/* 5. Additional Enquiry */}
+              {/* 3. Additional Enquiry */}
               <div className="form-group">
                 <label htmlFor={`${formId}-modal-additional`}>
                   ADDITIONAL ENQUIRY

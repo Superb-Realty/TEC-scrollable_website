@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useMotionValueEvent, useTransform } from "motion/react";
 import { measureSeams, pinnedProgress } from "@/components/pinned-progress";
 
-const LAST = 189;
-const src = (index: number) => `/sequence/frame-${String(index + 1).padStart(3, "0")}.webp?v=video2-oct30`;
+const LAST = 191;
+const src = (index: number) => `/sequence/frame-${String(index + 1).padStart(3, "0")}.webp?v=video1`;
 
 export function SequenceStory() {
   const storyRef = useRef<HTMLElement>(null);
@@ -113,16 +113,12 @@ export function SequenceStory() {
       ctx.imageSmoothingQuality = "high";
       const sw = image.naturalWidth;
       const sh = image.naturalHeight;
-      // Slight 1.035 bleed crops corner watermark; portrait viewports pan toward the building facade on the right
-      const isPortrait = width < height;
+      // Slight 1.035 bleed crops corner watermark while keeping the centered building elevation framed
       const baseScale = Math.max(width / sw, height / sh) * 1.035;
       const dw = sw * baseScale;
       const dh = sh * baseScale;
-      const progressRatio = Math.max(0, Math.min(1, selected / LAST));
-      const focalX = isPortrait ? 0.58 + progressRatio * 0.11 : 0.52;
-      const focalY = isPortrait ? 0.46 : 0.48;
-      const dx = (width - dw) * focalX;
-      const dy = (height - dh) * focalY;
+      const dx = (width - dw) * 0.5;
+      const dy = (height - dh) * 0.48;
       ctx.drawImage(image, 0, 0, sw, sh, dx, dy, dw, dh);
       lastDrawn = selected;
     };
@@ -221,7 +217,7 @@ export function SequenceStory() {
         )}
         {!reduced && activeCopy === "reveal" && (
           <motion.div className="reveal-copy" style={{ opacity: revealOpacity }}>
-            <h2>Vikhroli</h2>
+            <h2>AT Vikhroli</h2>
           </motion.div>
         )}
         {reduced && (

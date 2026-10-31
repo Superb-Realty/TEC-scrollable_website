@@ -370,18 +370,9 @@ export function LocalityMapSection() {
     >
       {/* 1. Architectural Editorial Section Header */}
       <div className="tec-locality-header">
-        <div className="tec-locality-badge-row">
-          <span className="tec-eyebrow">03 / STRATEGIC CONNECTIVITY & HUB</span>
-          <span className="tec-status-pill">
-            <span className="tec-live-pulse" />
-            {NODES.length} Key Nodes Mapped
-          </span>
-        </div>
-
         <div className="tec-locality-title-grid">
           <h2 id="architecture-title" className="tec-locality-title">
-            WHERE MUMBAI<br />
-            <em>CONNECTS,</em><br />
+            WHERE MUMBAI <em>CONNECTS,</em><br />
             THE FUTURE WORKS.
           </h2>
           <div className="tec-locality-description">

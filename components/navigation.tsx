@@ -29,7 +29,13 @@ export function Navigation() {
     let seams = measureSeams(story);
     const update = () => {
       raf = 0;
-      setVisible(pinnedProgress(story, seams) >= 1);
+      const heroLogo = document.getElementById("worm-hero-logo");
+      if (heroLogo) {
+        const rect = heroLogo.getBoundingClientRect();
+        setVisible(rect.top <= 24);
+      } else {
+        setVisible(pinnedProgress(story, seams) >= 1);
+      }
     };
     const scheduleUpdate = () => {
       if (!raf) raf = requestAnimationFrame(update);

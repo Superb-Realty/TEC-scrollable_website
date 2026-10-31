@@ -61,20 +61,6 @@ export async function POST(request: Request) {
       );
     }
 
-    if (!areaRequired || typeof areaRequired !== "string" || areaRequired.trim().length === 0) {
-      return Response.json(
-        { success: false, error: "Please specify the area required." },
-        { status: 400 }
-      );
-    }
-
-    if (!budget || typeof budget !== "string" || budget.trim().length === 0) {
-      return Response.json(
-        { success: false, error: "Please select or enter your budget." },
-        { status: 400 }
-      );
-    }
-
     // 3. Sanitized submission payload
     const submissionData = {
       timestamp: new Date().toLocaleString("en-IN", {
@@ -84,8 +70,8 @@ export async function POST(request: Request) {
       }),
       name: sanitizeCell(name, 120),
       phone: sanitizeCell(phone, 30),
-      areaRequired: sanitizeCell(areaRequired, 100),
-      budget: sanitizeCell(budget, 100),
+      areaRequired: sanitizeCell(areaRequired || "", 100),
+      budget: sanitizeCell(budget || "", 100),
       additionalEnquiry: sanitizeCell(additionalEnquiry, 1000),
     };
 

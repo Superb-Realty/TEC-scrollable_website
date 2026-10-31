@@ -299,7 +299,6 @@ export function ProjectPillars() {
   return (
     <section className="pillars-experience" ref={sectionRef} id="pillars" aria-labelledby="pillars-title">
       <div className="pillars-heading">
-        <p className="eyebrow">03.1 / THE FOUR PILLARS</p>
         <h2 id="pillars-title">INNOVATION SHAPING<br /><em>THE FUTURE OF BUSINESS</em></h2>
         <p className="pillars-intro">
           The Eastern Chambers reimagines the modern workplace for businesses that expect their address to work as hard as they do. A Grade A+ workplace should do more than accommodate business. It should enable what comes next, driven by <strong className="pillars-highlight">Technology, Design, Sustainability and Wellness</strong>.
