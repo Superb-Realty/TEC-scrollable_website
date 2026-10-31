@@ -36,7 +36,7 @@ const INITIAL_GREETING: ChatMessage = {
 };
 
 const CHATBOT_API_BASE =
-  process.env.NEXT_PUBLIC_CHATBOT_API_URL || "http://127.0.0.1:4000";
+  process.env.NEXT_PUBLIC_CHATBOT_API_URL || "https://tec-chatbot.vercel.app";
 
 function formatMessageText(text: string): React.ReactNode[] {
   const sanitizedText = text

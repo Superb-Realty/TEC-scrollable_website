@@ -1,7 +1,7 @@
 const BACKEND_URL =
   process.env.CHATBOT_BACKEND_URL ||
   process.env.NEXT_PUBLIC_CHATBOT_API_URL ||
-  "http://127.0.0.1:4000";
+  "https://tec-chatbot.vercel.app";
 
 export async function POST(request: Request) {
   try {
