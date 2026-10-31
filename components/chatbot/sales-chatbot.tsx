@@ -264,21 +264,28 @@ export function SalesChatbot() {
                     )
                   );
                 } else if (currentEvent === "lead_captured" && payload.phone) {
+                  const cleanPhone = String(payload.phone).replace(/^'/, "");
                   setLeadCapturedBanner(
-                    `Enquiry registered for ${payload.name} (${payload.phone})`
+                    `Enquiry registered for ${payload.name} (${cleanPhone})`
                   );
                   setMessages((prev) =>
-                    prev.map((m) =>
-                      m.id === assistantMsgId
-                        ? {
-                            ...m,
-                            leadCaptured: {
-                              name: payload.name,
-                              phone: payload.phone,
-                            },
-                          }
-                        : m
-                    )
+                    prev.map((m) => {
+                      if (m.id !== assistantMsgId) return m;
+                      const needsConfirmation =
+                        m.content.toLowerCase().includes("incomplete") ||
+                        !m.content.trim();
+                      const updatedContent = needsConfirmation
+                        ? `Thank you so much, **${payload.name}**! I have shared your 10-digit contact (**${cleanPhone}**) with our Sales Desk.\n\n• **Instant Document Delivery:** We are arranging the complete **Floor Plan Deck & Commercial Pricing Sheet** for **The Eastern Chambers**.\n• **Private Walkthrough:** Would you also like to schedule an exclusive site visit at LBS Marg, Vikhroli West?\n\nFor immediate assistance, our direct hotline is **+91 9090 263 264**.`
+                        : m.content;
+                      return {
+                        ...m,
+                        content: updatedContent,
+                        leadCaptured: {
+                          name: payload.name,
+                          phone: cleanPhone,
+                        },
+                      };
+                    })
                   );
                 } else if (currentEvent === "error" && payload.error) {
                   setMessages((prev) =>
