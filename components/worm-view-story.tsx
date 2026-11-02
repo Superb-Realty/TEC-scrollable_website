@@ -13,14 +13,15 @@ export function WormViewStory() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const logoWrapRef = useRef<HTMLDivElement>(null);
+  const summitRef = useRef<HTMLDivElement>(null);
   const desiredFrame = useRef(0);
   const drawRequested = useRef<(() => void) | null>(null);
 
   const [prefersReduced, setPrefersReduced] = useState(false);
-  const [activeChapter, setActiveChapter] = useState<"arrival" | "summit" | "none">("arrival");
 
   const scrollYProgress = useMotionValue(0);
-  const summitOpacity = useTransform(scrollYProgress, [0.86, 0.94], [0, 1]);
+  // Fade in at summit framing, hold alongside the logo, then gently fade as section concludes
+  const summitOpacity = useTransform(scrollYProgress, [0.66, 0.76, 0.88, 0.96], [0, 1, 1, 0]);
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -48,10 +49,91 @@ export function WormViewStory() {
       }
 
       if (logoWrapRef.current) {
-        const rect = logoWrapRef.current.getBoundingClientRect();
-        // Keep logo at full opacity while on screen; fade out smoothly as it reaches the top edge (90px -> 24px)
-        const topFade = Math.max(0, Math.min(1, (rect.top - 24) / 66));
-        logoWrapRef.current.style.opacity = String(topFade);
+        if (prefersReduced) {
+          logoWrapRef.current.style.transform = "none";
+          logoWrapRef.current.style.opacity = "1";
+        } else {
+          const vh = window.innerHeight;
+          const vw = window.innerWidth;
+          const isMobile = vw <= 600;
+
+          // Estimate base logo width based on responsive CSS clamp: clamp(165px, 17vw, 265px)
+          const baseWidth = isMobile
+            ? Math.max(135, Math.min(185, vw * 0.38))
+            : Math.max(165, Math.min(265, vw * 0.17));
+          const baseHeight = baseWidth / 1.947;
+
+          // 1. Initial position (Bottom-left resting zone)
+          const initialBottomOffset = isMobile
+            ? Math.max(130, Math.min(180, vh * 0.20))
+            : Math.max(vh * 0.23, vw * 0.132);
+          const initialY = vh - initialBottomOffset - baseHeight;
+          const initialX = isMobile ? (vw <= 400 ? 16 : 24) : 25;
+          const initialScale = 1;
+
+          // 2. Summit alignment position (Same horizontal line as "THE CHAMBERS OF CORPORATE POWER")
+          let summitY = isMobile
+            ? Math.max(76, Math.min(104, vh * 0.11))
+            : Math.max(100, Math.min(145, vh * 0.13));
+
+          if (summitRef.current) {
+            const sRect = summitRef.current.getBoundingClientRect();
+            if (sRect.top > 0) {
+              summitY = sRect.top;
+            }
+          }
+
+          const summitX = initialX;
+          const summitScale = isMobile ? 0.84 : 0.76;
+
+          // 3. Navbar target position (Merged into navbar header)
+          let navY = isMobile ? 18 : 20;
+          let navX = initialX;
+          let navScale = isMobile ? 110 / baseWidth : 138 / baseWidth;
+
+          const navWordmark = document.querySelector(".site-header .wordmark");
+          if (navWordmark) {
+            const wRect = navWordmark.getBoundingClientRect();
+            if (wRect.width > 0) {
+              navX = wRect.left;
+              navY = wRect.top;
+              navScale = wRect.width / baseWidth;
+            }
+          }
+
+          let currentX = initialX;
+          let currentY = initialY;
+          let currentScale = initialScale;
+          let currentOpacity = 1;
+
+          if (progress <= 0.72) {
+            // Phase 1: Move up and diminish toward the summit horizontal line
+            const t = Math.min(1, Math.max(0, progress / 0.72));
+            const ease = 1 - Math.pow(1 - t, 2.5);
+            currentY = initialY + (summitY - initialY) * ease;
+            currentX = initialX + (summitX - initialX) * ease;
+            currentScale = initialScale + (summitScale - initialScale) * ease;
+            currentOpacity = 1;
+          } else if (progress <= 0.86) {
+            // Phase 2: Hold alignment in the same horizontal line with "THE CHAMBERS OF CORPORATE POWER"
+            currentY = summitY;
+            currentX = summitX;
+            currentScale = summitScale;
+            currentOpacity = 1;
+          } else {
+            // Phase 3: Slowly glide up and diminish further, merging seamlessly into the navbar
+            const t = Math.min(1, Math.max(0, (progress - 0.86) / 0.14));
+            const ease = t * t * (3 - 2 * t);
+            currentY = summitY + (navY - summitY) * ease;
+            currentX = summitX + (navX - summitX) * ease;
+            currentScale = summitScale + (navScale - summitScale) * ease;
+            // Smoothly dissolve as the persistent navbar reveals at the header line
+            currentOpacity = t >= 0.55 ? Math.max(0, 1 - (t - 0.55) / 0.40) : 1;
+          }
+
+          logoWrapRef.current.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) scale(${currentScale})`;
+          logoWrapRef.current.style.opacity = String(currentOpacity);
+        }
       }
 
       const next = Math.round(progress * (TOTAL_FRAMES - 1));
@@ -79,14 +161,6 @@ export function WormViewStory() {
       cancelAnimationFrame(raf);
     };
   }, [scrollYProgress, prefersReduced]);
-
-  useMotionValueEvent(scrollYProgress, "change", (progress) => {
-    if (progress >= 0.86) {
-      setActiveChapter("summit");
-    } else {
-      setActiveChapter("arrival");
-    }
-  });
 
   // Canvas drawing and bounded frame preloading
   useEffect(() => {
@@ -259,12 +333,14 @@ export function WormViewStory() {
           </div>
         </div>
 
-        {activeChapter === "summit" && (
-          <motion.div className="worm-summit-tagline" style={{ opacity: summitOpacity }}>
-            <p>THE CHAMBERS OF<br /><em>CORPORATE POWER.</em></p>
-            <span>Grade A+ Commercial Workspaces</span>
-          </motion.div>
-        )}
+        <motion.div
+          ref={summitRef}
+          className="worm-summit-tagline"
+          style={{ opacity: summitOpacity }}
+        >
+          <p>THE CHAMBERS OF<br /><em>CORPORATE POWER.</em></p>
+          <span>Grade A+ Commercial Workspaces</span>
+        </motion.div>
       </div>
     </section>
   );

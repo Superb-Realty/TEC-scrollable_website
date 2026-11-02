@@ -30,11 +30,12 @@ export function Navigation() {
     const update = () => {
       raf = 0;
       const heroLogo = document.getElementById("worm-hero-logo");
+      const progress = pinnedProgress(story, seams);
       if (heroLogo) {
         const rect = heroLogo.getBoundingClientRect();
-        setVisible(rect.top <= 24);
+        setVisible(rect.top <= 26 || progress >= 0.96);
       } else {
-        setVisible(pinnedProgress(story, seams) >= 1);
+        setVisible(progress >= 1);
       }
     };
     const scheduleUpdate = () => {

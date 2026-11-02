@@ -55,7 +55,7 @@ h1 em,h2 em{font-family:Georgia,serif;font-weight:400;font-style:italic;letter-s
 
 /* A quiet, persistent masthead — dark translucent bar floating seamlessly over content. */
 .site-header{position:fixed;z-index:999;inset:0 0 auto;height:72px;padding:0 var(--gutter);display:flex;align-items:center;justify-content:space-between;color:#ffffff;background:rgba(18,28,23,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08);box-shadow:0 4px 24px rgba(0,0,0,.15)}
-.site-header{opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-100%);transition:transform .5s ease,opacity .4s ease,visibility .5s}
+.site-header{opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-6px);transition:transform .4s cubic-bezier(.16,1,.3,1),opacity .4s ease,visibility .4s}
 .site-header.is-visible{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0)}
 .site-header-actions{display:flex;align-items:center;gap:clamp(10px,1.5vw,22px);margin-left:auto}
 .wordmark{display:flex;align-items:center;flex-shrink:0}
@@ -283,7 +283,9 @@ h1 em,.reveal-copy em{color:#ddd8bd}
 .worm-stage{position:absolute;inset:0;background:#0F1216 url('/section-2/frame-001.webp?v=b202db4b') center bottom/cover}
 .worm-canvas{position:absolute;inset:0;display:block;width:100%;height:100%}
 .worm-vignette{display:none}
-.worm-captions{position:absolute;left:calc(var(--gutter) - 14px);right:30px;top:auto;bottom:max(23vh,13.2vw);pointer-events:none;z-index:2;max-width:720px}
+.worm-captions{position:absolute;inset:0;pointer-events:none;z-index:2}
+#worm-hero-logo{position:absolute;top:0;left:0;transform-origin:0 0;will-change:transform,opacity;pointer-events:none;transform:translate3d(25px,calc(100svh - max(23vh,13.2vw) - 110px),0)}
+@media(max-width:600px){#worm-hero-logo{transform:translate3d(var(--gutter),calc(100svh - clamp(130px,20vh,180px) - 80px),0)}}
 .worm-copy{margin:0}
 .worm-copy .eyebrow{color:#e5e7d7;letter-spacing:.18em;font-weight:600;margin:0 0 8px;text-shadow:0 1px 12px rgba(0,0,0,.85)}
 .worm-copy .eyebrow span{color:var(--gold);padding:0 10px}
@@ -576,7 +578,6 @@ h1{font-size:clamp(30px,8.2vw,44px);line-height:1.06;margin:14px 0 16px;text-sha
 .address-note>div span:first-child{font-size:24px;line-height:1}
 .address-note>div span:last-child{font-size:11px}
 .worm-story{height:calc(200svh + var(--blend-lg) * 2)}
-.worm-captions{left:var(--gutter);right:var(--gutter);top:auto;bottom:22vh;max-width:100%}
 .worm-copy h2{font-size:var(--fs-display);line-height:1.05;margin:12px 0}
 .worm-copy-desc{max-width:320px;font-size:14px;line-height:1.55}
 .worm-brand-copy h2{font-size:clamp(30px,8vw,44px)}
@@ -2775,11 +2776,7 @@ html{scroll-behavior:auto}
  .portfolio-disclaimer { font-size:10.5px; margin-top:14px; }
 }
 
-.worm-brand-logo{position:relative;left:-8px;display:block;width:clamp(165px,17vw,265px);max-width:100%;height:auto;object-fit:contain;filter:none;}
-
-/* Keep the elevation logo 25px from the viewport edge at the bottom-left, just above the background buildings/trees and clear of the main facade. */
-.worm-captions{left:25px;top:auto;bottom:max(23vh,13.2vw);}
-.worm-brand-logo{left:0;}
+.worm-brand-logo{position:relative;display:block;width:clamp(165px,17vw,265px);max-width:100%;height:auto;object-fit:contain;filter:none;left:0;}
 
 /* Clear contact hierarchy in the closing footer. */
 .closing-legal-bar{grid-template-columns:1fr 1fr;align-items:start;padding-bottom:32px;}
@@ -2809,11 +2806,10 @@ html{scroll-behavior:auto}
 @media(max-width:600px){
  .reveal-copy{bottom:clamp(64px,10vh,86px);left:var(--gutter);right:var(--gutter);max-width:100%;}
  .reveal-copy h2{font-size:clamp(28px,8.5vw,38px);line-height:1.05;}
- .worm-captions{left:var(--gutter);right:var(--gutter);bottom:clamp(130px,20vh,180px);}
  .worm-brand-logo{width:clamp(135px,38vw,185px);}
- .worm-summit-tagline{top:clamp(76px,11vh,104px);left:var(--gutter);right:var(--gutter);max-width:100%;text-align:left;}
- .worm-summit-tagline p{font-size:clamp(20px,5.6vw,26px);line-height:1.24;letter-spacing:.025em;}
- .worm-summit-tagline span{margin-top:10px;font-size:12px;}
+ .worm-summit-tagline{top:clamp(76px,11vh,104px);right:var(--gutter);left:auto;max-width:58vw;text-align:right;}
+ .worm-summit-tagline p{font-size:clamp(18px,5.2vw,24px);line-height:1.24;letter-spacing:.025em;}
+ .worm-summit-tagline span{margin-top:8px;font-size:11px;}
  .modal-backdrop{padding:10px;align-items:center;}
  .modal-dialog{width:100%;max-width:100%;max-height:calc(100dvh - 20px);border-radius:6px;}
  .modal-body{padding:26px 16px 22px;}
