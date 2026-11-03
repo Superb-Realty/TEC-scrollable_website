@@ -7,6 +7,7 @@ import { LocalityMapSection } from "@/components/locality-map-section";
 import { ProjectPillars } from "@/components/project-pillars";
 import { AmenityMarquee } from "@/components/amenity-marquee";
 import { DeveloperLegacies } from "@/components/developer-legacies";
+import { FooterEnquireButton } from "@/components/footer-enquire-button";
 import { EnquiryModal } from "@/components/enquiry-modal";
 import { SalesChatbot } from "@/components/chatbot/sales-chatbot";
 import { SectionReveal } from "@/components/section-reveal";
@@ -85,7 +86,17 @@ export default function Home() {
               <a href="tel:+919090263264"><span>CALL US</span>9090 263 264</a>
               <a href="mailto:info@superbrealty.in"><span>EMAIL US</span>info@superbrealty.in</a>
             </div>
-            <p className="closing-developer-credit">A development by <strong>Superb Realty &amp; GHP Group</strong></p>
+            <div className="closing-enquire-wrap">
+              <FooterEnquireButton />
+            </div>
+            <p className="closing-developer-credit">
+              A development by{" "}
+              <strong>
+                <a href="https://www.superbrealty.in" target="_blank" rel="noopener noreferrer" className="hover:underline">Superb Realty</a>
+                {" & "}
+                <a href="https://ghpcorp.com" target="_blank" rel="noopener noreferrer" className="hover:underline">GHP Group</a>
+              </strong>
+            </p>
           </div>
         </div>
 

@@ -537,18 +537,7 @@ export function LocalityMapSection() {
                   ✕ Clear selection
                 </button>
               </div>
-            ) : (
-              <div className="tec-legend-box">
-                <p className="tec-legend-tip">
-                  <span className="tec-tip-icon">✦</span>
-                  Click any marker or category to explore travel times and connectivity arcs.
-                </p>
-                <div className="tec-legend-item">
-                  <span className="tec-legend-line" />
-                  <span>Interactive flow arc connecting to TEC</span>
-                </div>
-              </div>
-            )}
+            ) : null}
 
             {/* Scroll zoom notice */}
             <div className="tec-scroll-mode-bar">

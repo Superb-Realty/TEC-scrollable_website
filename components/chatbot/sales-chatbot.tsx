@@ -470,7 +470,7 @@ export function SalesChatbot() {
                         m.content.toLowerCase().includes("incomplete") ||
                         !m.content.trim();
                       const updatedContent = needsConfirmation
-                        ? `Thank you so much, **${payload.name}**! I have shared your 10-digit contact (**${cleanPhone}**) with our Sales Desk.\n\n• **Instant Document Delivery:** We are arranging the complete **Floor Plan Deck & Commercial Pricing Sheet** for **The Eastern Chambers**.\n• **Private Walkthrough:** Would you also like to schedule an exclusive site visit at LBS Marg, Vikhroli West?\n\nFor immediate assistance, our direct hotline is **+91 9090 263 264**.`
+                        ? `Thank you so much, **${payload.name}**! I have shared your 10-digit contact (**${cleanPhone}**) with our Sales Desk.\n\n• **Instant Document Delivery:** We are arranging the complete **Brochure & Floor Plan Deck** for **The Eastern Chambers**.\n• **Private Walkthrough:** Would you also like to schedule an exclusive site visit at LBS Marg, Vikhroli West?\n\nFor immediate assistance, our direct hotline is **+91 9090 263 264**.`
                         : m.content;
                       return {
                         ...m,
@@ -735,7 +735,7 @@ export function SalesChatbot() {
               onClick={() => setShowLeadDrawer((prev) => !prev)}
               className={`tec-subbar-btn ${showLeadDrawer ? "is-active" : ""}`}
             >
-              {showLeadDrawer ? "← Back to Chat" : "📋 Instant Floor Plan Deck"}
+              {showLeadDrawer ? "← Back to Chat" : "📋 Download brochure"}
             </button>
             <a
               href="tel:+919090263264"
@@ -771,7 +771,7 @@ export function SalesChatbot() {
                 PRIORITY SALES DESK
               </p>
               <h4 className="tec-drawer-title">
-                Receive Floor Plans &amp; Commercial Sheet
+                Download Brochure &amp; Floor Plans
               </h4>
               <p className="tec-drawer-desc">
                 Share your coordinates below or simply type them in the chat.
@@ -822,7 +822,7 @@ export function SalesChatbot() {
                 >
                   {leadSubmitting
                     ? "Registering Priority Enquiry..."
-                    : "Request Commercial Deck →"}
+                    : "Download Brochure →"}
                 </button>
               </div>
             </form>

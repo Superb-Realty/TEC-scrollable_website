@@ -20,8 +20,8 @@ export function WormViewStory() {
   const [prefersReduced, setPrefersReduced] = useState(false);
 
   const scrollYProgress = useMotionValue(0);
-  // Fade in at summit framing, hold alongside the logo, then gently fade as section concludes
-  const summitOpacity = useTransform(scrollYProgress, [0.66, 0.76, 0.88, 0.96], [0, 1, 1, 0]);
+  // Fade in at summit framing and keep it persistent throughout the rest of Section 2
+  const summitOpacity = useTransform(scrollYProgress, [0.66, 0.76, 1], [0, 1, 1]);
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");

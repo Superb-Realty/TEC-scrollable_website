@@ -118,7 +118,13 @@ export function DeveloperLegacies() {
           {/* Left Column: Developer Profile Cards */}
           <div className="legacies-profiles-col">
             {/* Developer 1: Superb Realty */}
-            <article className="legacy-profile-card">
+            <a
+              href="https://www.superbrealty.in"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="legacy-profile-card"
+              aria-label="Visit Superb Realty official website (opens in a new tab)"
+            >
               <div className="profile-logo-zone" aria-label="Superb Realty logo area">
                 {/* Dedicated logo space with pre-configured logo image & fallback */}
                 <div className="profile-logo-wrapper">
@@ -140,10 +146,16 @@ export function DeveloperLegacies() {
                   and timely delivery, now shape the spaces of tomorrow.
                 </p>
               </div>
-            </article>
+            </a>
 
             {/* Developer 2: GHP Group */}
-            <article className="legacy-profile-card">
+            <a
+              href="https://ghpcorp.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="legacy-profile-card"
+              aria-label="Visit GHP Group official website (opens in a new tab)"
+            >
               <div className="profile-logo-zone" aria-label="GHP Group logo area">
                 {/* Dedicated logo space with pre-configured logo image & fallback */}
                 <div className="profile-logo-wrapper">
@@ -164,7 +176,7 @@ export function DeveloperLegacies() {
                   commercial ecosystem.
                 </p>
               </div>
-            </article>
+            </a>
           </div>
 
           {/* Right Column: 6 Past Landmark Projects Showcase (2x3 Grid) */}

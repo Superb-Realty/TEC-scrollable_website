@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image, { type StaticImageData } from "next/image";
 import { openEnquiryModal } from "@/components/enquiry-modal";
 import elevatedWorkspace from "@/assets/amenities/13_Elevated Workspace.jpg";
@@ -72,7 +72,6 @@ export function AmenityMarquee() {
   const openOriginRef = useRef<DOMRect | null>(null);
   const openingAnimationRef = useRef<Animation | null>(null);
   const [selectedSlide, setSelectedSlide] = useState<AmenitySlide | null>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
   const isDragging = useRef(false);
   const wasDragged = useRef(false);
   const startX = useRef(0);
@@ -130,25 +129,6 @@ export function AmenityMarquee() {
     return () => cancelAnimationFrame(animId);
   }, []);
 
-  // Track active slide based on scroll
-  const handleScroll = useCallback(() => {
-    const el = marqueeRef.current;
-    if (!el) return;
-    const cards = el.querySelectorAll<HTMLElement>(".amenity-slide-card");
-    const cardStep = cards.length > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : 1;
-    const index = Math.round(el.scrollLeft / cardStep) % AMENITY_SLIDES.length;
-    setActiveIndex(index);
-  }, []);
-
-  const scrollByAmount = (direction: -1 | 1) => {
-    const el = marqueeRef.current;
-    if (!el) return;
-    const cards = el.querySelectorAll<HTMLElement>(".amenity-slide-card");
-    const cardStep = cards.length > 1 ? cards[1].offsetLeft - cards[0].offsetLeft : 390;
-    const scrollAmount = cardStep * direction;
-    el.scrollBy({ left: scrollAmount, behavior: "smooth" });
-  };
-
   // Drag to scroll handlers
   const onMouseDown = (e: React.MouseEvent) => {
     const el = marqueeRef.current;
@@ -180,54 +160,31 @@ export function AmenityMarquee() {
       id="amenities"
       aria-labelledby="amenities-marquee-title"
     >
-      <div className="amenity-layout">
-        {/* Sticky Editorial Left Column */}
-        <div className="amenity-editorial-sticky">
-          <p className="eyebrow">THE EASTERN CHAMBERS</p>
-          <h2 id="amenities-marquee-title" className="amenity-editorial-title">AMENITIES.</h2>
-          <p className="amenity-editorial-copy">Pause. Play. Connect.</p>
-
-          <div className="amenity-nav-controls">
-            <div className="amenity-arrows">
-              <button
-                type="button"
-                className="amenity-arrow-btn"
-                onClick={() => scrollByAmount(-1)}
-                aria-label="Previous amenity slide"
-              >
-                ←
-              </button>
-              <button
-                type="button"
-                className="amenity-arrow-btn"
-                onClick={() => scrollByAmount(1)}
-                aria-label="Next amenity slide"
-              >
-                →
-              </button>
-            </div>
-
-            <div className="amenity-status-pill font-mono">
-              <span className="amenity-live-dot" aria-hidden="true" />
-              <span>
-                {String(activeIndex + 1).padStart(2, "0")} / {String(AMENITY_SLIDES.length).padStart(2, "0")}
-              </span>
-              <span className="amenity-pause-note font-mono">AUTO-FLOW</span>
-            </div>
+      <div className="amenity-container">
+        {/* Top Header Row with Title on Top-Left and Actions on Right */}
+        <div className="amenity-header-row">
+          <div className="amenity-title-block">
+            <p className="eyebrow">THE EASTERN CHAMBERS</p>
+            <h2 id="amenities-marquee-title" className="amenity-editorial-title">
+              AMENITIES.
+            </h2>
+            <p className="amenity-editorial-copy">Pause. Play. Connect.</p>
           </div>
 
-          <div className="amenity-cta-wrap">
-            <button
-              type="button"
-              className="btn-amenity-schedule"
-              onClick={() => openEnquiryModal()}
-            >
-              Begin a conversation <span aria-hidden="true">→</span>
-            </button>
+          <div className="amenity-header-actions">
+            <div className="amenity-cta-wrap">
+              <button
+                type="button"
+                className="btn-amenity-schedule"
+                onClick={() => openEnquiryModal()}
+              >
+                Begin a conversation <span aria-hidden="true">→</span>
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Smooth Scrolling Draggable Visual Marquee */}
+        {/* Centered Horizontal Scrolling Track showing 3 full cards at a time */}
         <div
           className="amenity-marquee-viewport"
           ref={marqueeRef}
@@ -235,14 +192,13 @@ export function AmenityMarquee() {
           onMouseDown={onMouseDown}
           onMouseMove={onMouseMove}
           onMouseUp={onMouseUp}
-          onScroll={handleScroll}
           role="region"
           aria-label="Amenity visual marquee"
           tabIndex={0}
         >
           <div className="amenity-marquee-track">
-            {/* Render slides duplicated once to allow seamless loop feeling */}
-            {[...AMENITY_SLIDES, ...AMENITY_SLIDES].map((slide, idx) => (
+            {/* Render slides duplicated to allow seamless loop feeling */}
+            {[...AMENITY_SLIDES, ...AMENITY_SLIDES, ...AMENITY_SLIDES].map((slide, idx) => (
               <article
                 key={`${slide.id}-${idx}`}
                 className="amenity-slide-card"
@@ -265,7 +221,7 @@ export function AmenityMarquee() {
                     src={slide.image}
                     alt={slide.alt}
                     fill
-                    sizes="(max-width: 768px) 85vw, 420px"
+                    sizes="(max-width: 768px) 90vw, (max-width: 1024px) 48vw, 440px"
                     className="amenity-card-img"
                     draggable={false}
                   />
