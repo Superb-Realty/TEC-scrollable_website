@@ -217,7 +217,10 @@ export function SequenceStory() {
         )}
         {!reduced && activeCopy === "reveal" && (
           <motion.div className="reveal-copy" style={{ opacity: revealOpacity }}>
-            <h2>AT Vikhroli</h2>
+            <h2>
+              <span className="reveal-prefix">AT</span>
+              <span className="reveal-location">Vikhroli</span>
+            </h2>
           </motion.div>
         )}
         {reduced && (

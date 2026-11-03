@@ -2796,6 +2796,8 @@ html{scroll-behavior:auto}
 @media(min-width:901px){.closing-pedigree{margin-left:clamp(24px,3vw,56px);}}
 
 .reveal-copy h2{font-family:var(--font-proxima),Arial,sans-serif;font-weight:300;text-transform:uppercase;letter-spacing:-.025em;font-size:calc(var(--fs-display) + 20px);margin:0;}
+.reveal-copy .reveal-prefix{display:block;font-size:0.6em;line-height:1.1;letter-spacing:.02em;font-weight:300;margin-bottom:2px;}
+.reveal-copy .reveal-location{display:block;}
 .reveal-copy{bottom:clamp(24px,4.5vh,48px);left:var(--gutter);right:auto;max-width:min(90vw,calc(50vw - 260px));}
 @media(min-width:1440px){
  .reveal-copy{max-width:calc(50vw - 300px);}
@@ -3213,6 +3215,110 @@ html{scroll-behavior:auto}
   border-radius: 3px;
   font-size: 12px;
   color: #7b6330;
+}
+
+.tec-chat-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2.5px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.tec-call-link {
+  color: #0f4c3a;
+  text-decoration-color: rgba(15, 76, 58, 0.45);
+}
+
+.tec-call-link:hover {
+  color: #08291f;
+  text-decoration-color: #08291f;
+}
+
+.tec-wa-link {
+  color: #0f6f39;
+  text-decoration-color: rgba(15, 111, 57, 0.45);
+}
+
+.tec-wa-link:hover {
+  color: #084523;
+  text-decoration-color: #084523;
+}
+
+.tec-mail-link {
+  color: #8c6a28;
+  text-decoration-color: rgba(140, 106, 40, 0.45);
+}
+
+.tec-mail-link:hover {
+  color: #5c4415;
+  text-decoration-color: #5c4415;
+}
+
+.tec-ext-link {
+  color: #1a4f3b;
+  text-decoration-color: rgba(26, 79, 59, 0.35);
+}
+
+.tec-ext-link:hover {
+  color: #0e2d21;
+  text-decoration-color: #0e2d21;
+}
+
+.tec-chat-contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 9px;
+  border-top: 1px dashed rgba(195, 172, 123, 0.38);
+}
+
+.tec-action-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 600;
+  text-decoration: none;
+  line-height: 1.2;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+  cursor: pointer;
+}
+
+.tec-action-call {
+  background: #142820;
+  color: #f7f3e8;
+  border: 1px solid #c8b07e;
+  box-shadow: 0 2px 6px rgba(20, 40, 32, 0.15);
+}
+
+.tec-action-call:hover {
+  background: #1d3a2f;
+  color: #ffffff;
+  border-color: #e5d2a4;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(20, 40, 32, 0.25);
+}
+
+.tec-action-wa {
+  background: #128c7e;
+  color: #ffffff;
+  border: 1px solid #075e54;
+  box-shadow: 0 2px 6px rgba(18, 140, 126, 0.25);
+}
+
+.tec-action-wa:hover {
+  background: #25d366;
+  color: #ffffff;
+  border-color: #1ebe5d;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(37, 211, 102, 0.35);
 }
 
 .tec-msg-lead-pill {

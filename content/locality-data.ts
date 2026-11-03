@@ -67,8 +67,7 @@ export const NODES: LocalityNode[] = [
   { id: "en-powaiplaza", category: "entertainment", name: "Powai Plaza (Central Avenue)", meta: "2.6 KM · 7 min", lat: 19.1234, lng: 72.9131 },
   { id: "en-phoenix", category: "entertainment", name: "Phoenix Marketcity (LBS Marg, Kurla)", meta: "6.0 KM · 12 min", lat: 19.0863, lng: 72.8887 },
 
-  // 6. Existing Multi-Modal Connectivity
-  { id: "ec-green4", category: "existingConnectivity", name: "Metro Line 4 (Surya Nagar Station)", meta: "0.2 KM · 2 min walk", lat: 19.1142, lng: 72.9272 },
+  // 6. Existing Multi-Modal Connectivity (Operational)
   { id: "ec-vikhroli-stn", category: "existingConnectivity", name: "Vikhroli Railway Station", meta: "0.4 KM · 2 min", lat: 19.1115, lng: 72.9282 },
   { id: "ec-vikhroli-bridge", category: "existingConnectivity", name: "Vikhroli East-West Flyover", meta: "0.4 KM · 2 min", lat: 19.1098, lng: 72.9275 },
   { id: "ec-eeh", category: "existingConnectivity", name: "Eastern Express Highway (EEH)", meta: "1.6 KM · 3–4 min", lat: 19.1110, lng: 72.9362 },

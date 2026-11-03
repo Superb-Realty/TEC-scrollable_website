@@ -127,9 +127,13 @@ const CHATBOT_API_BASE =
 function formatMessageText(text: string): React.ReactNode[] {
   const sanitizedText = text
     .replace(/\s*[—–]\s*/g, ", ")
+    .replace(/\b(?:in\s+)?(?:this\s+|my\s+|the\s+)?knowledge\s*base\b/gi, "")
+    .replace(/\b(?:in\s+)?(?:this\s+|my\s+|the\s+)?database\b/gi, "")
+    .replace(/\bas\s+an\s+ai\b/gi, "")
     .replace(/\bleasing\s*&\s*sales\b/gi, "Sales")
     .replace(/\bcorporate\s+leasing\b/gi, "Sales")
     .replace(/\bleasing\b/gi, "sales");
+
   const lines = sanitizedText.split("\n");
   return lines.map((line, lineIdx) => {
     const trimmed = line.trim();
@@ -140,12 +144,86 @@ function formatMessageText(text: string): React.ReactNode[] {
     const isBullet = /^[•\-*]\s+/.test(trimmed);
     const cleanLine = isBullet ? trimmed.replace(/^[•\-*]\s+/, "") : line;
 
-    // Parse **bold** and `code`
-    const parts = cleanLine.split(/(\*\*.*?\*\*|`.*?`)/g);
+    // Tokenize markdown links [label](url), bold **text**, code `code`, raw phone numbers, raw emails
+    const tokenRegex =
+      /(\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*|`[^`]+`|(?:\+?91[\s-]?)?9090[\s-]?[0-9]{3}[\s-]?[0-9]{3}|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g;
+
+    const parts = cleanLine.split(tokenRegex);
     const renderedParts = parts.map((part, i) => {
+      if (!part) return null;
+
+      // Markdown links: [label](url)
+      const mdLinkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+      if (mdLinkMatch) {
+        const [, label, url] = mdLinkMatch;
+        const isTel = url.startsWith("tel:");
+        const isWa = url.includes("wa.me") || url.includes("whatsapp");
+        const isMail = url.startsWith("mailto:");
+
+        if (isTel) {
+          return (
+            <a
+              key={i}
+              href={url}
+              className="tec-chat-link tec-call-link"
+              title="Click to call"
+            >
+              <span aria-hidden="true">📞</span>
+              <span>{label}</span>
+            </a>
+          );
+        }
+
+        if (isWa) {
+          return (
+            <a
+              key={i}
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="tec-chat-link tec-wa-link"
+              title="Click to chat on WhatsApp"
+            >
+              <span aria-hidden="true">💬</span>
+              <span>{label}</span>
+            </a>
+          );
+        }
+
+        if (isMail) {
+          return (
+            <a
+              key={i}
+              href={url}
+              className="tec-chat-link tec-mail-link"
+              title="Send email"
+            >
+              <span aria-hidden="true">✉️</span>
+              <span>{label}</span>
+            </a>
+          );
+        }
+
+        return (
+          <a
+            key={i}
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="tec-chat-link tec-ext-link"
+          >
+            <span>{label}</span>
+            <span aria-hidden="true">↗</span>
+          </a>
+        );
+      }
+
+      // Bold: **text**
       if (part.startsWith("**") && part.endsWith("**")) {
         return <strong key={i}>{part.slice(2, -2)}</strong>;
       }
+
+      // Code: `code`
       if (part.startsWith("`") && part.endsWith("`")) {
         return (
           <code key={i} className="tec-chat-code font-mono">
@@ -153,6 +231,37 @@ function formatMessageText(text: string): React.ReactNode[] {
           </code>
         );
       }
+
+      // Raw phone number
+      if (/(?:\+?91[\s-]?)?9090[\s-]?[0-9]{3}[\s-]?[0-9]{3}/.test(part)) {
+        return (
+          <a
+            key={i}
+            href="tel:+919090263264"
+            className="tec-chat-link tec-call-link"
+            title="Click to call +91 9090 263 264"
+          >
+            <span aria-hidden="true">📞</span>
+            <span>{part}</span>
+          </a>
+        );
+      }
+
+      // Raw email
+      if (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(part)) {
+        return (
+          <a
+            key={i}
+            href={`mailto:${part}`}
+            className="tec-chat-link tec-mail-link"
+            title={`Email ${part}`}
+          >
+            <span aria-hidden="true">✉️</span>
+            <span>{part}</span>
+          </a>
+        );
+      }
+
       return <React.Fragment key={i}>{part}</React.Fragment>;
     });
 
@@ -702,6 +811,31 @@ export function SalesChatbot() {
                           </span>
                         )}
                       </div>
+
+                      {msg.role === "assistant" &&
+                        !msg.isStreaming &&
+                        (msg.content.includes("9090") ||
+                          msg.content.includes("wa.me") ||
+                          msg.content.includes("Sales Team")) && (
+                          <div className="tec-chat-contact-actions">
+                            <a
+                              href="tel:+919090263264"
+                              className="tec-action-pill tec-action-call"
+                              title="Call Sales Team: +91 9090 263 264"
+                            >
+                              <span aria-hidden="true">📞</span> Call Sales
+                            </a>
+                            <a
+                              href="https://wa.me/919090263264?text=Hi%2C%20I%20am%20inquiring%20about%20The%20Eastern%20Chambers"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="tec-action-pill tec-action-wa"
+                              title="Message Sales Team on WhatsApp"
+                            >
+                              <span aria-hidden="true">💬</span> WhatsApp
+                            </a>
+                          </div>
+                        )}
 
                       {msg.leadCaptured && (
                         <div className="tec-msg-lead-pill font-mono">
